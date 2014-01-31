@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Hello World: Firefox OS Style</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Hello World: Firefox OS Style</h2>
+<p class="meta">30 Jan 2014</p>
+
+<div class="post">
+<p>This is the first entry to the blog series dedicated to developing mobile applications for <a href="http://www.mozilla.org/en-US/firefox/os/">Firefox OS</a>.</p>
+
+<h2>Hello, Firefox OS</h2>
+
+<p>Firefox OS apps are created using the standard web technologies: HTML, CSS, and Javascript. Let&#39;s create three files that test the basic functionality of each of these technologies.</p>
+
+<p>HTML:</p>
+
+<div class="highlight"><pre><code class="html"><span class="c">&lt;!-- hello.html --&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span> Hello, Firefox OS <span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;hello.js&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;hello.css&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Hello, Firefox OS<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">id=</span><span class="s">&quot;coolButton&quot;</span><span class="nt">&gt;</span>Do Something Cool<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+<p>CSS:</p>
+
+<div class="highlight"><pre><code class="css"><span class="c">/* hello.css */</span>
+<span class="nc">.body</span> <span class="p">{</span>
+  <span class="k">background-color</span><span class="o">:</span><span class="m">#00ff00</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Javascript:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// hello.js</span>
+<span class="kd">var</span> <span class="nx">readyStateCheckInterval</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;complete&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">init</span><span class="p">();</span>
+        <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">readyStateCheckInterval</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ready!&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;coolButton&#39;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 0 = normal | 1 = converted</span>
+
+    <span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&quot;Turn It Back!&quot;</span><span class="p">;</span>
+        <span class="nx">state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="nx">state</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="s1">&#39;#fdf3e6&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s2">&quot;Do That Again!&quot;</span><span class="p">;</span>
+        <span class="nx">state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Save all these files in the same directory/folder. Now open a web browser and point it to <code>hello.html</code>. Check that everything is working. All the files work as a website. Let&#39;s make them work as an application.</p>
+
+<h2>Simulate</h2>
+
+<p>The easiest way to test a Firefox OS application is to use the simulator for the Firefox web browser. Here&#39;s a quick tutorial on how to install it.</p>
+
+<ul>
+<li>Download and install the latest version of <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a></li>
+<li>Navigate to the App Manager (located at <a href="about:app-manager">about:app-manager</a>)</li>
+<li>Click on <code>Start Simulator</code> on the bottom of the page</li>
+<li>Click on <code>Install Simulator</code></li>
+<li>Click on the green <code>Install Simulator</code> button on the page</li>
+<li>Choose the stable version (should be 1.2)</li>
+<li>Wait for the download to finish (it&#39;s around 60 MB)</li>
+<li>Click <code>Allow</code> in the menu that pops up under the URL bar</li>
+<li>Click <code>Install Now</code></li>
+</ul>
+
+<p>And it&#39;s installed! Here&#39;s how to start the simulator.</p>
+
+<ul>
+<li>Now go back to <a href="about:app-manager">App Manager</a></li>
+<li>Click on <code>Start Simulator</code></li>
+<li>Select <code>Firefox OS 1.2</code></li>
+</ul>
+
+<p>Now, we&#39;re ready to test the application. Let&#39;s convert our website into the application.</p>
+
+<h2>The Manifest</h2>
+
+<p>The <a href="https://developer.mozilla.org/docs/Apps/Manifest">App Manifest</a> is a JSON file that contains metadata about a Firefox OS application. It can contains data on the developer and the permissions that the application uses. To turn our Hello World website into an application we only need to provide the required metadata fields</p>
+
+<p>The manifest only requires the fields</p>
+
+<ul>
+<li>Name</li>
+<li>Description</li>
+<li>Icons</li>
+</ul>
+
+<p>Our manifest will look like this</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+  &quot;name&quot;: &quot;Hello, Firefox OS&quot;,
+  &quot;description&quot;: &quot;Simple Demo App&quot;,
+  &quot;launch_path&quot;: &quot;/hello.html&quot;,
+  &quot;icons&quot;: {
+    &quot;128&quot;: &quot;/hello.png&quot;
+  }
+}
+</code></pre></div>
+<p>The field <code>launch_path</code> is needed because our HTML file is not name <code>index.html</code>. Also, it is required that your application has an icon (To save some time, feel free to use <a href="">this one I made myself</a>).</p>
+
+<h2>The Moment Of Truth</h2>
+
+<p>Finally, it&#39;s time to test the application on the simulator.</p>
+
+<ul>
+<li>Place all the files in the same directory/folder</li>
+<li>Navigate to the <a href="about:app-manager">App Manager</a></li>
+<li>Start the simulator</li>
+<li>Select the <code>Apps</code> tab</li>
+<li>Click on <code>Add Packaged App</code></li>
+<li>Select the directory/folder that contains all the files</li>
+<li>Click <code>Update</code></li>
+</ul>
+
+<p>And that&#39;s it! It&#39;s a simple process</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
