@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hello World: Firefox OS Style"
+title:  "Hello, World: Firefox OS Style"
 date:   2014-01-30 23:51:57
 ---
 
