@@ -1,0 +1,8 @@
+{
+  "name": "Hello, Firefox OS",
+  "description": "Simple Demo App",
+  "launch_path": "/hello.html",
+  "icons": {
+    "128": "/hello.png"
+  }
+}
