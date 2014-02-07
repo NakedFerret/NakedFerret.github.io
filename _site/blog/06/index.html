@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebApi: Notification</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Gonzalo Andreani</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>WebApi: Notification</h2>
+<p class="meta">06 Feb 2014</p>
+
+<div class="post">
+<p>This article will show how to use the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications">Notification API</a>. We will be building the app <code>API Showcase</code> through the rest of these series to quickly test each new api. <a href="/demos/04/">Try the demo of version one</a></p>
+
+<p><em>Note:</em> This is the icon for the new application</p>
+
+<p><img src="/demos/04/img/ic_api_showcase.png" alt="API Showcase Icon"></p>
+
+<h2>Permission: Manifest</h2>
+
+<p>Unlike the previous post, the <code>Notification</code> API requires requesting a permission. This can be done one of two ways: through the manifest or through the API itself. However, Firefox OS does not support requesting permissions after an app is installed. The required permission is called <code>desktop-notification</code>.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+  &quot;name&quot;: &quot;API Showcase&quot;,
+  &quot;description&quot;: &quot;App that contains examples of API usage&quot;,
+  &quot;launch_path&quot;: &quot;/index.html&quot;,
+  &quot;version&quot;: &quot;v1.0&quot;,
+  &quot;icons&quot;: {
+    &quot;128&quot;: &quot;/img/ic_api_showcase.png&quot;
+  },
+  &quot;permissions&quot;: {
+    &quot;desktop-notification&quot;: {
+    &quot;description&quot;: &quot;Needed to show notifications&quot;
+    }
+  }
+}
+</code></pre></div>
+<h2>Notification Object</h2>
+
+<p>The Notification API works through the <code>Notification</code> object. To test whether the app has the required permissions, <code>Notification.permission</code> will return</p>
+
+<ul>
+<li><code>granted</code>: the user has allowed the app to show notifications</li>
+<li><code>denied</code>: the user has not allowed the app to show notifications</li>
+<li><code>default</code>: the user did not decide, but this is as good as <code>denied</code></li>
+</ul>
+
+<p>Notifications are created by supplying a title and optionally</p>
+
+<ul>
+<li><code>dir</code>: the direction of the notification (auto, ltr, rtl)</li>
+<li><code>lang</code>: language used within notification</li>
+<li><code>body</code>: the body of the notification</li>
+<li><code>tag</code>: An ID that allows a notification to be replaced or removed</li>
+<li><code>icon</code>: the url of the image to use as an icon</li>
+</ul>
+
+<p>The notifications are displayed as soon as they are created. So all that is required to show a notification is</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="s2">&quot;Title!&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="s2">&quot;Look at this bod&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">tag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Notification</span><span class="p">(</span><span class="nx">title</span><span class="p">,</span> <span class="p">{</span><span class="nx">body</span><span class="o">:</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="nx">tag</span><span class="p">});</span>
+</code></pre></div>
+
+<p>The <code>tag</code> option prevents multiple notifications with the same tag from being displayed.</p>
+
+<h2>Permission: Javascript API</h2>
+
+<p>As mentioned before, there is another method to getting the required permissions to show a notification. It&#39;s possible to ask the user for permission using the <code>Notification.requestPermission</code> function. It takes a function with one parameter, <code>permission</code>, that contains the result of the user decision.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">Notification</span><span class="p">.</span><span class="nx">requestPermission</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">permission</span> <span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Adresses a bug in Opera/Chrome. You can ignore this but it is</span>
+    <span class="c1">// needed to run in some browsers</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span> <span class="k">in</span> <span class="nx">Notification</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">Notification</span><span class="p">.</span><span class="nx">permission</span> <span class="o">=</span> <span class="nx">permission</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">permission</span> <span class="o">===</span> <span class="s2">&quot;granted&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="s2">&quot;Title!&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="s2">&quot;Look at this bod&quot;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">tag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Notification</span><span class="p">(</span><span class="nx">title</span><span class="p">,</span> <span class="p">{</span><span class="nx">body</span><span class="o">:</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="nx">tag</span><span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>You can find the source code for the app <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/04">here</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
