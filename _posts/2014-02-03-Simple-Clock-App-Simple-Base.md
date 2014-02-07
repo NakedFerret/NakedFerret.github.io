@@ -77,5 +77,22 @@ function formatDate(d) {
 
 The this will get the time from a `Date` object, format it to a 12 hour format that includes seconds, and will update the text of the H1.
 
+The manifest is very similar to the one from Hello, Firefox.
 
-TODO: Show the app manifest and how to install a hosted application
+
+	{
+	  "name": "Simple Clock",
+	  "description": "Simple Text Based Clock",
+	  "launch_path": "/index.html",
+	  "icons": {
+		"128": "/img/ic_simple_clock.png"
+	  }
+	}
+
+
+Here is the icon.
+
+![Simple Clock Icon](/demos/02/img/ic_simple_clock.png) 
+
+
+TODO: Show how to install a hosted application
