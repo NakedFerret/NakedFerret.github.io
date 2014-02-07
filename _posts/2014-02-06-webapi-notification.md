@@ -2,7 +2,7 @@
 layout: post
 title:  "WebApi: Notification"
 date:   2014-02-06 12:00:00
-permalink: /blog/06/
+permalink: /blog/6/
 ---
 
 This article will show how to use the [Notification API](https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications). We will be building the app `API Showcase` through the rest of these series to quickly test each new api. [Try the demo of version one](/demos/04/)

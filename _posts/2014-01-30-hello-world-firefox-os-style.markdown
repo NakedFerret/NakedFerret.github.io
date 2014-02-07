@@ -2,7 +2,7 @@
 layout: post
 title:  "Hello, World: Firefox OS Style"
 date:   2014-01-30 23:51:57
-permalink: /blog/01/
+permalink: /blog/1/
 ---
 
 This is the first entry to the blog series dedicated to developing mobile applications for [Firefox OS](http://www.mozilla.org/en-US/firefox/os/).

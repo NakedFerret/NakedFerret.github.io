@@ -2,7 +2,7 @@
 layout: post
 title:  "Simple Clock: Text"
 date:   2014-02-03 1:26:00
-permalink: /blog/03
+permalink: /blog/3/
 ---
 
 In this post, we create a simple clock app.
