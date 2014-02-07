@@ -1,0 +1,8 @@
+{
+  "name": "Simple Clock V2",
+  "description": "Simple image based clock",
+  "launch_path": "/index.html",	    
+  "icons": {
+    "128": "/img/ic_simple_clock.png"
+  }
+}
