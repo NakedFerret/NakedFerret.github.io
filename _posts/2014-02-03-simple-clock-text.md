@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Simple Clock App: Simple Base"
+title:  "Simple Clock: Text"
 date:   2014-02-03 1:26:00
 ---
 

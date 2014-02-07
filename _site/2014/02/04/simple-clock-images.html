@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Simple Clock: Images</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Gonzalo Andreani</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Simple Clock: Images</h2>
+<p class="meta">04 Feb 2014</p>
+
+<div class="post">
+<p>In this post, we modify the previous app to create an analog clock using images. <a href="/demos/03/">Try the Demo</a></p>
+
+<hr>
+
+<p>HTML:</p>
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Simple Clock: V2<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;js/app.js&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;css/style.css&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;clock-container&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">&quot;clock-face&quot;</span> <span class="na">src=</span><span class="s">&quot;img/clock-face.png&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">&quot;hour-hand&quot;</span> <span class="na">src=</span><span class="s">&quot;img/hour-hand.png&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">&quot;minute-hand&quot;</span> <span class="na">src=</span><span class="s">&quot;img/minute-hand.png&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">&quot;second-hand&quot;</span> <span class="na">src=</span><span class="s">&quot;img/second-hand.png&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+<p>We&#39;re going to use a div that contains all the images. This will make it easier to position the images. We&#39;re going to exploit the fact that all images fit within 256px x 256px</p>
+
+<p>To center the css were going to use <code>absolute positioning</code> with the <code>top</code> and <code>left</code> rules.</p>
+
+<div class="highlight"><pre><code class="css"><span class="nf">#clock-container</span> <span class="p">{</span>
+    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">256px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">256px</span><span class="p">;</span>
+    <span class="k">left</span><span class="o">:</span><span class="m">50</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">top</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">-128px</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-128px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The all images are also going to use <code>absolute positioning</code> so that they can overlap</p>
+
+<div class="highlight"><pre><code class="css"><span class="nf">#clock-container</span> <span class="nt">img</span> <span class="p">{</span>
+    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Then we center each hand image using <code>left</code> again.</p>
+
+<div class="highlight"><pre><code class="css"><span class="nf">#hour-hand</span> <span class="p">{</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">256px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">12px</span><span class="p">;</span>
+    <span class="k">left</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-4.5px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#minute-hand</span> <span class="p">{</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">256px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">9px</span><span class="p">;</span>
+    <span class="k">left</span><span class="o">:</span><span class="m">50</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-6px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#second-hand</span> <span class="p">{</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">256px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">6px</span><span class="p">;</span>
+    <span class="k">left</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-3px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The javascript is going to change the CSS <code>transform</code> rule. In order to update the <code>transform</code> rule of an element we need to change the <code>MozTransform</code> field. It&#39;s easier to deal with the hand images if we use a an object to represent them. The <code>Hand</code> object accomplishes this. It takes an HTML element and a degree of rotation. </p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Hand</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">degree_rotation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">degree_rotation</span> <span class="o">=</span> <span class="nx">degree_rotation</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">element</span> <span class="o">=</span> <span class="nx">element</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">time</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span>
+    <span class="nx">degree</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">*</span> <span class="nx">degree_rotation</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">MozTransform</span> <span class="o">=</span> <span class="s2">&quot;rotate(&quot;</span><span class="o">+</span><span class="nx">degree</span><span class="o">+</span><span class="s2">&quot;deg)&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This makes the rest of the code a little more manageable and readable</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">readyStateCheckInterval</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;complete&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">init</span><span class="p">();</span>
+        <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">readyStateCheckInterval</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+
+
+<span class="kd">function</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setInterval</span><span class="p">(</span><span class="nx">updateTime</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kd">function</span> <span class="nx">updateTime</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Rotate image</span>
+
+    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+
+    <span class="kd">var</span> <span class="nx">hour_hand</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hand</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;hour-hand&#39;</span><span class="p">),</span> <span class="mi">30</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">minute_hand</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hand</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;minute-hand&#39;</span><span class="p">),</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">second_hand</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Hand</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;second-hand&#39;</span><span class="p">),</span> <span class="mi">6</span><span class="p">);</span>
+
+    <span class="nx">minute_hand</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">());</span>
+    <span class="nx">second_hand</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+
+    <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">getHours</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">h</span> <span class="o">&gt;=</span> <span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">h</span> <span class="o">-=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">hour_hand</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">h</span><span class="p">);</span>
+    
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The manifest is very similar to the one from the previous version. However, we now can use the <code>version</code> field. Firefox OS never uses this variable but it is accessible by the app and can be used to coordinate in-app update procedures.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+  &quot;name&quot;: &quot;Simple Clock&quot;,
+  &quot;description&quot;: &quot;Simple analog clock&quot;,
+  &quot;launch_path&quot;: &quot;/index.html&quot;,
+  &quot;version&quot;: &quot;V2&quot;
+  &quot;icons&quot;: {
+    &quot;128&quot;: &quot;/images/ic_simple_lock.png&quot;
+  }
+}
+</code></pre></div>
+<p>You can find a packaged version in a zip file <a href="">COMING SOON</a> and the hosted version at <a href="">COMING SOON</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
