@@ -1,0 +1,34 @@
+#clock-container {
+    position: absolute;
+    height: 256px;
+    width: 256px;
+    left:50%;
+    top: 50%;
+    margin: -128px 0 0 -128px;
+}
+
+#clock-container img {
+    position: absolute;
+}
+
+#hour-hand {
+    height: 256px;
+    width: 12px;
+    left: 50%;
+    margin: 0 0 0 -4.5px;
+}
+
+#minute-hand {
+    height: 256px;
+    width: 9px;
+    left:50%;
+    margin: 0 0 0 -6px;
+}
+
+#second-hand {
+    height: 256px;
+    width: 6px;
+    left: 50%;
+    margin: 0 0 0 -3px;
+}
+
