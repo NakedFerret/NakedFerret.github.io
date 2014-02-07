@@ -2,6 +2,7 @@
 layout: post
 title:  "Simple Clock: Images"
 date:   2014-02-04 12:00:00
+permalink: /blog/04/
 ---
 
 In this post, we modify the previous app to create an analog clock using images. [Try the Demo](/demos/03/)

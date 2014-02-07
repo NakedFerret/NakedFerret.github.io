@@ -2,6 +2,7 @@
 layout: post
 title:  "WebAPI: BatteryManager"
 date:   2014-02-05 12:00:00
+permalink: /blog/05/
 ---
 
 

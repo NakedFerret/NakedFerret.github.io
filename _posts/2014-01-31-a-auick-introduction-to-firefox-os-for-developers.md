@@ -2,6 +2,7 @@
 layout: post
 title:  "A Quick Introduction to Firefox OS for Developers"
 date:   2014-01-31 11:39:00
+permalink: /blog/02/
 ---
 
 This post will give an overview of Firefox OS. The audience are developers of mobile applications.
