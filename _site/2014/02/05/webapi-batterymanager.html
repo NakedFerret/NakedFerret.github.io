@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebAPI: BatteryManager</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Gonzalo Andreani</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>WebAPI: BatteryManager</h2>
+<p class="meta">05 Feb 2014</p>
+
+<div class="post">
+<p>In this post were going to explore the (small) <a href="https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager">BatteryManager API</a>.</p>
+
+<p><code>BatteryManager</code> is returned by <code>navigator.battery</code>. You can interface with the object in the following ways</p>
+
+<ul>
+<li><code>level</code></li>
+<li><code>chargingTime</code></li>
+<li><code>discharginTime</code></li>
+</ul>
+
+<p>The battery manager also dispatches the following events</p>
+
+<ul>
+<li><code>levelchange</code></li>
+<li><code>chargingchange</code></li>
+<li><code>chargingtimechange</code></li>
+<li><code>dischargingtimechange</code></li>
+</ul>
+
+<p>You can add an event listener using <code>addEventListener</code> interface.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">updateStatus</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">battery</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">battery</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Battery: &#39;</span> <span class="o">+</span> <span class="nx">battery</span><span class="p">.</span><span class="nx">level</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Charge Time: &#39;</span> <span class="o">+</span> <span class="nx">battery</span><span class="p">.</span><span class="nx">chargingTime</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;DisCharge Time: &#39;</span> <span class="o">+</span> <span class="nx">battery</span><span class="p">.</span><span class="nx">dischargingTime</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">addBatteryListeners</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">battery</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">battery</span><span class="p">;</span>
+    <span class="nx">battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;levelchange&#39;</span><span class="p">,</span> <span class="nx">updateStatus</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="nx">battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;chargingchange&#39;</span><span class="p">,</span> <span class="nx">updateStatus</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="nx">battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;chargingtimechange&#39;</span><span class="p">,</span> <span class="nx">updateStatus</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="nx">battery</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;dischargingtimechange&#39;</span><span class="p">,</span> <span class="nx">updateStatus</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">addBatteryListeners</span><span class="p">();</span>
+<span class="nx">updateStatus</span><span class="p">();</span>
+</code></pre></div>
+
+<p>Now we can test this...but it&#39;s a lot of trouble to create a new application to test this little bit of javascript. Thus, this leads us to an introduction to some of the developer tools.</p>
+
+<h2>Web Developer Tools</h2>
+
+<p>The Web Developer Tools for in the Firefox Web browser can be used for any website and for any Firefox OS app. </p>
+
+<ul>
+<li>Go to the <a href="about:app-manager">App Manager</a></li>
+<li>Select the <code>Apps</code> Tab on the left hand side</li>
+<li>Select the <code>Hello, Firefox OS</code> app from the first post.</li>
+<li>Click on <code>Debug</code></li>
+</ul>
+
+<p>Here there is a couple of different tools at out disposal.</p>
+
+<ul>
+<li><code>Console</code> - the javascript console</li>
+<li><code>Inspector</code> - inspect HTML elements from the page. Shows the CSS rules applied to the element.</li>
+<li><code>Debugger</code>- used to set breakpoints in javascript code and step through it</li>
+<li><code>Style Editor</code> - CSS editor</li>
+<li><code>Profiler</code> - profile the render and running time of the webpage.</li>
+<li><code>Scratchpad</code> - write javascript code that gets run in the context of the webpage</li>
+</ul>
+
+<p>The one we are interested in is the <code>Scratchpad</code>. Just paste the javascript code above, click run, and look at the console! Much simpler than creating another app.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
