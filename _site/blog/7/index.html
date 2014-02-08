@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebApi: Alarm</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Gonzalo Andreani</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>WebApi: Alarm</h2>
+<p class="meta">07 Feb 2014</p>
+
+<div class="post">
+<p>This post will cover the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Alarm">Alarm API</a>. Instead of creating a brand new application, we will modifying the <code>API Showcase</code> app. As always, I would encourage you to <a href="/demos/05/">try the demo</a>.</p>
+
+<h2>Permission</h2>
+
+<p>The <code>Alarm</code> API requires <code>alarms</code> permission. The following is required in the manifest file</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;permissions&quot;: {
+  &quot;alarms&quot;: {
+  &quot;description&quot;: &quot;Required to schedule alarms&quot;
+  }
+}
+</code></pre></div>
+<p>The permission level is <code>default</code>. That mean any <code>hosted</code> or <code>packaged</code> application can access this API.</p>
+
+<h2>What do you mean, Alarm?</h2>
+
+<p>Alarms is a word that gets thrown around a lot these days. Depending on the context, it can mean an alert meant to attract attention, an awareness of dangers, or similarly, to cause to feel danger. In the Firefox OS context, an alarm is a message passed to your application, at a specified time.</p>
+
+<h2>Scheduling Alarms</h2>
+
+<p>Alarms are registered through the <code>MozAlarmsManager</code> interface which is accessible through the <code>navigator.mozAlarms</code> object. Register an alarm using the <code>add</code> which accepts the parameters</p>
+
+<ul>
+<li><code>Date</code>: in the future, of course</li>
+<li><code>respectTimezone</code>: can be either <code>ignoreTimezone</code> or <code>honorTimezone</code>. Consider if you set the alarm in the CET timezone at 12 PM. If you travel to a place with a PDT timezone, <strong>ignoring</strong> the timezone means the alarm will still sound at 12 PM, while <strong>honoring</strong> the timezone will means the alarm will sound at 3 AM.</li>
+<li><code>data</code>: optional object that gets attached to the alarm</li>
+</ul>
+
+<p>The <code>add</code> method will return a <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMRequest">DomRequest</a> object. If you are unfamiliar with this object, you can use it as follows</p>
+
+<ul>
+<li><code>onsuccess</code>: assign a callback function for when the request is successful</li>
+<li><code>result</code>: contains the result of the request</li>
+<li><code>onerror</code>: same as above but for when an error occurred</li>
+<li><code>error</code>: the error of the request</li>
+</ul>
+
+<p>The <code>result</code> of the request will be a number representing the id of the alarm (the id is used to cancel an alarm with the <code>remove</code> method). All together, it looks quite simple</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">myDate</span>  <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">myDate</span><span class="p">.</span><span class="nx">setSeconds</span><span class="p">(</span><span class="nx">myDate</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">foo</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozAlarms</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">myDate</span><span class="p">,</span> <span class="s2">&quot;ignoreTimezone&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The alarm has been scheduled&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> 
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occurred: &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>This schedules an alarm that will activate 5 seconds into the future</p>
+
+<h2>Responding to Alarms</h2>
+
+<p>In order to respond to Alarms, the application must register itself with the system. This is accomplished through the manifest and the <code>messages</code> field.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;messages&quot;: [
+{ &quot;alarm&quot;: &quot;/index.html&quot; }
+]
+</code></pre></div>
+<p>The <code>index.html</code> tells the system which page will handle the alarm messages. The alarms will be handled using navigator.mozSetMessageHandler in the following manner</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">navigator</span><span class="p">.</span><span class="nx">mozSetMessageHandler</span><span class="p">(</span><span class="s2">&quot;alarm&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">alarm</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;alarm fired: &quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">alarm</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span> 
+<span class="p">});</span>
+</code></pre></div>
+
+<p>The demo uses an alarm to show a notification 5 seconds in the future. Check out the <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/05">source code</a> for more information.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
