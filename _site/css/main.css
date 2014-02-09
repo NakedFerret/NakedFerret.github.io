@@ -27,7 +27,7 @@ p { margin: 1em 0; }
 
 a         { color: #00a; }
 a:hover   { color: #000; }
-a:visited { color: #a0a; }
+a:visited { color: #4e7ad4; }
 
 /*****************************************************************************/
 /*
@@ -55,12 +55,21 @@ a:visited { color: #a0a; }
 /*
 /*****************************************************************************/
 
+h1 {
+    font-size: 130%;
+}
+
+h2 {
+    font-size: 110%;
+}
+
 .site {
   font-size: 115%;
   text-align: justify;
   width: 42em;
   margin: 3em auto 2em;
   line-height: 1.5em;
+  position: relative;
 }
 
 .header a {
@@ -68,30 +77,37 @@ a:visited { color: #a0a; }
   text-decoration: none;
 }
 
-.title {
-  display: inline-block;
-  margin-bottom: 2em;
-}
-
-.title a {
-  color: #a00;
-}
-
-.title a:hover {
-  color: #000;
-}
-
 .header a.extra {
   color: #aaa;
-  margin-left: 1em;
+  margin-left: 5em;
+  margin-right: 5em;
 }
 
 .header a.extra:hover {
   color: #000;
 }
 
+.header img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .meta {
   color: #aaa;
+}
+
+.post-title {
+    text-align: center;
+    margin: 1em 0;
+}
+
+.post-title h1 {
+    text-decoration: underline;
+    margin: 0 0;
+}
+
+.post-title p {
+    margin: 0 0;
 }
 
 .footer {
@@ -108,7 +124,7 @@ a:visited { color: #a0a; }
 }
 
 .footer .contact a {
-  color: #8085C1;
+  color: #4e7ad4;
 }
 
 .footer .rss {
