@@ -1,3 +1,4 @@
 name: Gonzalo Andreani
 markdown: redcarpet
 pygments: true
+exclude: [Guardfile]
