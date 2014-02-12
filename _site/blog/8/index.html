@@ -8,7 +8,6 @@
 
         <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/css/syntax.css">
-
 	<script src="http://localhost:35729/livereload.js"></script>
 
         <!-- Custom CSS -->
@@ -18,20 +17,22 @@
     <body>
 
         <div class="site">
-          <div class="header">
-            <a class="extra" href="/">home</a>
-	    <a class="extra" href="/">blog</a>
-	    <a class="extra" href="/">projects</a>
-	    <img src="/img/logo.png">
-          </div>
 
-          <div class="post-title">
-  <h1>BuildingBlocks: Buttons</h2>
-  <p class="meta">10 Feb 2014</p>
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
 </div>
 
 <div class="post">
-<p>Before we keep exploring WebAPI, we can take a moment to build a UI foundation our API Showcase appilication. I <a href="/blog/2/">previously mentioned</a> Gaia Building Blocks. It&#39;s a mini GUI framework for firefox OS. So far, the application only showcases 2 apis: Notification and Alarm. Let&#39;s examine the <a href="http://buildingfirefoxos.com/building-blocks/buttons.html">Button</a> building block</p>
+  <div class="title">
+    <h1>BuildingBlocks: Buttons</h2>
+    <p class="meta">10 Feb 2014</p>
+  </div>
+   <p>Before we keep exploring WebAPI, we can take a moment to build a UI foundation our API Showcase appilication. I <a href="/blog/2/">previously mentioned</a> Gaia Building Blocks. It&#39;s a mini GUI framework for firefox OS. So far, the application only showcases 2 apis: Notification and Alarm. Let&#39;s examine the <a href="http://buildingfirefoxos.com/building-blocks/buttons.html">Button</a> building block</p>
 
 <h2>Downloading</h2>
 
@@ -80,18 +81,14 @@
 
 <p>Lastly, creating a list of buttons also changes their look.</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;ul&gt;</span>
-  <span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button&gt;</span>Default<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
-  <span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">disabled=</span><span class="s">&quot;disabled&quot;</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
-  <span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button&gt;</span>Action 1<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
-  <span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;icon icon-view&quot;</span><span class="nt">&gt;</span>View Name<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
-  <span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;icon icon-dialog&quot;</span><span class="nt">&gt;</span>Change Date<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;/ul&gt;</span>
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button&gt;</span>Default<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">disabled=</span><span class="s">&quot;disabled&quot;</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button&gt;</span>Action 1<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;icon icon-view&quot;</span><span class="nt">&gt;</span>View Name<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span> <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">&quot;icon icon-dialog&quot;</span><span class="nt">&gt;</span>Change Date<span class="nt">&lt;/button&gt;</span> <span class="nt">&lt;/li&gt;</span>
 </code></pre></div>
 
 <p><img src="/img/posts/8/buttons4.png" alt="List button styles"></p>
-
-<p><em>Note:</em> Use <code>ul { list-style: none; }</code> to hide the list markers</p>
 
 <p>This is useful when grouping actions together or when you want to trigger a dialog. Using the classes <code>icon icon-view</code> will create a button that suggests to the user something will be shown. The classes <code>icon icon-dialog</code> will suggest that a dialog will be shown.</p>
 

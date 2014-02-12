@@ -59,18 +59,14 @@ If we add `disabled="disabled"` to the `button` elements and `aria-disabled=true
 Lastly, creating a list of buttons also changes their look.
 
 {% highlight html %}
-<ul>
-  <li> <button>Default</button> </li>
-  <li> <button disabled="disabled">Disabled</button> </li>
-  <li> <button>Action 1</button> </li>
-  <li> <button class="icon icon-view">View Name</button> </li>
-  <li> <button class="icon icon-dialog">Change Date</button> </li>
-</ul>
+<li> <button>Default</button> </li>
+<li> <button disabled="disabled">Disabled</button> </li>
+<li> <button>Action 1</button> </li>
+<li> <button class="icon icon-view">View Name</button> </li>
+<li> <button class="icon icon-dialog">Change Date</button> </li>
 {% endhighlight %}
 
 ![List button styles](/img/posts/8/buttons4.png)
-
-*Note:* Use `ul { list-style: none; }` to hide the list markers
 
 This is useful when grouping actions together or when you want to trigger a dialog. Using the classes `icon icon-view` will create a button that suggests to the user something will be shown. The classes `icon icon-dialog` will suggest that a dialog will be shown.
 
