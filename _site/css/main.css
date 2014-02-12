@@ -198,15 +198,14 @@ a:visited { color: #4e7ad4; }
 /*
 /*****************************************************************************/
 
-@media (max-width: 768px) {
-    .post pre {
-	margin: 24px 0;
-    }
-
-    #logo-container {
-	margin-left:auto;
-	margin-right:auto;
-	width:100%;
+@media (max-width: 900px) {
+    .header a {
+	width:32%;
     }
 }
 
+@media (max-width: 767px) {
+    .post pre {
+	margin: 24px 0;
+    }
+}
