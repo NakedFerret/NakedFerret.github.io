@@ -1,0 +1,24 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+section[role="region"] {
+    background: #fff;
+    height: 100%;
+}
+
+/* Decrease the font size */
+
+html {
+    font-size: 62.5%;
+}
+
+#btn-notify {
+    display: none;
+}
+
+#btn-notify-wait {
+    display: none;
+}
