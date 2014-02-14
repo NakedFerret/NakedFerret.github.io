@@ -1,0 +1,20 @@
+{
+  "name": "API Showcase V6",
+  "description": "App that contains examples of API usage",
+  "launch_path": "/index.html",	    
+  "version": "v6.0",
+  "icons": {
+    "128": "/img/ic_api_showcase.png"
+  },
+  "permissions": {
+    "desktop-notification": {
+    "description": "Needed to show notifications"
+    },
+    "alarms": {
+    "description": "Needed to show notifications in the future."
+    }
+  },
+  "messages": [
+  { "alarm": "/index.html" }
+  ]
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebAPI: WebActivities</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>WebAPI: WebActivities</h2>
+    <p class="meta">13 Feb 2014</p>
+  </div>
+   <p>In this post, we will take a quick look at the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Web_Activities">WebActivity API</a>. WebActivities are basically parts of apps that register with the system. When a user wants to perform a certain action that many apps can accomplish (like share, choose an image, take a photo, etc), the system will present the user with all the registered applications that can accomplish that action.</p>
+
+<h2>Starting an Activity</h2>
+
+<p>In order to launch one of these activities we create a <code>MozActivity</code>. The parameter is an object with the following </p>
+
+<ul>
+<li><code>name</code> : the name of the action the user wants to perform</li>
+<li><code>data</code> : information about the action. Usually contains <code>type</code></li>
+</ul>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/WebAPI/Web_Activities#Firefox_OS_activities">Here</a> is a list of all the activities that Gaia offers. Let&#39;s try to show the user an activity to create a contact. It&#39;s done as follows</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">activity</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MozActivity</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;new&quot;</span><span class="p">,</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;webcontacts/contact&quot;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">activity</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;WebActivity reported success&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">activity</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>And that&#39;s it! You can <a href="/demos/09/">try the demo</a> but the WebActivity API is not supported by any web browser. Source code is <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/09">here</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
