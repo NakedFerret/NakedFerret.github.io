@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>WebAPI: WebActivities</title>
+        <title>WebAPI: Contact</title>
         <meta name="viewport" content="width=device-width">
 
         <!-- syntax highlighting CSS -->
@@ -29,39 +29,142 @@
 
 <div class="post">
   <div class="title">
-    <h1>WebAPI: WebActivities</h2>
-    <p class="meta">13 Feb 2014</p>
+    <h1>WebAPI: Contact</h2>
+    <p class="meta">14 Feb 2014</p>
   </div>
-   <p>In this post, we will take a quick look at the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Web_Activities">WebActivity API</a>. WebActivities are basically parts of apps that register with the system. When a user wants to perform a certain action that many apps can accomplish (like share, choose an image, take a photo, etc), the system will present the user with all the registered applications that can accomplish that action.</p>
+   <p>In this post we will be exploring the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Contacts">Contact API</a>. </p>
 
-<h2>Starting an Activity</h2>
+<h2>Creating a Contact</h2>
 
-<p>In order to launch one of these activities we create a <code>MozActivity</code>. The parameter is an object with the following </p>
+<p>The code to create a contact differs between Firefox OS v1.2 and v1.3</p>
 
-<ul>
-<li><code>name</code> : the name of the action the user wants to perform</li>
-<li><code>data</code> : information about the action. Usually contains <code>type</code></li>
-</ul>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">contactData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">givenName</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">],</span>
+  <span class="nx">familyName</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;Doe&quot;</span><span class="p">]</span>
+<span class="p">}</span>
 
-<p><a href="https://developer.mozilla.org/en-US/docs/WebAPI/Web_Activities#Firefox_OS_activities">Here</a> is a list of all the activities that Gaia offers. Let&#39;s try to show the user an activity to create a contact. It&#39;s done as follows</p>
+<span class="c1">// V1.2</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mozContact</span><span class="p">();</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">contactData</span><span class="p">);</span>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">activity</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MozActivity</span><span class="p">({</span>
-    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;new&quot;</span><span class="p">,</span>
-    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;webcontacts/contact&quot;</span>
-    <span class="p">}</span>
-<span class="p">});</span>
+<span class="c1">// V1.3</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mozContact</span><span class="p">(</span><span class="nx">contactData</span><span class="p">);</span>
 
-<span class="nx">activity</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;WebActivity reported success&quot;</span><span class="p">);</span>
-<span class="p">};</span>
-
-<span class="nx">activity</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="c1">// Platform independent code</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mozContact</span><span class="p">(</span><span class="nx">contactData</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span> <span class="s2">&quot;init&quot;</span> <span class="k">in</span> <span class="nx">person</span> <span class="p">){</span>
+    <span class="nx">person</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">contactData</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 
-<p>And that&#39;s it! You can <a href="/demos/09/">try the demo</a> but the WebActivity API is not supported by any web browser. Source code is <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/09">here</a>.</p>
+<p>Once the contact is created, it must be saved. The save() method returns a DOMRequest object. We can listen for success or errors by passing callbacks.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">saveRequest</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+<span class="nx">saveRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Contact Saved&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">saveRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Searching for Contacts</h2>
+
+<p>When searching the contacts, we can specify filter and sort options.</p>
+
+<p>The filter options include</p>
+
+<ul>
+<li><code>filterBy</code>: An array of strings of all the fields to filter by</li>
+<li><code>filterValue</code>: the value to match against</li>
+<li><code>filterOp</code>: The filter comparison operator. Can be <code>equals</code>, <code>startsWith</code>, <code>contains</code>, and <code>match</code> (used for telephone numbers)</li>
+<li><code>filterLimit</code>: the number of contacts to retrieve</li>
+</ul>
+
+<p>And the sort options are</p>
+
+<ul>
+<li><code>sortBy</code>: A string of the field to sort by. Only <code>giveName</code> and <code>familyName</code> are supported</li>
+<li><code>sortOrder</code>: A string of the order. Can be <code>descending</code> or <code>ascending</code></li>
+</ul>
+
+<p>The two methods to search for contacts are</p>
+
+<ul>
+<li><code>mozContacts.find()</code>: find a specific list of contacts</li>
+<li><code>mozContacts.getAll()</code>: retrive all contacts</li>
+</ul>
+
+<p>The <code>find()</code> method returns a <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMRequest">DomRequest</a> object and can be used as follows</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">filterValue</span> <span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+  <span class="nx">filterBy</span>    <span class="o">:</span> <span class="p">[</span><span class="s2">&quot;givenName&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="s2">&quot;nickName&quot;</span><span class="p">],</span>
+  <span class="nx">filterOp</span>    <span class="o">:</span> <span class="s2">&quot;contains&quot;</span><span class="p">,</span>
+  <span class="nx">filterLimit</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nx">sortBy</span>      <span class="o">:</span> <span class="s2">&quot;familyName&quot;</span>
+  <span class="nx">sortOrder</span>   <span class="o">:</span> <span class="s2">&quot;ascending&quot;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">search</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+
+<span class="nx">search</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">search</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nx">search</span><span class="p">.</span><span class="nx">result</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">firstName</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">givenName</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">lastName</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">familyName</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Found:&quot;</span> <span class="o">+</span> <span class="nx">firstName</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">lastName</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Sorry, there is no such contact.&quot;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">search</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Search failed&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The <code>getAll()</code> method is slightly different because if uses a <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMCursor">DomCursor</a> instead of a DomRequest to callback the results.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">sortBy</span><span class="o">:</span> <span class="s2">&quot;familyName&quot;</span><span class="p">,</span>
+    <span class="nx">sortOrder</span><span class="o">:</span> <span class="s2">&quot;descending&quot;</span>
+<span class="p">}</span>
+    
+<span class="kd">var</span> <span class="nx">allContacts</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">getAll</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+
+<span class="nx">allContacts</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cursor</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">cursor</span><span class="p">.</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">firstName</span> <span class="o">=</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">givenName</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">lastName</span> <span class="o">=</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">familyName</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Found: &quot;</span> <span class="o">+</span> <span class="nx">firstName</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">lastName</span><span class="p">);</span>
+    <span class="nx">cursor</span><span class="p">.</span><span class="k">continue</span><span class="p">();</span> 
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;No more contacts&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">allContacts</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s2">&quot;Something went terribly wrong! :(&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The <code>continue()</code> method will call <code>onsuccess</code> or <code>onerror</code> again with the next contact in the result list.</p>
+
+<h2>Updating and Deleting Contact</h2>
+
+<p>A contact can be updated by changing its properties and calling <code>mozContacts.save()</code>. Similarly, a contact can be deleted by calling <code>mozContacts.remove()</code>.</p>
+
+<h2>Seeing it in action</h2>
+
+<blockquote>
+<p><em>Note:</em> there is currently a permissions error with the demo, I&#39;m trying to fix it and will update this post in the future</p>
+</blockquote>
+
+<p><a href="/demos/10/">Try the demo</a> (although it can only be tested in the simulator) and/or check out the <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10">source code</a>.</p>
 
 </div>
 

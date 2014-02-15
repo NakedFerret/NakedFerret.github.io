@@ -142,6 +142,13 @@ a:visited { color: #4e7ad4; }
   border: 0;
 }
 
+blockquote {
+    background-color: #d7d7e6;
+    margin: 24px 0;
+    border: 1px solid #DDD;
+    padding: 0px 1em;
+}
+
 /*****************************************************************************/
 /*
 /* Posts
