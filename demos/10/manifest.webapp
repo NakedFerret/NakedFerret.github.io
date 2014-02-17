@@ -3,6 +3,7 @@
   "description": "App that contains examples of API usage",
   "launch_path": "/index.html",	    
   "version": "v7.0",
+  "type": "privileged",
   "icons": {
     "128": "/img/ic_api_showcase.png"
   },

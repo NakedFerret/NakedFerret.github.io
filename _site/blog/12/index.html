@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebAPI: Contact Continued</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>WebAPI: Contact Continued</h2>
+    <p class="meta">17 Feb 2014</p>
+  </div>
+   <p><a href="/blog/11/">Last post</a> we explored the Contact API, but ran into permissions problems. This post, we&#39;ll show the fix and show the last part of the contacts API. <a href="/demos/10/">Try the (working) demo</a> and check out the <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10">source code</a>.</p>
+
+<h2>Wiping the slate</h2>
+
+<p>The most destructive API call in is by far the <code>clear()</code> command. It will remove all contacts from the device. The system does not step in and warn the user while the command is happening, so the duty is delegated to the application. In the future we will implement an alert dialog for this particular demo, but for now here is the code.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">clearRequest</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+
+<span class="nx">clearRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;All contacts have been removed.&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">clearRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Contacts were not cleared&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Asking for Permission, Take one</h2>
+
+<p>According to <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions#Hosted_app_and_privileged_app_permissions">the permissions list page</a>, accessing the contacts API requires something like the following in the application manifest</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;permissions&quot;: {
+  &quot;contacts&quot;: {
+    &quot;access&quot;: &quot;readwrite&quot;,
+    &quot;description&quot;: &quot;Needed to read, create, and modify contacts&quot;
+  }
+},
+</code></pre></div>
+<p>Where the possible values of <code>access</code> are</p>
+
+<ul>
+<li><code>readonly</code></li>
+<li><code>readwrite</code></li>
+<li><code>readcreate</code></li>
+<li><code>createonly</code></li>
+</ul>
+
+<p>Looking at the <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions#Hosted_app_and_privileged_app_permissions">permissions page</a> again, you can notice that the <code>Default Granted</code> column has the value <code>Prompt</code> for the <code>contacts</code> api. This means that the user will be given a prompt before the appliction is given access to the api. The user can deny or allow the app the access to the api at this prompt.</p>
+
+<p>However, when we test the app, no such prompt comes up and the app reports error on every contact api. The error name is <code>Not Allowed</code>. Intuitively, there is an error with the permissions.</p>
+
+<h2>Asking for Permission, Take two</h2>
+
+<p>The fix is a simple one, all it requieres is that the app manifest contain the following</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;type&quot;: &quot;privileged&quot;
+</code></pre></div>
+<p>Here&#39;s the explanation. The contact API is a <code>priviledged</code> API. An application can be priveledged when it is installed through the marketplace. But for the system to recognize the application as privileged, we must specify it in the manifest as stated above.</p>
+
+<h2>All&#39;s Well</h2>
+
+<p>As stated in the beginning of the post, <a href="/demos/10/">demo</a> and <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10">source</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

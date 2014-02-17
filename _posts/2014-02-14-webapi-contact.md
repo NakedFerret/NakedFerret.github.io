@@ -133,4 +133,4 @@ A contact can be updated by changing its properties and calling `mozContacts.sav
 
 > *Note:* there is currently a permissions error with the demo, I'm trying to fix it and will update this post in the future
 
-[Try the demo](/demos/10/) (although it can only be tested in the simulator) and/or check out the [source code](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10).
+> *Update:* [The working demo is here](/demos/10/) (it can only be tested in the simulator). [Source here](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10).

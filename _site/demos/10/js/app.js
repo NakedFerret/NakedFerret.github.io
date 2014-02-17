@@ -124,12 +124,144 @@ function connectButton(btnSelector, params){
 // Contact API
 function prepareContactDemo() {
 
-    // Add some dummy contacts
-    createAndSaveContact("Mary", "Jane");
-    createAndSaveContact("John", "Doe");
-    createAndSaveContact("Mary", "Poppins");
-    createAndSaveContact("Jogi", "Bear");
-    createAndSaveContact("Gerald", "Johanssen");
+    document.querySelector("#btn-contact-create").addEventListener('click', function() {
+	// Add some dummy contacts
+	createAndSaveContact("Mary", "Jane");
+	createAndSaveContact("John", "Doe");
+	createAndSaveContact("Mary", "Poppins");
+	createAndSaveContact("Jogi", "Bear");
+	createAndSaveContact("Gerald", "Johanssen");
+    });
+
+    document.querySelector("#btn-contact-find").addEventListener('click', function() {
+	var options = {
+	    filterValue : "John",
+	    filterBy    : ["givenName"],
+	    filterOp    : "contains",
+	    filterLimit : 1
+	}
+
+	var search = navigator.mozContacts.find(options);
+
+	search.onsuccess = function() {
+	    if (search.result.length === 1) {
+		var person = search.result[0];
+		var firstName = person.givenName[0];
+		var lastName = person.familyName[0];
+		console.log("Found:" + firstName + " " + lastName);
+	    } else {
+		console.log("Sorry, there is no such contact.")
+	    }
+	}
+
+	search.onerror = function() {
+	    console.error("Search failed");
+	}
+    });
+
+    document.querySelector("#btn-contact-update").addEventListener('click', function() {
+
+	var updateContact = function(contact) {
+
+	    var updateRequest = navigator.mozContacts.save(contact); 
+
+	    updateRequest.onsuccess = function() {
+		console.log("contact #" + contact.id + " updated");
+	    };
+
+	    updateRequest.onerror = function() {
+		console.error("could not update contact #" + contact.id);
+	    };
+	};
+
+
+	var options = {
+	    filterValue : "John",
+	    filterBy    : ["givenName"],
+	    filterOp    : "contains",
+	    filterLimit : 1
+	}
+
+	var search = navigator.mozContacts.find(options);
+
+	search.onsuccess = function() {
+	    if (search.result.length === 1) {
+		var person = search.result[0];
+
+		// Change last name to Mathews
+		person.familyName[0] = "Mathews";
+
+		updateContact(person)
+	    } else {
+		console.log("Sorry, there is no such contact.")
+	    }
+	}
+
+	search.onerror = function() {
+	    console.error("Search failed");
+	}
+
+	
+    });
+
+    
+    document.querySelector("#btn-contact-delete").addEventListener('click', function() {
+
+	var deleteContact = function(contact) {
+
+	    var deleteRequest = navigator.mozContacts.remove(contact); 
+
+	    deleteRequest.onsuccess = function() {
+		console.log("contact #" + contact.id + " removed");
+	    };
+
+	    deleteRequest.onerror = function() {
+		console.error("could not remove contact #" + contact.id);
+	    };
+	};
+
+
+	var options = {
+	    filterValue : "John",
+	    filterBy    : ["givenName"],
+	    filterOp    : "contains",
+	    filterLimit : 1
+	}
+
+	var search = navigator.mozContacts.find(options);
+
+	search.onsuccess = function() {
+	    if (search.result.length === 1) {
+		var person = search.result[0];
+
+		// Change last name to Mathews
+		person.familyName[0] = "Mathews";
+
+		deleteContact(person)
+	    } else {
+		console.log("Sorry, there is no such contact.")
+	    }
+	}
+
+	search.onerror = function() {
+	    console.error("Search failed");
+	}
+	
+    });
+
+    document.querySelector("#btn-contact-clear").addEventListener('click', function() {
+
+	var clearRequest = navigator.mozContacts.clear();
+
+	clearRequest.onsuccess = function () {
+	    console.log('All contacts have been removed.');
+	}
+
+	clearRequest.onerror = function () {
+	    console.error('Contacts were not cleared');
+	}
+    });
+
 }
 
 function createAndSaveContact(firstName, lastName) {
