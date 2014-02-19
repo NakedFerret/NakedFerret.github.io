@@ -1,0 +1,92 @@
+/* Make the application fill up the screen space */
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+
+}
+
+#index {
+    height: 100%;
+}
+
+/* Make the sections fill up the space */
+section[role="region"] {
+    background: #fff;
+    height: 100%;
+}
+
+/* Decrease the font size */
+html {
+    font-size: 62.5%;
+}
+
+/* animations that control the sections */
+[data-position="right"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    z-index: 15;
+    z-index: 100; /* -> drawer */
+}
+section[role="region"][data-position="right"] {
+    position: absolute;
+}
+[data-position="right"].current {
+    animation: rightToCurrent 0.4s forwards;
+    -webkit-animation: rightToCurrent 0.4s forwards;
+}
+[data-position="right"].right {
+    animation: currentToRight 0.4s forwards;
+    -webkit-animation: currentToRight 0.4s forwards;
+}
+[data-position="current"].left {
+    animation: currentToLeft 0.4s forwards;
+    -webkit-animation: currentToLeft 0.4s forwards;
+}
+[data-position="current"].current {
+    animation: leftToCurrent 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+
+/* Hide Scrollbar. Apply .scrollable to long sections */
+html {
+    overflow: hidden;
+}
+
+.scrollable {
+  overflow: auto;
+  height: 100%;
+  padding: 1rem 1rem 0 2rem;
+}
+
+[role="main"] {
+    padding: 1rem 1rem 0 1rem;
+}
+
+/* Placement for confirm dialog */
+
+[data-position="back"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0;
+}
+[data-position="back"].fade-in {
+    z-index: 120;
+    animation: fadeIn 0.2s forwards;
+    -webkit-animation: fadeIn 0.2s forwards;
+}
+[data-position="back"].fade-out {
+    animation: fadeOut 0.2s forwards;
+    -webkit-animation: fadeOut 0.2s forwards;
+}
+
+
