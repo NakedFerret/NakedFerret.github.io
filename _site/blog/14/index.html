@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>BuildingBlocks: Status</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>BuildingBlocks: Status</h2>
+    <p class="meta">19 Feb 2014</p>
+  </div>
+   <p>The Contacts part of the API Showcase application does not show a lot of information to the user. All the information is displayed in the console. A good way to remedy is to use the <a href="http://buildingfirefoxos.com/building-blocks/status.html">Status</a> building block.</p>
+
+<h2>The Simplest</h2>
+
+<p>This is by far the simplest building blocks to use by virtue of the implementation of the building blocks demo (<a href="https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip">download here</a>). In order to take advantage of this, simply copy the following from the demo </p>
+
+<ul>
+<li><code>style/status</code></li>
+<li><code>status.css</code></li>
+<li><code>js/status.js</code></li>
+</ul>
+
+<p>and import it in your app</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">defer</span> <span class="na">src=</span><span class="s">&quot;js/status.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;css/status.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</code></pre></div>
+
+<p>To use, simply call <code>utils.status.show(message)</code>. <code>message</code> can be a string or HTML.</p>
+
+<h2>Thats cool, but how does it work?</h2>
+
+<p>To satisfy my curiosity I took a peek at the contents of <code>status.js</code>. It works as follows. The <code>status</code> object keeps track of 4 variables</p>
+
+<ul>
+<li><code>DISPLAYED_TIME</code> : default time to show the status, in milliseconds</li>
+<li><code>section</code> : the HTML element representing a status. Looks like</li>
+</ul>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;status&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>The Alarm is set. Nighty night<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/section&gt;</span>
+</code></pre></div>
+
+<ul>
+<li><code>content</code> : The HTML element representing the message contents</li>
+<li><code>timeoutID</code> : used to hide the status</li>
+</ul>
+
+<p>The library is auto initialized, and at this time <code>section</code> is created. The library listens for <code>animationend</code> events on the <code>section</code>, and the listeners are attached at this time also.</p>
+
+<p>The only function the user should use is <code>show()</code>. It takes two parameters <code>message</code> and <code>duration</code>. The <code>message</code>, as explained above, can be a string or HTML. <code>duration</code> is specified in milliseconds and is optional ( the library will use <code>DISPLAYED_TIME</code> instead ). If a status is already shown, it will change the contents, or else it will display a new one. In either case, it will set a timeout to hide the status.</p>
+
+<p>As a little bonus, the library emits <code>status-showed</code> and <code>status-hidden</code> events should the application want to know coordinate with the status.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>The status was used in the demos, as described in the beginning of the post, to give the user feedback about the Contact API calls. The demo is available <a href="/demos/12/">here (does not work in browsers)</a> and the <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/12">source is on github</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
