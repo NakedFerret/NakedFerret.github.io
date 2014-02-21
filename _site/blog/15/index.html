@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Submitting a Firefox OS bug</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>Submitting a Firefox OS bug</h2>
+    <p class="meta">20 Feb 2014</p>
+  </div>
+   <p>This post documents my experience submitting a bug report to the Firefox OS project. The bug resides <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=975241">here</a>. Hopefully it&#39;s not a duplicate (I searched for a while), and hopefully it will benefit the project in the long run.</p>
+
+<h2>Stumbling on a bug</h2>
+
+<p>I found the bug while messing around with the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Contacts">Contact API</a>. When an application wishes to use the Contact API, the system will present a user with a prompt. The user can choose to deny or allow the application access to the API. The prompt looks like the one below.</p>
+
+<p><img src="/img/posts/15/prompt.png" alt="A prompt with the options &quot;deny&quot; or &quot;allow&quot;"></p>
+
+<p>I unchecked the &quot;Remember my choice&quot; option, pressed &quot;Deny&quot;, and nothing happened. Not the gravest bug, but a bug nonetheless.</p>
+
+<h2>Reproducing</h2>
+
+<p>Now, I needed to create discrete steps the Firefox OS developers could take to reproduce the bug. What I described above is pretty good, but it could be more concise and clearer.</p>
+
+<p>First of all, the app that I was testing contained 300 lines of javascript and had some semi complex UI interaction. The developers should not have to search through all of that to find the single line that causes the bug. I created a much smaller application (<a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/13">source here</a>) that the developers could test. </p>
+
+<p>Then, I created the following steps to reproduce the bug</p>
+
+<ol>
+<li>Install the provided app</li>
+<li>Open provide app</li>
+<li>Click on the button labeled &quot;Ask for permission&quot;</li>
+<li>Uncheck &quot;Remember Choice&quot;</li>
+<li>Click &quot;Deny&quot;</li>
+</ol>
+
+<p>Which is more concise and much clearer than the paragraph I had before. I was ready to submit the bug report. </p>
+
+<h2>Submitting</h2>
+
+<p>Mozilla uses their own <a href="https://bugzilla.mozilla.org/">bug management system</a>, called Bugzilla. Submitting a bug is relatively simple, and the system gives you suggestions for other bugs that might be duplicates. Of course, the suggestions are naive and I took the time to search for similar bugs using any other keyword I could think of.</p>
+
+<p>The system asks the three main questions any bug report should answer</p>
+
+<ul>
+<li>What did you do?</li>
+<li>What happened?</li>
+<li>What should have happened?</li>
+</ul>
+
+<p>The system then takes the answers to these questions and automatically formats the report. It also accepts attachements and provides a link to <a href="https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines">documentation</a> on how to write bug reports. The process was relatively painless and simple.</p>
+
+<h2>What&#39;s next?</h2>
+
+<p>Well, the bug will get marked as either a <code>duplicate</code> or <code>new</code>, which means that the bug is confirmed by a developer. Should the bug get confirmed, the developer will mark the severity of the bug, i.e. put on the backlog or fixed before the release, etc.</p>
+
+<p>If the developers deem the bug an easy fix, they will assign a mentor. Mentored bugs are a great opportunity for community members to get involved in the project. I believe this system creates a really strong welcoming atmosphere. There&#39;s a nice little website called <a href="http://www.joshmatthews.net/bugsahoy/">Bugs Ahoy!</a> that contains a list of mentored bugs.</p>
+
+<h2>What could have been done better?</h2>
+
+<p>The biggest concern in my mind is that the bug could have already been fixed in one of the latest developmental snapshots. I did not get a chance to test the bug in a dev release of Firefox OS (for numerous reasons). </p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "Contact Bug",
+  "description": "App that contains examples of API usage",
+  "launch_path": "/index.html",	    
+  "version": "v9.0",
+  "type": "privileged",
+  "permissions": {
+    "contacts": {
+      "access": "readwrite",
+      "description": "Needed to read, create, and modify contacts"
+    }
+  }
+}
