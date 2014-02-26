@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>WebAPI: IndexedDB Part1</title>
+        <title>WebAPI: IndexedDB Part2</title>
         <meta name="viewport" content="width=device-width">
 
         <!-- syntax highlighting CSS -->
@@ -29,85 +29,144 @@
 
 <div class="post">
   <div class="title">
-    <h1>WebAPI: IndexedDB Part1</h2>
-    <p class="meta">24 Feb 2014</p>
+    <h1>WebAPI: IndexedDB Part2</h2>
+    <p class="meta">25 Feb 2014</p>
   </div>
-   <p>In this post, I will introduce <a href="https://developer.mozilla.org/en-US/docs/IndexedDB">IndexedDB</a>. As the name suggests, it is a lightweight database. It&#39;s not a relational database however, it&#39;s a key-value database. It maps keys to javascript objects (or primitives). The API is a little more difficult to grasp than the other API&#39;s offered by Firefox OS so this post is broken up into two parts. The first part will talk about how to create the structure of the database, and how to open and close the database.</p>
+   <p>In this post, we will cover how to add, get, update, and delete records from <a href="https://developer.mozilla.org/en-US/docs/IndexedDB">IndexedDB</a>.</p>
 
-<h2>The Object Store</h2>
+<h2>Transactions</h2>
 
-<p>Instead of containing tables, IndexedDB databases contain object stores. The object stores provide the structure to the database. Object stores map keys to objects, and allow indexes to be built on the property of an object. Indexes will be covered in the next section.</p>
+<p>All of these operations are done through the respective methods in the object store interface. The only way to access an object store is through transactions.</p>
 
-<p>The keys can be supplied by using <code>keyPath</code>, <code>autoIncrement</code>, both, or neither. <code>keyPath</code> specifies which value in the object is the key. <code>autoIncrement</code> automatically creates the key when an item is stored. Here are the implications of using each key strategy.</p>
+<p>IndexedDB is a transactional database, so any changes to the database are passed through a transaction context. Transactions take a list of object stores affected by the transaction and a mode. The available modes are</p>
 
 <ul>
-<li><code>keyPath</code> : javascript objects only (no primitives). objects must have property with same name as keyPath.</li>
-<li><code>autoIncrement</code> : any value (objects included). Keys are auto generated. Keys can optionally be specified</li>
-<li><code>both</code> : javascript objects only (no primitives). Key is generated and saved to property whose name matches the keyPath. If a value exists already, that will be the key.</li>
-<li><code>neither</code> : any value (objects included). Key must be supplied when adding new value</li>
+<li><code>readonly</code> : only allows the user can only read from the object stores</li>
+<li><code>readwrite</code> : the user may read, update, and delete objects from the stores</li>
+<li><code>versionchange</code> : allows the user to change the object stores in the database</li>
 </ul>
 
-<p>These key strategies apply to each individual object storage. This allows some flexibility in degining the sturucture of a database because it&#39;s possible to have a database that takes advantage of all these strategies.</p>
+<p>There are specific call backs when a transactions completes or when it encounters errors. They are <code>oncomplete</code> and <code>onerror</code>, respectively.</p>
 
-<h2>Creating the object stores</h2>
+<h2>Adding</h2>
 
-<p>The object stores are created using <code>createObjectStore()</code>. The first parameter is the name of the object store and the second paramters is an object that specifies which strategy to use. The following example assumes we have a database openened and ready to be modified. We will cover how to accomplish this in the next section.</p>
+<p>To add, simply start a transaction in <code>readwrite</code> mode and call the <code>add()</code> method on the object store.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// db == open datbase</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="c1">// Uses the keyPath strategy</span>
-<span class="c1">// Keys is stored in object.taskId</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">keyPath</span><span class="o">:</span> <span class="s2">&quot;taskId&quot;</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
 
-<span class="c1">// Uses the autoIncrement strategy</span>
-<span class="c1">// Key is automatically created</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">autoIncrement</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="kd">var</span> <span class="nx">addRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="nx">addRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual object added</span>
+<span class="p">}</span>
+<span class="nx">addRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual object NOT added</span>
+<span class="p">}</span>
 
-<span class="c1">// Uses the &quot;both&quot; strategy</span>
-<span class="c1">// Key is automatically created and stored in object.taskId.</span>
-<span class="c1">// If object.taskId has a value, that will be used instead of being created</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">autoIncrement</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">keyPath</span><span class="o">:</span> <span class="s2">&quot;taskId&quot;</span> <span class="p">});</span>
+<span class="c1">// Optionally add other objects</span>
 
-<span class="c1">// Uses the &quot;neither&quot; strategy</span>
-<span class="c1">// Keys have to be given when adding objects to the store</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">);</span>
-</code></pre></div>
-
-<h2>Handling the Database</h2>
-
-<p>Once the structure is designed, the database can be created. There is no explicit create method in IndexedDB. Instead, the database is created when it is first opened. To open the database, simply call <code>indexedDB.open()</code></p>
-
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">indexedDB</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;MyTestDatabase&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</code></pre></div>
-
-<p>The first argument is the name of the database and the second argument is the database version. When the database version changes, the system will call <code>onupgradeneeded()</code>. The system will also call <code>onupgradeneeded()</code> when the database needs to be created.</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="nx">request</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span> 
-  <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
-  <span class="c1">// Create an objectStore for this database</span>
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">oncomplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// All objects stored</span>
+<span class="p">};</span>
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// No objects stored</span>
 <span class="p">};</span>
 </code></pre></div>
 
-<p>It&#39;s important to note that any structure changes to the database can only happen in <code>onupgradeneeded()</code></p>
+<h2>Get</h2>
 
-<p>Opening the database returns a <code>DOMRequest</code> object. We can grab the database connection from the result or access any errors in the following manner</p>
+<p>When getting an object, the transaction can be opened in <code>readonly</code> mode if no changes to the object are intended. The <code>get()</code> is responsible for retrieving the objects and takes the key of the desired object as a parameter. The object will be returned as a result to the <code>onsuccess</code> function provided. Instead of throwing an error, the result will be undefined if the object could not be found.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">db</span><span class="p">;</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">errorCode</span><span class="p">);</span>
-<span class="p">};</span>
-<span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">db</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readonly&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">objKey</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">objKey</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">result</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="c1">// Object found</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Object not found</span>
+  <span class="p">}</span>
 <span class="p">};</span>
 </code></pre></div>
 
-<p>Closing the database is not required, but it is good practice. Use <code>db.close()</code></p>
+<h2>Update</h2>
+
+<p>Updating objects is accomplished through the <code>put()</code> method. If the object being updated is not using the <code>keyPath</code> strategy, the key must be supplied. The transaction must be used in <code>readwrite</code> mode.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="kd">var</span> <span class="nx">updateRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="c1">// If not using the keyPath strategy, pass a key</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="kd">var</span> <span class="nx">objKey</span> <span class="o">=</span> <span class="p">..;</span>
+<span class="kd">var</span> <span class="nx">updateRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">objKey</span><span class="p">);</span>
+
+<span class="nx">updateRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual object added</span>
+<span class="p">}</span>
+<span class="nx">updateRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual object NOT added</span>
+<span class="p">}</span>
+
+<span class="c1">// Optionally update other objects</span>
+
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">oncomplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// All objects updated</span>
+<span class="p">};</span>
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// No objects updated</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<h2>Delete</h2>
+
+<p>Deleting objects is accomplished using the <code>delete()</code> command. It accepts a key for the desired object to release. The transaction must be openend in <code>readwrite</code> mode.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">objKey</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="kd">var</span> <span class="nx">deleteRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">objKey</span><span class="p">);</span>
+<span class="nx">deleteRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual object deleted</span>
+<span class="p">};</span>
+<span class="nx">deleteRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Individual delete object NOT deleted</span>
+<span class="p">};</span>
+
+<span class="c1">// Optionally delete other objects</span>
+
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">oncomplete</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// All objects deleted</span>
+<span class="p">}</span>
+<span class="nx">transaction</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// No objects deleted</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <h2>Demo</h2>
 
-<p>The demo for this post focuses only on opening and closing the database. It creates an object store but does not add, remove, or get any items from it. All of that will be covered in the next post. The demo is <a href="/demos/15/">here (may work on modern browsers)</a> and, of course, <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/15">the source</a>.
-)</p>
+<p>The demo stores the following object, called <code>Person</code></p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The object store holding all the <code>Person</code> objects uses the <code>keyPath</code> strategy. <a href="/demos/16/">Try it here (FXOS only)</a> and the source is <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/16">here</a>.</p>
 
 </div>
 
