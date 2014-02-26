@@ -2,7 +2,7 @@
 layout: post
 title:  "WebAPI: IndexedDB Part2"
 date:   2014-02-25 12:00:00
-permalink: /blog/17/
+permalink: /blog/18/
 ---
 
 In this post, we will cover how to add, get, update, and delete records from [IndexedDB](https://developer.mozilla.org/en-US/docs/IndexedDB).

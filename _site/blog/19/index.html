@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>WebAPI: IndexedDB Part3</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>WebAPI: IndexedDB Part3</h2>
+    <p class="meta">26 Feb 2014</p>
+  </div>
+   <p>In this post we will wrap up <a href="https://developer.mozilla.org/en-US/docs/IndexedDB">IndexedDB</a> by exploring cursors and indexes. Make sure you read <a href="/blog/17/">part 1</a> and <a href="/blog/18/">part 2</a>.</p>
+
+<h2>Cursors</h2>
+
+<p>A cursor allows an app to iterate through all the results of a query in a manner that does not block the main UI thread. Opening a cursor is simple, just call <code>openCursor()</code> on an object store. It returns an <a href="https://developer.mozilla.org/en-US/docs/Web/API/IDBRequest">IDBRequest</a> object. The result of the request will be the cursor. The object retrieved by the cursor is in <code>cursor.value</code>. To retrieve the next object call <code>cursor.continue()</code> and the function will be called again recursively. The function will be called one last time when there are no more results to the query. A common flow is as follows</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// open the object store in a transaction</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">().</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cursor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// retrieved object in cursor.value</span>
+    <span class="nx">cursor</span><span class="p">.</span><span class="k">continue</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// No more object left in the query</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// handle transaction success, error</span>
+</code></pre></div>
+
+<h2>Range and Direction</h2>
+
+<p>It&#39;s possible to limit the objects returned by a cursor. You can create an <code>IDBKeyRange</code> and pass it as a parameter to the cursor.</p>
+
+<ul>
+<li><code>lowerBound()</code> : match anything past the provided key. Optionally pass <code>true</code> to exclude the given key in the results</li>
+<li><code>upperBound()</code> : match anything up to the provided key. Optionally pass <code>true</code> to exclude the given key in the results</li>
+<li><code>bound()</code> : provide two keys to get the results between the two keys. The default includes the keys in the results. To exclude one key but include the other, pass <code>true</code> and <code>false</code>, respectively. To exclude both keys, pass two <code>true</code>&#39;s</li>
+</ul>
+
+<p>Here are a couple of examples to better illustrate the above. The examples assume the object store uses a string value as a key.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Match anything past &quot;Bill&quot;, including &quot;Bill&quot;</span>
+<span class="kd">var</span> <span class="nx">lowerBoundKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">lowerBound</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">);</span>
+
+<span class="c1">// Match anything past &quot;Bill&quot;, but don&#39;t include &quot;Bill&quot;</span>
+<span class="kd">var</span> <span class="nx">lowerBoundOpenKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">lowerBound</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// Match anything up to, but not including, &quot;Donna&quot;</span>
+<span class="kd">var</span> <span class="nx">upperBoundOpenKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">upperBound</span><span class="p">(</span><span class="s2">&quot;Donna&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// Match anything between &quot;Bill&quot; and &quot;Donna&quot;, but not including &quot;Donna&quot;</span>
+<span class="kd">var</span> <span class="nx">boundKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">bound</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="s2">&quot;Donna&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">(</span><span class="nx">boundKeyRange</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="p">...;</span>
+</code></pre></div>
+
+<h2>Indexes</h2>
+
+<p>Indexes allow the user to search through the object store on properties besides the key. This does not work on object stores that contain values instead of javscript objects. The parameter for creating an index are the name of the index and the name of the property to build the index on. </p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">openDBRequest</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="nx">openDBRequest</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">// create the object stores</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="c1">// create the &quot;name&quot; index on the &quot;firstName&quot; property</span>
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;firstName&quot;</span><span class="p">);</span>
+
+<span class="c1">// Finish setting up db</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>You can also use indexes to apply constraints on the data. This can be achieved using the <code>unique</code> optional parameter.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// Users should not have the same email address</span>
+<span class="c1">// Create an index called &quot;email&quot; on the &quot;email&quot; property of the objects</span>
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>You can use the indexes through <code>get()</code>, simply pass the value of the property you are looking for. <code>get()</code> will return the object with the lowest key value. To run through all the matches, you can get a cursor through <code>openCursor()</code></p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// open the object store in a transaction</span>
+<span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="c1">// Returns the first result</span>
+<span class="nx">index</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;Donna&quot;</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">donna</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Returns all the results</span>
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">().</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cursor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">value</span>
+    <span class="nx">cursor</span><span class="p">.</span><span class="k">continue</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// No more object left in the query</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// handle transaction success, error</span>
+</code></pre></div>
+
+<h2>Demo</h2>
+
+<p>The demo does not take advantage of the key ranges, but it creates an index on the name property of the <code>Person</code> object. Try the <a href="/demos/17/">demo here (FXOS only)</a> and find the source <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/17">here</a>.</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
