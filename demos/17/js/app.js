@@ -453,7 +453,6 @@ function dataURLToBlob(dataURL) {
 
 
 // IndexedDB
-
 function prepareIndexedDBDemo() {
 
 		var dbName = "TestDB";
@@ -655,6 +654,5 @@ function prepareIndexedDBDemo() {
 				db = undefined;
 				utils.status.show("Database closed");
 		});
-		
 		
 }

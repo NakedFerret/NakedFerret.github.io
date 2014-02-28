@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>IndexedDB Caveat</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>IndexedDB Caveat</h2>
+    <p class="meta">27 Feb 2014</p>
+  </div>
+   <p>This post will explain a caveat of the IndexedDB api that I have encountered and my work around. </p>
+
+<h2>The Caveat</h2>
+
+<p><a href="/blog/17/">Part 1</a> of the IndexedDB posts explains that it&#39;s possible to store objects using a <code>keyPath</code> and <code>autoIncrement</code>. The documentation states that the key will be stored in <code>object[keyPath]</code> if it doesn&#39;t exists already. This is not true. Examine the following code</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// open a transaction and access the object store</span>
+<span class="kd">var</span> <span class="nx">objStore</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// object store has keyPath and autoIncrement</span>
+<span class="c1">// obj = object with keyPath undefined</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">objStore</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">keyPath</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>This will add an object and print the value of the objects <code>keyPath</code>. When running the code, it prints <code>undefined</code>. This is against what the documentation states, but there is an easy work around. It is this utility function.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addObject</span><span class="p">(</span><span class="nx">objectStore</span><span class="p">,</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">objectStore</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
+
+  <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">keyPath</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">keyPath</span><span class="p">;</span>
+    <span class="nx">object</span><span class="p">[</span><span class="nx">keyPath</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in <code>event.target.source.keyPath</code>, and the new key is the <code>result</code>. With this function, the code changes only slighty but works as expected.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="c1">// open a transaction and access the object store</span>
+<span class="kd">var</span> <span class="nx">objStore</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// object store has keyPath and autoIncrement</span>
+<span class="c1">// obj = object with keyPath undefined</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="nx">addObject</span><span class="p">(</span><span class="nx">objStore</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
+</code></pre></div>
+
+<p>After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the <code>request.onsuccess</code> call back. The function could be modified to receive an optional callback as a paremeter to remedy this.</p>
+
+<h2>Demo</h2>
+
+<p>The demo of the code using this functionality is <a href="/demos/18/">here</a>. It behaves the same way but the code is a little clearer and more straighforward. <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18">Source Code</a></p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
