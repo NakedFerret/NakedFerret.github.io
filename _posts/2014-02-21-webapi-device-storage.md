@@ -15,7 +15,7 @@ Firefox OS divides the storage into the following storage areas.
 * `apps`: This storage area is used to store the user data needed by apps. Only available for certified application only.
 * `music`: This is the storage area where music and sounds are stored.
 * `pictures`: This is the storage area where pictures are stored.
-* `sdcard`: This is the storage area that give access to the device's SDCard.
+* `sdcard`: This is the storage area that give access to the device's SD Card.
 * `videos`: This is the storage area where videos are stored.
 
 To access a certain storage area, use the `navigator.getDeviceStorage()` method. Also, each storage area requires explicit permissions. For example, to access the `sdcard` and `videos` areas, the following is needed in the manifest
@@ -84,7 +84,7 @@ The information above is intuitive but worth mentioning.
 
 ## Retrieving a file
 
-Retrieving a file is much simpler, simple provide the filename to `DeviceStorage.get()`.
+Retrieving a file is much simpler, simple provide the file name to `DeviceStorage.get()`.
 
 {% highlight javascript %}
 var sdcard = navigator.getDeviceStorage("sdcard");

@@ -56,7 +56,7 @@ objStr.openCursor(boundKeyRange).onsuccess = ...;
 
 ## Indexes
 
-Indexes allow the user to search through the object store on properties besides the key. This does not work on object stores that contain values instead of javscript objects. The parameter for creating an index are the name of the index and the name of the property to build the index on. 
+Indexes allow the user to search through the object store on properties besides the key. This does not work on object stores that contain values instead of javascript objects. The parameter for creating an index are the name of the index and the name of the property to build the index on. 
 
 {% highlight javascript %}
 var openDBRequest = ...;
@@ -108,6 +108,6 @@ objStr.openCursor().onsuccess = function() {
 
 ## Demo
 
-The demo does not take advantage of the key ranges, but it creates an index on the name property of the `Person` object. Try the [demo here (FXOS only)](/demos/17/) and find the source [here](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/17).
+The demo does not take advantage of the key ranges, but it creates an index on the name property of the `Person` object. Try the [demo here (Firefox OS only)](/demos/17/) and find the source [here](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/17).
 
 

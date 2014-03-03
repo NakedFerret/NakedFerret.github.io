@@ -9,7 +9,7 @@ This post will show one way to implement the [Confirm](http://buildingfirefoxos.
 
 ## Importing
 
-Like all buildingblocks components, the `Confirm` dialog must be imported. Download the [building blocks sample application](https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip), and copy
+Like all BuildingBlocks components, the `Confirm` dialog must be imported. Download the [building blocks sample application](https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip), and copy
 
 * `style/confirm.css`
 * `style/confirm/`

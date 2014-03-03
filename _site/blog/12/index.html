@@ -68,18 +68,18 @@
 <li><code>createonly</code></li>
 </ul>
 
-<p>Looking at the <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions#Hosted_app_and_privileged_app_permissions">permissions page</a> again, you can notice that the <code>Default Granted</code> column has the value <code>Prompt</code> for the <code>contacts</code> api. This means that the user will be given a prompt before the appliction is given access to the api. The user can deny or allow the app the access to the api at this prompt.</p>
+<p>Looking at the <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions#Hosted_app_and_privileged_app_permissions">permissions page</a> again, you can notice that the <code>Default Granted</code> column has the value <code>Prompt</code> for the <code>contacts</code> API. This means that the user will be given a prompt before the app is given access to the API. The user can deny or allow the app the access to the API at this prompt.</p>
 
-<p>However, when we test the app, no such prompt comes up and the app reports error on every contact api. The error name is <code>Not Allowed</code>. Intuitively, there is an error with the permissions.</p>
+<p>However, when we test the app, no such prompt comes up and the app reports error on every contact API. The error name is <code>Not Allowed</code>. Intuitively, there is an error with the permissions.</p>
 
 <h2>Asking for Permission, Take two</h2>
 
-<p>The fix is a simple one, all it requieres is that the app manifest contain the following</p>
+<p>The fix is a simple one, all it requires is that the app manifest contain the following</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;type&quot;: &quot;privileged&quot;
 </code></pre></div>
-<p>Here&#39;s the explanation. The contact API is a <code>priviledged</code> API. An application can be priveledged when it is installed through the marketplace. But for the system to recognize the application as privileged, we must specify it in the manifest as stated above.</p>
+<p>Here&#39;s the explanation. The contact API is a <code>privileged</code> API. An application can be privileged when it is installed through the marketplace. But for the system to recognize the application as privileged, we must specify it in the manifest as stated above.</p>
 
-<h2>All&#39;s Well</h2>
+<h2>All is Well</h2>
 
 <p>As stated in the beginning of the post, <a href="/demos/10/">demo</a> and <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/10">source</a>.</p>
 

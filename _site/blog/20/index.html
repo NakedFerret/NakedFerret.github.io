@@ -32,7 +32,7 @@
     <h1>IndexedDB Caveat</h2>
     <p class="meta">27 Feb 2014</p>
   </div>
-   <p>This post will explain a caveat of the IndexedDB api that I have encountered and my work around. </p>
+   <p>This post will explain a caveat of the IndexedDB API that I have encountered and my work around. </p>
 
 <h2>The Caveat</h2>
 
@@ -62,7 +62,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<p>The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in <code>event.target.source.keyPath</code>, and the new key is the <code>result</code>. With this function, the code changes only slighty but works as expected.</p>
+<p>The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in <code>event.target.source.keyPath</code>, and the new key is the <code>result</code>. With this function, the code changes only slightly but works as expected.</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="c1">// open a transaction and access the object store</span>
 <span class="kd">var</span> <span class="nx">objStore</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// object store has keyPath and autoIncrement</span>
@@ -72,11 +72,11 @@
 <span class="nx">addObject</span><span class="p">(</span><span class="nx">objStore</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
 </code></pre></div>
 
-<p>After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the <code>request.onsuccess</code> call back. The function could be modified to receive an optional callback as a paremeter to remedy this.</p>
+<p>After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the <code>request.onsuccess</code> call back. The function could be modified to receive an optional callback as a parameter to remedy this.</p>
 
 <h2>Demo</h2>
 
-<p>The demo of the code using this functionality is <a href="/demos/18/">here</a>. It behaves the same way but the code is a little clearer and more straighforward. <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18">Source Code</a></p>
+<p>The demo of the code using this functionality is <a href="/demos/18/">here</a>. It behaves the same way but the code is a little clearer and more straightforward. <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18">Source Code</a></p>
 
 </div>
 

@@ -101,7 +101,7 @@ Building blocks provides the following transitions to help us make this navigati
 
 * `currentToLeft` : moves the current section off to the left
 * `currentToRight` : same as above but to the right
-* `rightToCurrent` : moves the offscreen section towards the center
+* `rightToCurrent` : moves the off-screen section towards the center
 * `leftToCurrent` : same as above but from the left 
 
 We can use `currentToLeft` and `rightToCurrent` to navigate from the main section to another. Then, we can use `leftToCurrent` and `currentToRight` to bring things back to how they originally were.
@@ -112,7 +112,7 @@ We can easily use these transitions by changing an elements class, and making CS
 
 ## The Javascript
 
-Therefore, when we click a navigation link in our drawer, we will set the class of the current element to `left` and the offscreen section to `current`
+Therefore, when we click a navigation link in our drawer, we will set the class of the current element to `left` and the off-screen section to `current`
 
 {% highlight javascript %}
 document.querySelector('#nav-notify').addEventListener ('click', function () {

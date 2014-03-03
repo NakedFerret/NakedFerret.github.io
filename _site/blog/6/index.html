@@ -32,7 +32,7 @@
     <h1>WebApi: Notification</h2>
     <p class="meta">06 Feb 2014</p>
   </div>
-   <p>This article will show how to use the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications">Notification API</a>. We will be building the app <code>API Showcase</code> through the rest of these series to quickly test each new api. <a href="/demos/04/">Try the demo of version one</a></p>
+   <p>This article will show how to use the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications">Notification API</a>. We will be building the app <code>API Showcase</code> through the rest of these series to quickly test each new API. <a href="/demos/04/">Try the demo of version one</a></p>
 
 <p><em>Note:</em> This is the icon for the new application</p>
 
@@ -73,7 +73,7 @@
 <li><code>lang</code>: language used within notification</li>
 <li><code>body</code>: the body of the notification</li>
 <li><code>tag</code>: An ID that allows a notification to be replaced or removed</li>
-<li><code>icon</code>: the url of the image to use as an icon</li>
+<li><code>icon</code>: the URL of the image to use as an icon</li>
 </ul>
 
 <p>The notifications are displayed as soon as they are created. So all that is required to show a notification is</p>
@@ -92,7 +92,7 @@
 
 <div class="highlight"><pre><code class="javascript"><span class="nx">Notification</span><span class="p">.</span><span class="nx">requestPermission</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">permission</span> <span class="p">)</span> <span class="p">{</span>
 
-    <span class="c1">// Adresses a bug in Opera/Chrome. You can ignore this but it is</span>
+    <span class="c1">// Addresses a bug in Opera/Chrome. You can ignore this but it is</span>
     <span class="c1">// needed to run in some browsers</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span> <span class="k">in</span> <span class="nx">Notification</span><span class="p">))</span> <span class="p">{</span>
         <span class="nx">Notification</span><span class="p">.</span><span class="nx">permission</span> <span class="o">=</span> <span class="nx">permission</span><span class="p">;</span>

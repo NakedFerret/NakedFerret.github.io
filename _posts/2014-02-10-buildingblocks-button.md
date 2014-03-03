@@ -5,7 +5,7 @@ date:   2014-02-10 12:00:00
 permalink: /blog/8/
 ---
 
-Before we keep exploring WebAPI, we can take a moment to build a UI foundation our API Showcase appilication. I [previously mentioned](/blog/2/) Gaia Building Blocks. It's a mini GUI framework for firefox OS. So far, the application only showcases 2 apis: Notification and Alarm. Let's examine the [Button](http://buildingfirefoxos.com/building-blocks/buttons.html) building block
+Before we keep exploring WebAPI, we can take a moment to build a UI foundation our API Showcase app. I [previously mentioned](/blog/2/) Gaia Building Blocks. It's a mini GUI framework for Firefox OS. So far, the application only showcases 2 APIs: Notification and Alarm. Let's examine the [Button](http://buildingfirefoxos.com/building-blocks/buttons.html) building block
 
 ## Downloading 
 

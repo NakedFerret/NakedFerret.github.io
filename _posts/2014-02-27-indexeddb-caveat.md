@@ -5,7 +5,7 @@ date:   2014-02-27 12:00:00
 permalink: /blog/20/
 ---
 
-This post will explain a caveat of the IndexedDB api that I have encountered and my work around. 
+This post will explain a caveat of the IndexedDB API that I have encountered and my work around. 
 
 ## The Caveat
 
@@ -37,7 +37,7 @@ function addObject(objectStore, object) {
 }
 {% endhighlight %}
 
-The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in `event.target.source.keyPath`, and the new key is the `result`. With this function, the code changes only slighty but works as expected.
+The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in `event.target.source.keyPath`, and the new key is the `result`. With this function, the code changes only slightly but works as expected.
 
 {% highlight javascript %}
 // open a transaction and access the object store
@@ -48,8 +48,8 @@ var obj = ...;
 addObject(objStore, obj);
 {% endhighlight %}
 
-After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the `request.onsuccess` call back. The function could be modified to receive an optional callback as a paremeter to remedy this.
+After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the `request.onsuccess` call back. The function could be modified to receive an optional callback as a parameter to remedy this.
 
 ## Demo
 
-The demo of the code using this functionality is [here](/demos/18/). It behaves the same way but the code is a little clearer and more straighforward. [Source Code](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18)
+The demo of the code using this functionality is [here](/demos/18/). It behaves the same way but the code is a little clearer and more straightforward. [Source Code](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18)

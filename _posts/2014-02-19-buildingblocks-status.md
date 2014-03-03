@@ -24,7 +24,7 @@ and import it in your app
 
 To use, simply call `utils.status.show(message)`. `message` can be a string or HTML.
 
-## Thats cool, but how does it work?
+## That's cool, but how does it work?
 
 To satisfy my curiosity I took a peek at the contents of `status.js`. It works as follows. The `status` object keeps track of 4 variables
 
@@ -46,4 +46,4 @@ As a little bonus, the library emits `status-showed` and `status-hidden` events 
 
 ## Wrapping Up
 
-The status was used in the demos, as described in the beginning of the post, to give the user feedback about the Contact API calls. The demo is available [here (does not work in browsers)](/demos/12/) and the [source is on github](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/12).
+The status was used in the demos, as described in the beginning of the post, to give the user feedback about the Contact API calls. The demo is available [here (does not work in browsers)](/demos/12/) and the [source is on Github](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/12).

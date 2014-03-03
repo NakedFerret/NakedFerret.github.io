@@ -5,7 +5,7 @@ date:   2014-02-06 12:00:00
 permalink: /blog/6/
 ---
 
-This article will show how to use the [Notification API](https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications). We will be building the app `API Showcase` through the rest of these series to quickly test each new api. [Try the demo of version one](/demos/04/)
+This article will show how to use the [Notification API](https://developer.mozilla.org/en-US/docs/WebAPI/Using_Web_Notifications). We will be building the app `API Showcase` through the rest of these series to quickly test each new API. [Try the demo of version one](/demos/04/)
 
 _Note:_ This is the icon for the new application
 
@@ -44,7 +44,7 @@ Notifications are created by supplying a title and optionally
 * `lang`: language used within notification
 * `body`: the body of the notification
 * `tag`: An ID that allows a notification to be replaced or removed
-* `icon`: the url of the image to use as an icon
+* `icon`: the URL of the image to use as an icon
 
 The notifications are displayed as soon as they are created. So all that is required to show a notification is
 
@@ -64,7 +64,7 @@ As mentioned before, there is another method to getting the required permissions
 {% highlight javascript %}
 Notification.requestPermission(function( permission ) {
 
-    // Adresses a bug in Opera/Chrome. You can ignore this but it is
+    // Addresses a bug in Opera/Chrome. You can ignore this but it is
 	// needed to run in some browsers
 	if(!('permission' in Notification)) {
 		Notification.permission = permission;

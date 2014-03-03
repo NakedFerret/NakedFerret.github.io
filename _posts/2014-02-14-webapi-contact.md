@@ -64,7 +64,7 @@ And the sort options are
 The two methods to search for contacts are
 
 * `mozContacts.find()`: find a specific list of contacts
-* `mozContacts.getAll()`: retrive all contacts
+* `mozContacts.getAll()`: retrieve all contacts
 
 The `find()` method returns a [DomRequest](https://developer.mozilla.org/en-US/docs/Web/API/DOMRequest) object and can be used as follows
 
@@ -96,7 +96,7 @@ search.onerror = function() {
 }
 {% endhighlight %}
 
-The `getAll()` method is slightly different because if uses a [DomCursor](https://developer.mozilla.org/en-US/docs/Web/API/DOMCursor) instead of a DomRequest to callback the results.
+The `getAll()` method is slightly different because if uses a [DOMCursor](https://developer.mozilla.org/en-US/docs/Web/API/DOMCursor) instead of a DomRequest to callback the results.
 
 {% highlight javascript %}
 var options = {

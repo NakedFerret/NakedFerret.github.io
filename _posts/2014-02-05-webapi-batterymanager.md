@@ -12,7 +12,7 @@ In this post were going to explore the (small) [BatteryManager API](https://deve
 
 * `level`
 * `chargingTime`
-* `discharginTime`
+* `dischargingTime`
 
 The battery manager also dispatches the following events
 

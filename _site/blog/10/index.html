@@ -125,7 +125,7 @@
 <ul>
 <li><code>currentToLeft</code> : moves the current section off to the left</li>
 <li><code>currentToRight</code> : same as above but to the right</li>
-<li><code>rightToCurrent</code> : moves the offscreen section towards the center</li>
+<li><code>rightToCurrent</code> : moves the off-screen section towards the center</li>
 <li><code>leftToCurrent</code> : same as above but from the left </li>
 </ul>
 
@@ -137,7 +137,7 @@
 
 <h2>The Javascript</h2>
 
-<p>Therefore, when we click a navigation link in our drawer, we will set the class of the current element to <code>left</code> and the offscreen section to <code>current</code></p>
+<p>Therefore, when we click a navigation link in our drawer, we will set the class of the current element to <code>left</code> and the off-screen section to <code>current</code></p>
 
 <div class="highlight"><pre><code class="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-notify&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#notification&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span><span class="p">;</span>

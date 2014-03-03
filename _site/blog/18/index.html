@@ -52,10 +52,10 @@
 
 <p>To add, simply start a transaction in <code>readwrite</code> mode and call the <code>add()</code> method on the object store.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objStrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objStrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objStrName</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="kd">var</span> <span class="nx">addRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
@@ -80,10 +80,10 @@
 
 <p>When getting an object, the transaction can be opened in <code>readonly</code> mode if no changes to the object are intended. The <code>get()</code> is responsible for retrieving the objects and takes the key of the desired object as a parameter. The object will be returned as a result to the <code>onsuccess</code> function provided. Instead of throwing an error, the result will be undefined if the object could not be found.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objStrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readonly&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objStrName</span><span class="p">],</span> <span class="s2">&quot;readonly&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objStrName</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">objKey</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="nx">objStr</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">objKey</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
@@ -99,10 +99,10 @@
 
 <p>Updating objects is accomplished through the <code>put()</code> method. If the object being updated is not using the <code>keyPath</code> strategy, the key must be supplied. The transaction must be used in <code>readwrite</code> mode.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objStrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objStrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objStrName</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="kd">var</span> <span class="nx">updateRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
@@ -130,12 +130,12 @@
 
 <h2>Delete</h2>
 
-<p>Deleting objects is accomplished using the <code>delete()</code> command. It accepts a key for the desired object to release. The transaction must be openend in <code>readwrite</code> mode.</p>
+<p>Deleting objects is accomplished using the <code>delete()</code> command. It accepts a key for the desired object to release. The transaction must be opened in <code>readwrite</code> mode.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objstrName</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">objStrName</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objstrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objstrName</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">transaction</span><span class="p">([</span><span class="nx">objStrName</span><span class="p">],</span> <span class="s2">&quot;readwrite&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">objectStore</span><span class="p">(</span><span class="nx">objStrName</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">objKey</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="kd">var</span> <span class="nx">deleteRequest</span> <span class="o">=</span> <span class="nx">objStr</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">objKey</span><span class="p">);</span>
@@ -166,7 +166,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<p>The object store holding all the <code>Person</code> objects uses the <code>keyPath</code> strategy. <a href="/demos/16/">Try it here (FXOS only)</a> and the source is <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/16">here</a>.</p>
+<p>The object store holding all the <code>Person</code> objects uses the <code>keyPath</code> strategy. <a href="/demos/16/">Try it here (Firefox OS only)</a> and the source is <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/16">here</a>.</p>
 
 </div>
 

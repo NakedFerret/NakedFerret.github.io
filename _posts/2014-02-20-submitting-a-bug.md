@@ -41,7 +41,7 @@ The system asks the three main questions any bug report should answer
 * What happened?
 * What should have happened?
 
-The system then takes the answers to these questions and automatically formats the report. It also accepts attachements and provides a link to [documentation](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines) on how to write bug reports. The process was relatively painless and simple.
+The system then takes the answers to these questions and automatically formats the report. It also accepts attachments and provides a link to [documentation](https://developer.mozilla.org/en-US/docs/Mozilla/QA/Bug_writing_guidelines) on how to write bug reports. The process was relatively painless and simple.
 
 ## What's next?
 
@@ -51,5 +51,5 @@ If the developers deem the bug an easy fix, they will assign a mentor. Mentored 
 
 ## What could have been done better?
 
-The biggest concern in my mind is that the bug could have already been fixed in one of the latest developmental snapshots. I did not get a chance to test the bug in a dev release of Firefox OS (for numerous reasons). 
+The biggest concern in my mind is that the bug could have already been fixed in one of the latest developmental snapshots. I did not get a chance to test the bug in a development release of Firefox OS (for numerous reasons). 
 

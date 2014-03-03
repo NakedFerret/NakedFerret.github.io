@@ -7,7 +7,7 @@ permalink: /blog/9/
 
 Building on our [previous work](/blog/8/), we're going to separate the notification demos, from the alarm demos using the [Drawer](http://buildingfirefoxos.com/building-blocks/drawer.html). Download BuildingBlocks [here](https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip).
 
-## First Attemp
+## First Attempt
 
 According to the documentation, all we need to implement the drawer is to import
 
@@ -93,9 +93,9 @@ Here's a quick overview of what was happening. `drawer.css` absolutely positions
 
 ## Close, but something isn't quite right...
 
-There are just some minor problems left to solve. The icon for the drawer is overscaled and it makes the bitmap look fuzzy. The title of the sidebar is too big and cannot be read. To downscale the whole UI we can simply decrease the root font-size with `html { font-size: 62.5%; }` to get us the following result.
+There are just some minor problems left to solve. The icon for the drawer is over-scaled and it makes the bitmap look fuzzy. The title of the sidebar is too big and cannot be read. To downscale the whole UI we can simply decrease the root font-size with `html { font-size: 62.5%; }` to get us the following result.
 
-![Third implemenetation. Everything looks scaled down](/img/posts/9/drawer5.png)
+![Third implementation. Everything looks scaled down](/img/posts/9/drawer5.png)
 
 ![Third implementation: sidebar shown. The heading finally fits](/img/posts/9/drawer6.png)
 

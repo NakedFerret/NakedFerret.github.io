@@ -32,7 +32,7 @@
     <h1>WebAPI: IndexedDB Part1</h2>
     <p class="meta">24 Feb 2014</p>
   </div>
-   <p>In this post, I will introduce <a href="https://developer.mozilla.org/en-US/docs/IndexedDB">IndexedDB</a>. As the name suggests, it is a lightweight database. It&#39;s not a relational database however, it&#39;s a key-value database. It maps keys to javascript objects (or primitives). The API is a little more difficult to grasp than the other API&#39;s offered by Firefox OS so this post is broken up into two parts. The first part will talk about how to create the structure of the database, and how to open and close the database.</p>
+   <p>In this post, I will introduce <a href="https://developer.mozilla.org/en-US/docs/IndexedDB">IndexedDB</a>. As the name suggests, it is a lightweight database. It&#39;s not a relational database however, it&#39;s a key-value database. It maps keys to javascript objects (or primitives). The API is a little more difficult to grasp than the other APIs offered by Firefox OS so this post is broken up into two parts. The first part will talk about how to create the structure of the database, and how to open and close the database.</p>
 
 <h2>The Object Store</h2>
 
@@ -47,13 +47,13 @@
 <li><code>neither</code> : any value (objects included). Key must be supplied when adding new value</li>
 </ul>
 
-<p>These key strategies apply to each individual object storage. This allows some flexibility in degining the sturucture of a database because it&#39;s possible to have a database that takes advantage of all these strategies.</p>
+<p>These key strategies apply to each individual object storage. This allows some flexibility in designing the structure of a database because it&#39;s possible to have a database that takes advantage of all these strategies.</p>
 
 <h2>Creating the object stores</h2>
 
-<p>The object stores are created using <code>createObjectStore()</code>. The first parameter is the name of the object store and the second paramters is an object that specifies which strategy to use. The following example assumes we have a database openened and ready to be modified. We will cover how to accomplish this in the next section.</p>
+<p>The object stores are created using <code>createObjectStore()</code>. The first parameter is the name of the object store and the second parameters is an object that specifies which strategy to use. The following example assumes we have a database opened and ready to be modified. We will cover how to accomplish this in the next section.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// db == open datbase</span>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// db == open database</span>
 
 <span class="c1">// Uses the keyPath strategy</span>
 <span class="c1">// Keys is stored in object.taskId</span>
@@ -84,7 +84,7 @@
 
 <div class="highlight"><pre><code class="javascript"><span class="nx">request</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span> 
   <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
-  <span class="c1">// Create an objectStore for this database</span>
+  <span class="c1">// Create an object store for this database</span>
 <span class="p">};</span>
 </code></pre></div>
 

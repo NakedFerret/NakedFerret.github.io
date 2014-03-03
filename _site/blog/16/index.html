@@ -42,7 +42,7 @@
 <li><code>apps</code>: This storage area is used to store the user data needed by apps. Only available for certified application only.</li>
 <li><code>music</code>: This is the storage area where music and sounds are stored.</li>
 <li><code>pictures</code>: This is the storage area where pictures are stored.</li>
-<li><code>sdcard</code>: This is the storage area that give access to the device&#39;s SDCard.</li>
+<li><code>sdcard</code>: This is the storage area that give access to the device&#39;s SD Card.</li>
 <li><code>videos</code>: This is the storage area where videos are stored.</li>
 </ul>
 
@@ -113,7 +113,7 @@
 
 <h2>Retrieving a file</h2>
 
-<p>Retrieving a file is much simpler, simple provide the filename to <code>DeviceStorage.get()</code>.</p>
+<p>Retrieving a file is much simpler, simple provide the file name to <code>DeviceStorage.get()</code>.</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">pics</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;my-file.txt&quot;</span><span class="p">);</span>

@@ -24,10 +24,10 @@ There are specific call backs when a transactions completes or when it encounter
 To add, simply start a transaction in `readwrite` mode and call the `add()` method on the object store.
 
 {% highlight javascript %}
-var objstrName = ...;
+var objStrName = ...;
 
-var transaction = db.transaction([objstrName], "readwrite");
-var objStr = transaction.objectStore(objstrName);
+var transaction = db.transaction([objStrName], "readwrite");
+var objStr = transaction.objectStore(objStrName);
 
 var obj = ...;
 var addRequest = objStr.add(obj);
@@ -53,10 +53,10 @@ transaction.onerror = function(event) {
 When getting an object, the transaction can be opened in `readonly` mode if no changes to the object are intended. The `get()` is responsible for retrieving the objects and takes the key of the desired object as a parameter. The object will be returned as a result to the `onsuccess` function provided. Instead of throwing an error, the result will be undefined if the object could not be found.
 
 {% highlight javascript %}
-var objstrName = ...;
+var objStrName = ...;
 
-var transaction = db.transaction([objstrName], "readonly");
-var objStr = transaction.objectStore(objstrName);
+var transaction = db.transaction([objStrName], "readonly");
+var objStr = transaction.objectStore(objStrName);
 
 var objKey = ...;
 objStr.get(objKey).onsuccess = function(event) {
@@ -73,10 +73,10 @@ objStr.get(objKey).onsuccess = function(event) {
 Updating objects is accomplished through the `put()` method. If the object being updated is not using the `keyPath` strategy, the key must be supplied. The transaction must be used in `readwrite` mode.
 
 {% highlight javascript %}
-var objstrName = ...;
+var objStrName = ...;
 
-var transaction = db.transaction([objstrName], "readwrite");
-var objStr = transaction.objectStore(objstrName);
+var transaction = db.transaction([objStrName], "readwrite");
+var objStr = transaction.objectStore(objStrName);
 
 var obj = ...;
 var updateRequest = objStr.put(obj);
@@ -104,13 +104,13 @@ transaction.onerror = function(event) {
 
 ## Delete
 
-Deleting objects is accomplished using the `delete()` command. It accepts a key for the desired object to release. The transaction must be openend in `readwrite` mode.
+Deleting objects is accomplished using the `delete()` command. It accepts a key for the desired object to release. The transaction must be opened in `readwrite` mode.
 
 {% highlight javascript %}
-var objstrName = ...;
+var objStrName = ...;
 
-var transaction = db.transaction([objstrName], "readwrite");
-var objStr = transaction.objectStore(objstrName);
+var transaction = db.transaction([objStrName], "readwrite");
+var objStr = transaction.objectStore(objStrName);
 
 var objKey = ...;
 var deleteRequest = objStr.delete(objKey);
@@ -142,4 +142,4 @@ function Person(name, id) {
 }
 {% endhighlight %}
 
-The object store holding all the `Person` objects uses the `keyPath` strategy. [Try it here (FXOS only)](/demos/16/) and the source is [here](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/16).
+The object store holding all the `Person` objects uses the `keyPath` strategy. [Try it here (Firefox OS only)](/demos/16/) and the source is [here](https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/16).
