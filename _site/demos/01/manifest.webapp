@@ -2,6 +2,10 @@
   "name": "Hello, Firefox OS",
   "description": "Simple Demo App",
   "launch_path": "/hello.html",
+  "developer" : {
+    "name" : "Gonzalo Andreani",
+    "url" : "http://www.andreani.in"  	     
+  },
   "icons": {
     "128": "/hello.png"
   }
