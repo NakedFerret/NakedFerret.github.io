@@ -3,7 +3,6 @@
   "description": "App that contains examples of API usage",
   "launch_path": "/index.html",	    
   "version": "v15.0",
-  "type": "privileged",
   "icons": {
     "128": "/img/ic_api_showcase.png"
   },
@@ -13,10 +12,6 @@
     },
     "alarms": {
       "description": "Needed to show notifications in the future"
-    },
-    "contacts": {
-      "access": "readwrite",
-      "description": "Needed to read, create, and modify contacts"
     },
     "device-storage:pictures": {
       "access": "readwrite" 

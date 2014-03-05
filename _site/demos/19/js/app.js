@@ -675,7 +675,6 @@ function prepareIndexedDBDemo() {
 }
 
 // Install
-
 function prepareInstall() {
 
     var isFFOS = ("mozApps" in navigator && navigator.userAgent.search("Mobile") != -1);
@@ -690,7 +689,7 @@ function prepareInstall() {
 
 	installButton.addEventListener('click', function() {
 
-	    var manifestUrl = 'http://www.andreani.in/demos/19/manifest.webapp';
+	    var manifestUrl = 'http://demo19.andreani.in/manifest.webapp';
 	    var req = navigator.mozApps.installPackage(manifestUrl);
 
 	    req.onsuccess = function() {

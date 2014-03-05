@@ -23,4 +23,34 @@ function init() {
 	    state = 0;
 	}
     });
+
+    prepareInstall();
+}
+
+
+function prepareInstall() {
+
+    var isFFOS = ("mozApps" in navigator && navigator.userAgent.search("Mobile") != -1);
+
+    if ( isFFOS ) {
+	
+	var installMessage = document.querySelector("#install-message");
+	var installButton = document.querySelector("#btn-install");
+
+	installMessage.classList.remove('hidden');
+	installButton.classList.remove('hidden');
+
+	installButton.addEventListener('click', function() {
+
+	    var manifestUrl = 'http://demo01.andreani.in/manifest.webapp';
+	    var req = navigator.mozApps.installPackage(manifestUrl);
+
+	    req.onsuccess = function() {
+		console.log(this.result);
+	    };
+	    req.onerror = function() {
+		console.log(this.error);
+	    };
+	});
+    } 
 }
