@@ -42,7 +42,7 @@ function prepareInstall() {
 
 	installButton.addEventListener('click', function() {
 
-	    var manifestUrl = '/manifest.webapp';
+	    var manifestUrl = 'http://demo01.andreani.in/manifest.webapp';
 	    var req = navigator.mozApps.installPackage(manifestUrl);
 
 	    req.onsuccess = function() {
