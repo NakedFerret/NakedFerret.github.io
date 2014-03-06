@@ -1,0 +1,41 @@
+/* Make the application fill up the screen space */
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#index {
+    height: 100%;
+}
+
+/* Make the sections fill up the space */
+section[role="region"] {
+    background: #fff;
+    height: 100%;
+}
+
+/* Decrease the font size */
+html {
+    font-size: 62.5%;
+}
+
+/* Hide Scrollbar. Apply .scrollable to long sections */
+html {
+    overflow: hidden;
+}
+
+.scrollable {
+  overflow: auto;
+  height: 100%;
+  padding: 1rem 1rem 0 2rem;
+}
+
+[role="main"] {
+    padding: 1rem 1rem 0 1rem;
+}
+
+/* Used to hide and show elements */
+.hidden {
+    visibility: hidden;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Simple Notes",
+  "description": "Simple Note App",
+  "launch_path": "/index.html",	    
+  "version": "v0.1"
+}

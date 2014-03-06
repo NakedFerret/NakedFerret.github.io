@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Notes</title>
+    <script type="text/javascript" src="js/app.js"> </script>
+    <script type="text/javascript" defer src="js/status.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="css/buttons.css" rel="stylesheet" type="text/css">
+    <link href="css/headers.css" rel="stylesheet" type="text/css">
+    <link href="css/status.css" rel="stylesheet" type="text/css">
+    <link href="css/input_areas.css" rel="stylesheet" type="text/css">
+    <link href="css/transitions.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <section role="region">
+      <header>
+	<menu type="toolbar">
+	  <button id="btn-create-note-discard">Discard</button>
+	  <button id="btn-create-note-save">Save</button>
+	</menu>
+	<h1>New Note</h1>
+      </header>
+
+      <div role="main">
+	<form>
+	  <p>
+	    <input type="text" placeholder="Note Title" id="create-note-form-title">
+	  </p>
+	  <p>
+	    <textarea placeholder="Note Content" id="create-note-form-content"></textarea>
+	  </p>
+	</form>
+      </div>
+    </section>
+
+  </body>
+</html>

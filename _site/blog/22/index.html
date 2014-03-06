@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Simple Notes: New Note</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>Simple Notes: New Note</h2>
+    <p class="meta">03 Mar 2014</p>
+  </div>
+   <p>Over the next couple of days I will be creating an application that will store notes for the user. I will not spend more than 4 days working on it, so my top priority will be basic functionality and polish/features will follow afterwards.</p>
+
+<p>Today I will tackle the New Note screen, as it seems like the most difficult part of the application.</p>
+
+<h2>Database Structure</h2>
+
+<p>The database model used to store notes is simply</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Note</span><span class="p">(</span><span class="nx">title</span><span class="p">,</span> <span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">id</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">title</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">content</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>I chose to use a <code>keyPath</code> and <code>autoIncrement</code> key strategy with the model. Notes are stored in the <code>notes</code> object store. The <code>notes</code> object store does not have any indexes but it might in the future to keep the <code>title</code>&#39;s unique or implement search functionality.</p>
+
+<h2>The UI</h2>
+
+<p>The <code>New Note</code> interface consists simply of</p>
+
+<ul>
+<li>Single-line text input for the <code>title</code></li>
+<li>Multi-line text input for the <code>content</code></li>
+<li>A <code>Discard</code> button that cancels the task of creating a Note</li>
+<li>A <code>Save</code> button that saves the Note</li>
+</ul>
+
+<p>The finished product looks like this</p>
+
+<p><img src="/img/posts/22/new_note_ui.png" alt="The UI described above"></p>
+
+<p>In order to achieve this look I the <code>headers</code> and <code>input area</code> <a href="http://buildingfirefoxos.com/building-blocks/headers.html">building blocks</a>. To import these blocks, I simply copied</p>
+
+<ul>
+<li><code>style/headers/</code></li>
+<li><code>style/headers.css</code></li>
+<li><code>style/input_areas/</code></li>
+<li><code>style/input_areas.css</code></li>
+</ul>
+
+<p>from the sample BuildingBlocks application found <a href="https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip">here (zip)</a></p>
+
+<p>The structure for the header is simply</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;header&gt;</span>
+  <span class="nt">&lt;menu</span> <span class="na">type=</span><span class="s">&quot;toolbar&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button&gt;</span>Discard<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;button&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;/menu&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>New Note<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/header&gt;</span>
+</code></pre></div>
+
+<p>and the structure for the text input is</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;form&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;Note Title&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;textarea</span> <span class="na">placeholder=</span><span class="s">&quot;Note Content&quot;</span> <span class="nt">&gt;&lt;/textarea&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>Additionally, the UI alerts the user when a note has been successfully saved by showing a <code>status</code>. This is done using the <code>status.js</code> javascript module from the BuildingBlocks sample application. This node requires <code>transitions.css</code> file from the application also.</p>
+
+<h2>Demo</h2>
+
+<p>Once again, this application can be tested in a web browser <a href="/demos/20/">here</a> and the source code can be found <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/18">here</a></p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
