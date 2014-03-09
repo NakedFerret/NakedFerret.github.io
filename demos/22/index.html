@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Notes</title>
+    <script type="text/javascript" src="js/app.js"> </script>
+    <script type="text/javascript" defer src="js/status.js"></script>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="css/buttons.css" rel="stylesheet" type="text/css">
+    <link href="css/headers.css" rel="stylesheet" type="text/css">
+    <link href="css/status.css" rel="stylesheet" type="text/css">
+    <link href="css/input_areas.css" rel="stylesheet" type="text/css">
+    <link href="css/transitions.css" rel="stylesheet" type="text/css">
+    <link href="css/lists.css" rel="stylesheet" type="text/css">
+    <link href="css/edit_mode.css" rel="stylesheet" type="text/css">
+    <link href="css/switches.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <section id="index" role="region" data-position="current">
+      <header>
+	<menu type="toolbar">
+	  <button id="btn-multi-delete">Multi Delete</button>
+	  <button id="nav-create-note">New</button>
+	</menu>
+	<h1>Notes</h1>
+      </header>
+
+      <div role="main" class="scrollable">
+	<section data-type="list">
+	  <ul id="note-list">
+	  </ul>
+	</section>
+      </div>
+    </section>
+
+    <section id="create-note" role="region" data-position="right">
+      <header>
+	<a class="btn-back" href="#">
+	  <span class="icon icon-back">back</span>
+	</a>
+	<menu type="toolbar">
+	  <button id="btn-create-note-save">Save</button>
+	</menu>
+	<h1>New Note</h1>
+      </header>
+
+      <div role="main">
+	<form>
+	  <p>
+	    <input type="text" placeholder="Note Title" id="create-note-form-title">
+	  </p>
+	  <p>
+	    <textarea placeholder="Note Content" id="create-note-form-content"></textarea>
+	  </p>
+	</form>
+      </div>
+    </section>
+ 
+   <section role="region" data-position="right">
+      <section data-type="list">
+	<ul>
+	  <li id="note-li-template">
+	    <label class="pack-checkbox danger">
+              <input type="checkbox">
+              <span></span>
+	    </label>
+	    <a href="#">
+	      <p class="note-title"> </p>
+	      <p class="note-content"> </p>
+	    </a>
+	  </li>
+	</ul>
+      </section>
+    </section>
+
+   <section role="region" data-position="right">
+      <section data-type="list">
+	<ul>
+	  <li id="note-li-template">
+	    <label class="pack-checkbox danger">
+              <input type="checkbox">
+              <span></span>
+	    </label>
+	    <p class="note-title"> </p>
+	    <p class="note-content"> </p>
+	  </li>
+	</ul>
+      </section>
+    </section>
+
+    <section id="edit-note-list" data-position="edit-mode">
+      <form role="dialog" data-type="edit">
+	<section>
+	  <header>
+	    <menu type="toolbar">
+              <button id="btn-end-edit-mode">Done</button>
+	    </menu>
+	    <h1>Delete Notes</h1>
+	  </header>
+	</section>
+	<menu>
+	  <button id="btn-delete-all">Delete All </button>
+	  <button id="btn-delete-selected">Delete Selected</button>
+	</menu>
+      </form>
+    </section>
+
+  </body>
+</html>

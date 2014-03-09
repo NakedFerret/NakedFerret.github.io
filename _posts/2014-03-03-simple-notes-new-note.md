@@ -43,7 +43,7 @@ In order to achieve this look I the `headers` and `input area` [building blocks]
 * `style/input_areas/`
 * `style/input_areas.css`
 
-from the sample BuildingBlocks application found [here (zip)](https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip)
+from the sample BuildingBlocks application found [here (zip)](https://github.com/buildingfirefoxos/Building-Blocks/archive/gh-pages.zip). I also imported the `headers.css` and `input_areas.css` files.
 
 The structure for the header is simply
 
