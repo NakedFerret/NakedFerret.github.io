@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Bug Progress: Day 1</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+	<script src="http://localhost:35729/livereload.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+
+          <div class="header">
+  <a class="extra" href="/">home</a>
+  <a class="extra current" href="/">blog</a>
+  <a class="extra" href="/">projects</a>
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+<div class="post">
+  <div class="title">
+    <h1>Bug Progress: Day 1</h2>
+    <p class="meta">07 Mar 2014</p>
+  </div>
+   <p>I have volunteered to help fix a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=924609">bug</a> in Firefox OS. The bug is pretty small. It can be summed up as follows. When you attach a video to the SMS application, it shows a generic icon. Ideally it should show a thumbnail preview. In this post, I will explain my understanding of how the Gaia video application generates a thumbnail from a video.</p>
+
+<h2>MediaDB</h2>
+
+<p><code>MediaDB</code> is the shared library that keeps track of the filesystem. It stores names, types, sizes and metadata about files. <code>metadata.js</code> is the Video app library that wraps around the <code>MediaDB</code> library. The reason for this is outlined in the source code documentation </p>
+
+<blockquote>
+<p>The phones we want to run on have only a single hardware h.264 video decoder, and gecko is not yet smart enough to share the hardware among all the <code>video</code> elements that want to use it. So all apps (camera, gallery and video) that have permission to use the video hardware must be careful to only use it while they are in the foreground and to relinquish it when they go to the background.</p>
+
+<p>The video app wants to use <code>video</code> elements for metadata parsing and for playing videos for the user. It can&#39;t do both of these things at the same time. The MediaDB metadata parsing architecture assumes that it can, however. So the Video app does not pass a metadata parser function to MediaDB. MediaDB notifies the app about new video files but does not include any metadata with those notifications. Instead, we use the queueing and metadata parsing functions in this file to handle metadata parsing in an interruptible way.</p>
+</blockquote>
+
+<p>From reading this, it is clear that MediaDB does not play a role in generating thumbnails. Why even mention it then? I think it&#39;s a very important caveat that should be kept in the back of the mind when designing the solution to the bug. Here&#39;s why. Ultimately, the best solution to the bug would be to create a shared library that both the Video app and the SMS app could use to generate a thumbnail. If creating a thumbnail from a video can only be done through the use of a <code>video</code> tag, the shared library should be very careful about how it handles the <code>video</code> tag.</p>
+
+<h2>Generating a Thumbnail</h2>
+
+<p>The process to generate a thumbnail is surprisingly simple. It consists of the following steps</p>
+
+<ul>
+<li>Load the video file</li>
+<li>Seek</li>
+<li>Create <code>canvas</code></li>
+<li>Determine Scale</li>
+<li>Call <code>context.drawImage</code> on the <code>video</code> tag</li>
+<li>Get image url from <code>canvas.toBlob()</code></li>
+</ul>
+
+<p>First, the video file is loaded into a <code>video</code> tag. Then, the video is fast forwarded 5 seconds or 10% of the video, whichever is shorter. This is accomplished using</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">video</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// Offscreen video element</span>
+<span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">duration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Next, a canvas is created. The scale is determined by finding the smallest ratio between the desired thumbnail size and the vide size.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">thumbWidth</span> <span class="o">/</span> <span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">thumbHeight</span> <span class="o">/</span> <span class="nx">videoHeight</span><span class="p">);</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">scale</span><span class="p">,</span> <span class="nx">scale</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Calling <code>context.scale()</code> will scale the image we get from <code>context.drawImage()</code>. The first parameter is the x scale ratio and the second parameter is the y scale ratio. Finally <code>context.drawImage()</code> is called. This method draws an image of what the element looks like at the moment the method is called. It takes 3 parameters, an element, an x position, and a y position. The element is the offscreen <code>video</code> tag. The x and y have to be calculated so that the image is placed in the center of the canvas. The resulting image url can be obtained from <code>canvas.toBlob()</code></p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="nx">scale</span> <span class="o">*</span> <span class="nx">vw</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">scale</span> <span class="o">*</span> <span class="nx">vh</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nx">tw</span> <span class="o">-</span> <span class="nx">w</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="nx">scale</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nx">th</span> <span class="o">-</span> <span class="nx">h</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="nx">scale</span><span class="p">;</span>
+
+<span class="c1">// Draw the current video frame into the image</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">player</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">toBlob</span><span class="p">(</span><span class="nx">callback</span><span class="p">,</span> <span class="s1">&#39;image/jpeg&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Gonzalo Andreani<br />
+                Student<br />
+                gandr002@plattsburgh.edu
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
