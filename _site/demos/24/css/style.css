@@ -1,0 +1,131 @@
+/* Make the application fill up the screen space */
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#index {
+    height: 100%;
+}
+
+/* Make the sections fill up the space */
+section[role="region"] {
+    background: #fff;
+    height: 100%;
+}
+
+section[role="region"] > header.fixed:first-child {
+    position: absolute;
+    width: 100%;
+}
+
+.scrollable.header {
+    border-top: 5rem solid transparent;
+}
+
+.scrollable.edit {
+    border-bottom: 7rem solid transparent;
+}
+
+/* Decrease the font size */
+html {
+    font-size: 62.5%;
+}
+
+/* Hide Scrollbar. Apply .scrollable to long sections */
+html {
+    overflow: hidden;
+}
+
+[role="main"] {
+    padding: 1rem 1rem 0 1rem;
+}
+
+.scrollable {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+[role="main"].scrollable {
+  padding: 0 1rem;  
+}
+
+/* Used to hide and show elements */
+.hidden {
+    visibility: hidden;
+}
+
+/* animations that control the sections */
+[data-position="right"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    z-index: 15;
+    z-index: 100; /* -> drawer */
+}
+section[role="region"][data-position="right"] {
+    position: absolute;
+}
+[data-position="right"].current {
+    animation: rightToCurrent 0.4s forwards;
+    -webkit-animation: rightToCurrent 0.4s forwards;
+}
+[data-position="right"].right {
+    animation: currentToRight 0.4s forwards;
+    -webkit-animation: currentToRight 0.4s forwards;
+}
+[data-position="current"].left {
+    animation: currentToLeft 0.4s forwards;
+    -webkit-animation: currentToLeft 0.4s forwards;
+}
+[data-position="current"].current {
+    animation: leftToCurrent 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+
+/* Control for edit mode  */
+[data-position="edit-mode"] {
+    position: absolute;
+    top: -5rem;
+    left: 0;
+    right: 0;
+    bottom: -7rem;
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+[data-position="edit-mode"].edit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 120;
+    opacity: 1;
+}
+
+/* Allows clicks through the edit mode dialog */
+#edit-note-list {
+    pointer-events:none;
+}
+
+/* Hide the ugly date input result form */
+div#hides-date {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    float: left;
+}
+
+/* Hide the list styles */
+li {
+    list-style: none;
+}
