@@ -1,3 +1,3 @@
 guard 'livereload' do
-  watch(%r{_site/.+})
+  watch(%r{_site/blog/.+})
 end
