@@ -1,0 +1,18 @@
+<div class="header">
+
+	{% for nav in site.data.navigation %}
+
+	  {% assign class = "extra current" %}
+
+	  {% if include.current != nav.name %}
+	    {% capture class %} {{ class | remove:"current" }} {% endcapture %}
+	  {% endif %}
+
+    <a class="{{ class }}" href="{{ nav.dest }}"> {{ nav.name }} </a>
+
+	{% endfor %}
+	
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>

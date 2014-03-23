@@ -1,0 +1,77 @@
+---
+layout: default
+title: Gonzalo Andreani
+permalink: /portfolio/simplepass/
+---
+
+{% include header.html current="portfolio" %}
+
+{% assign simplepass = site.data.projects.simplepass %}
+
+<div class="project" class="row clearfix">
+
+	<div class="row clearfix"> 
+
+		<div class="title">
+
+			<h1> {{ simplepass.name }} </h1>
+
+			<img src="{{ simplepass.img }} ">
+
+			<p> {{ simplepass.desc }} </p>
+		</div>
+	</div>
+
+	<h2> Common Limitations </h2>
+
+	<p> SimplePass was designed to stand out from the rest of the pack. The best way to illustrate this, is to show the common limitations with other password managers.</p>
+
+
+	<div class="row clearfix">
+
+		<div class="column third">
+			<h3> Copy/Paste </h3>
+			<p> The copy/paste framework is insecure because any installed application can examine the clipboard </p>
+			
+		</div>
+
+		<div class="column third">
+			<h3> In-App Web Browser </h3>
+			<p> Prevents users from inputing passwords in other applications and from using their preferred web browser</p>
+		</div>
+
+		<div class="column third">
+			<h3> Unintuitive </h3>
+			<p> Users are required to learn difficult concepts and user interfaces are not optimized</p>
+		</div>
+	</div>
+
+	<h2> The Simple Approach </h2>
+
+	<p> SimplePass aims to address these shortcomings with a new password input system. </p>
+
+	<div class="row clearfix">
+
+		<div class="column third">
+			<h3> Simple </h3>
+			<p> Users can think of their password in terms of Vaults and Accounts. Passwords are stored in Accounts. Accounts are stored in vaults. </p>
+		</div>
+
+		<div class="column third">
+			<h3> Ubiquitous </h3>
+			<p> The new input system a touch away no matter where you are in your device  </p>
+		</div>
+
+		<div class="column third">
+			<h3> Unobtrusive  </h3>
+			<p> The input system is brought up by touching each side of the device's screen. This unique gesture prevents unintentional touches.   </p>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+
+

@@ -1,0 +1,50 @@
+---
+layout: default
+title: Gonzalo Andreani
+permalink: /portfolio/
+---
+
+{% include header.html current="portfolio" %}
+
+<div id="portfolio" class="row clearfix">
+
+	<div class="column two-thirds">
+		<h1> Side Projects </h1>
+
+
+		{% for proj_hash in site.data.projects %}
+
+		{% assign proj = proj_hash[1] %}
+
+		<div class="row clearfix project">
+			<div class="aside fourth">
+				<a href="{{ proj.dest }}"> <img src="{{ proj.img }}"> </a>
+			</div>
+			<h2><a href="{{ proj.dest }}"> {{ proj.name }} </a> </h2>
+			<p> {{ proj.desc }} </p>
+		</div>
+		{% endfor %}
+
+	</div>
+
+	<div class="column third">
+		<div id="mini-resume">
+			<div class="heading" >
+				<h1> Mini Resume </h1>
+				<a href="https://docs.google.com/document/d/1iXoRN2KTaMXE5KkevOYeznvxczi3xgPPYwCRssnPjpY/edit?usp=sharing"> Full Resume Here </a>
+			</div>
+
+			<ul>
+				<li>MS-SQL Server Internship </li>
+				<li>Independent Study on Firefox OS </li>
+				<li>Created SimplePass, an Android password manager </li>
+				<li>RA in Freshman Housing (2 years) </li>
+				<li>5 years Java experience </li>
+				<li>Fluent in Spanish. Know Basic Italian and Portuguese </li>
+			</ul>
+
+		</div>
+
+	</div>
+</div>
+

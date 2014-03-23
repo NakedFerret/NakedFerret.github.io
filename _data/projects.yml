@@ -1,0 +1,11 @@
+simplepass:
+  name: SimplePass
+  img: /img/simplepass_logo.png
+  dest: /portfolio/simplepass/
+  desc: "Password manager for Android that strives to be simple and secure. Recently launched in the <a href=\"https://play.google.com/store/apps/details?id=com.nakedferret.simplepass\">Play Store</a>. Also, it's open source. The code is hosted in <a href=\"https://github.com/NakedFerret/SimplePass\">Github</a>"
+
+mclib:
+  name: Minecraft Librarian
+  img: /img/mc-lib_logo.png
+  dest: /portfolio/mc-lib/
+  desc: "A python program that returns in game item id's. Scans information from official Minecraft Wiki"

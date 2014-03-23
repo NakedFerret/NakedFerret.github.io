@@ -7,7 +7,7 @@ permalink: /blog/28/
 
 In this post, I walk through the implementation of the Edit Note screen pictured below
 
-<!-- ![ When a note is clicked, a new section is shown. It looks like the new note section, but with the information from the note populated. It has two buttons: save and delete. ](/img/posts/28/preview.gif) -->
+![ When a note is clicked, a new section is shown. It looks like the new note section, but with the information from the note populated. It has two buttons: save and delete. ](/img/posts/28/preview.gif)
 
 ## Intuition fails
 

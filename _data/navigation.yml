@@ -1,0 +1,8 @@
+- name: home
+  dest: /
+
+- name: blog
+  dest: /blog/
+
+- name: portfolio
+  dest: /portfolio/

@@ -1,0 +1,40 @@
+---
+layout: default
+title: Gonzalo Andreani
+permalink: /portfolio/mc-lib/
+---
+
+{% include header.html current="portfolio" %}
+
+{% assign mclib = site.data.projects.mclib %}
+
+<div class="project" class="row clearfix">
+
+	<div class="row clearfix"> 
+
+		<div class="title">
+
+			<h1> {{ mclib.name }} </h1>
+
+			<img src="{{ mclib.img }} ">
+
+			<p> {{ mclib.desc }} </p>
+		</div>
+	</div>
+
+	<h2> Notable Features </h2>
+
+	<p>
+		<ul>
+			<li> Receives information from the Minecraft Wiki </li>
+			<li> Cache's the info scraped from the wiki </li>
+			<li> Searches using all words or any words </li>
+			<li> Order of search words does not affect results </li>
+		</ul>
+	</p>
+
+</div>
+
+
+
+
