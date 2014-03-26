@@ -34,7 +34,7 @@ section[role="region"] > header.fixed:first-child {
 
 Intuitively, the next step would be to set the top border of the scrollable section to the size of the header, `5rem`, to prevent the header from blocking the first list item. However, this brings us back to step one because the size of the srollable section becomes the same size as before!
 
-To remedy this, we can specify that the `scrollable` section use a different [box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property. The box-sizing property bascially dictates if the height and width should include the padding and border. Padding is included with the `padding-box` value, and border is additionally included with the `border-box` value. Combining this with the border, gives us the result we want.
+To remedy this, we can specify that the `scrollable` section use a different [box-sizing](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) property. The box-sizing property basically dictates if the height and width should include the padding and border. Padding is included with the `padding-box` value, and border is additionally included with the `border-box` value. Combining this with the border, gives us the result we want.
 
 {% highlight css %}
 .scrollable {

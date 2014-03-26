@@ -13,7 +13,7 @@ I have volunteered to help fix a [bug](https://bugzilla.mozilla.org/show_bug.cgi
 
 > The phones we want to run on have only a single hardware h.264 video decoder, and gecko is not yet smart enough to share the hardware among all the `video` elements that want to use it. So all apps (camera, gallery and video) that have permission to use the video hardware must be careful to only use it while they are in the foreground and to relinquish it when they go to the background.
 > 
-> The video app wants to use `video` elements for metadata parsing and for playing videos for the user. It can't do both of these things at the same time. The MediaDB metadata parsing architecture assumes that it can, however. So the Video app does not pass a metadata parser function to MediaDB. MediaDB notifies the app about new video files but does not include any metadata with those notifications. Instead, we use the queueing and metadata parsing functions in this file to handle metadata parsing in an interruptible way.
+> The video app wants to use `video` elements for metadata parsing and for playing videos for the user. It can't do both of these things at the same time. The MediaDB metadata parsing architecture assumes that it can, however. So the Video app does not pass a metadata parser function to MediaDB. MediaDB notifies the app about new video files but does not include any metadata with those notifications. Instead, we use the queuing and metadata parsing functions in this file to handle metadata parsing in an interruptible way.
 
 From reading this, it is clear that MediaDB does not play a role in generating thumbnails. Why even mention it then? I think it's a very important caveat that should be kept in the back of the mind when designing the solution to the bug. Here's why. Ultimately, the best solution to the bug would be to create a shared library that both the Video app and the SMS app could use to generate a thumbnail. If creating a thumbnail from a video can only be done through the use of a `video` tag, the shared library should be very careful about how it handles the `video` tag.
 
@@ -35,7 +35,7 @@ var video = ...; // Offscreen video element
 video.currentTime = Math.min(5, video.duration / 10);
 {% endhighlight %}
 
-Next, a canvas is created. The scale is determined by finding the smallest ratio between the desired thumbnail size and the vide size.
+Next, a canvas is created. The scale is determined by finding the smallest ratio between the desired thumbnail size and the video size.
 
 {% highlight javascript %}
 var scale = Math.min(thumbWidth / videoWidth, thumbHeight / videoHeight);

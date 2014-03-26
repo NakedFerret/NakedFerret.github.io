@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "A Quick Introduction to Firefox OS for Developers"
+title:  "A Quick Intro to Firefox OS for Devs"
 date:   2014-01-31 11:39:00
 permalink: /blog/2/
 ---
@@ -9,7 +9,7 @@ This post will give an overview of Firefox OS. The audience are developers of mo
 
 ## [WebAPI](https://developer.mozilla.org/en-US/docs/WebAPI)
 
-The most interesting part of the OS to a developer is the API. The APIs provided by Firefox OS are officially called `WebAPI`. They control access to the device hardware. The APIs are drafter by mozilla, implemented in the current version of Firefox OS, and then submitted to the W3C in an effort to create standards. 
+The most interesting part of the OS to a developer is the API. The APIs provided by Firefox OS are officially called `WebAPI`. They control access to the device hardware. The APIs are drafter by Mozilla, implemented in the current version of Firefox OS, and then submitted to the W3C in an effort to create standards. 
 
 ## WebAPI Security Levels
 

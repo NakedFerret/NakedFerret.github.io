@@ -19,7 +19,7 @@ And said Date picker looks like this
 
 ![The Date Picker looks like a slot machine with 3 slots, for month, day, and year](/img/posts/25/date-picker.png)
 
-## Uglyness
+## Ugliness
 
 There was a glaring issue with this approach. In order to bring forth the date picker, the user needed to press this ugly input box
 
@@ -36,7 +36,7 @@ div#hides-date {
 }
 {% endhighlight %}
 
-This hides the input, and takes it out of the "flow" (i.e. other elements on the page ignore the div when aligning themselves). Next, I added a button. When the button is clicked, the hidden date input is focused. This causes the date picker to pop up, and this effectively makes the user think that the button controls the date picker. I also added an event listener to the `input` element that listened for input changes. This event gets fired when the user chooses a date. When the event is received I updated the text of the button to reflect the date choosen.
+This hides the input, and takes it out of the "flow" (i.e. other elements on the page ignore the div when aligning themselves). Next, I added a button. When the button is clicked, the hidden date input is focused. This causes the date picker to pop up, and this effectively makes the user think that the button controls the date picker. I also added an event listener to the `input` element that listened for input changes. This event gets fired when the user chooses a date. When the event is received I updated the text of the button to reflect the date chosen.
 
 To accomplish all of that I used the following snippet
 

@@ -85,7 +85,7 @@ The nice thing about the switches, is that they will not be visible unless the `
 
 ## Stumbling all over the place
 
-Right after implementing the above functionality I ran into a problem I should have foreseen. The index list was not receving any clicks while in EditMode. It was clear why. The Edit Mode section was overlayed on top of the index section, and the former was intercepting all clicks. The solution turned out to be really simple. It's just the following CSS rule.
+Right after implementing the above functionality I ran into a problem I should have foreseen. The index list was not receiving any clicks while in EditMode. It was clear why. The Edit Mode section was overlayed on top of the index section, and the former was intercepting all clicks. The solution turned out to be really simple. It's just the following CSS rule.
 
 {% highlight css %}
 #edit-note-list {

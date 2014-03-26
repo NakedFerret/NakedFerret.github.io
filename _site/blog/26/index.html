@@ -75,7 +75,7 @@
 <blockquote>
 <p>The phones we want to run on have only a single hardware h.264 video decoder, and gecko is not yet smart enough to share the hardware among all the <code>video</code> elements that want to use it. So all apps (camera, gallery and video) that have permission to use the video hardware must be careful to only use it while they are in the foreground and to relinquish it when they go to the background.</p>
 
-<p>The video app wants to use <code>video</code> elements for metadata parsing and for playing videos for the user. It can&#39;t do both of these things at the same time. The MediaDB metadata parsing architecture assumes that it can, however. So the Video app does not pass a metadata parser function to MediaDB. MediaDB notifies the app about new video files but does not include any metadata with those notifications. Instead, we use the queueing and metadata parsing functions in this file to handle metadata parsing in an interruptible way.</p>
+<p>The video app wants to use <code>video</code> elements for metadata parsing and for playing videos for the user. It can&#39;t do both of these things at the same time. The MediaDB metadata parsing architecture assumes that it can, however. So the Video app does not pass a metadata parser function to MediaDB. MediaDB notifies the app about new video files but does not include any metadata with those notifications. Instead, we use the queuing and metadata parsing functions in this file to handle metadata parsing in an interruptible way.</p>
 </blockquote>
 
 <p>From reading this, it is clear that MediaDB does not play a role in generating thumbnails. Why even mention it then? I think it&#39;s a very important caveat that should be kept in the back of the mind when designing the solution to the bug. Here&#39;s why. Ultimately, the best solution to the bug would be to create a shared library that both the Video app and the SMS app could use to generate a thumbnail. If creating a thumbnail from a video can only be done through the use of a <code>video</code> tag, the shared library should be very careful about how it handles the <code>video</code> tag.</p>
@@ -99,7 +99,7 @@
 <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">duration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">);</span>
 </code></pre></div>
 
-<p>Next, a canvas is created. The scale is determined by finding the smallest ratio between the desired thumbnail size and the vide size.</p>
+<p>Next, a canvas is created. The scale is determined by finding the smallest ratio between the desired thumbnail size and the video size.</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">thumbWidth</span> <span class="o">/</span> <span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">thumbHeight</span> <span class="o">/</span> <span class="nx">videoHeight</span><span class="p">);</span>
 <span class="nx">context</span><span class="p">.</span><span class="nx">scale</span><span class="p">(</span><span class="nx">scale</span><span class="p">,</span> <span class="nx">scale</span><span class="p">);</span>
@@ -131,6 +131,9 @@
 			<li><span>11 Mar 2014</span> &raquo; 
 				<a href="/blog/28/">Simple Notes: Edit Notes</a></li>
 			
+			<li><span>11 Mar 2014</span> &raquo; 
+				<a href="/blog/29/">Simple Notes: Edit Notes</a></li>
+			
 			<li><span>10 Mar 2014</span> &raquo; 
 				<a href="/blog/27/">Simple Notes: Hidden Notes Fix</a></li>
 			
@@ -154,9 +157,6 @@
 			
 			<li><span>27 Feb 2014</span> &raquo; 
 				<a href="/blog/20/">IndexedDB Caveat</a></li>
-			
-			<li><span>26 Feb 2014</span> &raquo; 
-				<a href="/blog/19/">WebAPI: IndexedDB Part3</a></li>
 			
 		</ul>
 

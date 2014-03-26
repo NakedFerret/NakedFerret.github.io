@@ -5,7 +5,7 @@ date:   2014-03-03 12:00:00
 permalink: /blog/22/
 ---
 
-Over the next couple of days I will be creating an application that will store notes for the user. I will not spend more than 4 days working on it, so my top priority will be basic functionality and polish/features will follow afterwards.
+Over the next couple of days I will be creating an application that will store notes for the user. I will not spend more than 4 days working on it, so my top priority will be basic functionality and polish/features will follow afterward.
 
 Today I will tackle the New Note screen, as it seems like the most difficult part of the application.
 
