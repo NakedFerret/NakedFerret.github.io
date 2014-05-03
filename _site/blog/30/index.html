@@ -99,34 +99,54 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 <h2>Transferring the emulator</h2>
 
 <p>I built the emulator in a VPS. I wanted to use the emulator locally however. After a lot of trial and error, I found the relevant files.</p>
-
-<ul>
-<li>.config</li>
-<li>load-config.sh</li>
-<li>run-emulator.sh</li>
-<li>/out/host/linux-x86/bin/
-
-<ul>
-<li>ddms</li>
-<li>emulator</li>
-<li>emulator-arm</li>
-<li>mksdcard</li>
-</ul></li>
-<li>/out/host/linux-x86/lib/</li>
-<li>prebuilts/qemu-kernel/arm/kernel-qemu-armv7 </li>
-<li>out/target/product/generic/
-
-<ul>
-<li>hardware-qemu.ini</li>
-<li>ramdisk.img</li>
-<li>system.img</li>
-<li>userdata.img</li>
-<li>sdcard.img  // optional</li>
-</ul></li>
-</ul>
-
+<div class="highlight"><pre><code class="text language-text" data-lang="text">./out
+./out/host
+./out/host/linux-x86
+./out/host/linux-x86/bin
+./out/host/linux-x86/bin/mksdcard
+./out/host/linux-x86/bin/emulator
+./out/host/linux-x86/bin/emulator-arm
+./out/host/linux-x86/bin/ddms
+./out/host/linux-x86/lib
+./out/host/linux-x86/lib/libOpenglRender.so
+./out/host/linux-x86/lib/libGLES_V2_translator.so
+./out/host/linux-x86/lib/lib64GLES_CM_translator.so
+./out/host/linux-x86/lib/libicui18n.so
+./out/host/linux-x86/lib/libssl.so
+./out/host/linux-x86/lib/libEGL_translator.so
+./out/host/linux-x86/lib/lib64GLES_V2_translator.so
+./out/host/linux-x86/lib/libut_rendercontrol_dec.so
+./out/host/linux-x86/lib/libGLES_CM_translator.so
+./out/host/linux-x86/lib/libsqlite.so
+./out/host/linux-x86/lib/libicuuc.so
+./out/host/linux-x86/lib/lib64OpenglRender.so
+./out/host/linux-x86/lib/libcrypto.so
+./out/host/linux-x86/lib/lib64EGL_translator.so
+./out/target
+./out/target/product
+./out/target/product/generic
+./out/target/product/generic/ramdisk.img
+./out/target/product/generic/hardware-qemu.ini
+./out/target/product/generic/sdcard.img
+./out/target/product/generic/userdata.img 
+./out/target/product/generic/system.img
+./.config
+./run-emulator.sh
+./development
+./development/tools
+./development/tools/emulator
+./development/tools/emulator/skins
+./load-config.sh
+./prebuilts
+./prebuilts/qemu-kernel
+./prebuilts/qemu-kernel/arm
+./prebuilts/qemu-kernel/arm/kernel-qemu-armv7
+</code></pre></div>
 <p>You can probably shrink this list down a bit more, but as it stands, it&#39;s only about a quarter of a gig without <code>sdcard.img</code>. The <code>sdcard.img</code> does not have to get copied because it is created by the <code>run-emulator</code> script and the <code>mksdcard</code> program.</p>
 
+<p>A quick way to copy all the files from the build server to the local computer is using rsync. Note that the list of files is contained in <code>files.txt</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">rsync -z --files-from=../files.txt ssh.andreani.in:/home/gonzalo/B2G/ ../b2g-test/
+</code></pre></div>
 <h2>Using the emulator</h2>
 
 <p><img src="/img/posts/30/emulator_lockscreen.png" alt="A screenshot of the emulator lockscreen"></p>
@@ -143,6 +163,9 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>30 Mar 2014</span> &raquo; 
+				<a href="/blog/31/">Bug Progress: Day 2</a></li>
 			
 			<li><span>27 Mar 2014</span> &raquo; 
 				<a href="/blog/30/">Building the Emulator</a></li>
@@ -170,9 +193,6 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 			
 			<li><span>28 Feb 2014</span> &raquo; 
 				<a href="/blog/21/">Building Gaia</a></li>
-			
-			<li><span>27 Feb 2014</span> &raquo; 
-				<a href="/blog/20/">IndexedDB Caveat</a></li>
 			
 		</ul>
 

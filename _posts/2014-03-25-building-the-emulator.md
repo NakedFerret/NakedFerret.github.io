@@ -41,24 +41,54 @@ I also needed to create the following symlinks
 
 I built the emulator in a VPS. I wanted to use the emulator locally however. After a lot of trial and error, I found the relevant files.
 
-* .config
-* load-config.sh
-* run-emulator.sh
-* /out/host/linux-x86/bin/
-  * ddms
-  * emulator
-  * emulator-arm
-  * mksdcard
-* /out/host/linux-x86/lib/
-* prebuilts/qemu-kernel/arm/kernel-qemu-armv7 
-* out/target/product/generic/
-  * hardware-qemu.ini
-  * ramdisk.img
-  * system.img
-  * userdata.img
-  * sdcard.img  // optional
+	./out
+	./out/host
+	./out/host/linux-x86
+	./out/host/linux-x86/bin
+	./out/host/linux-x86/bin/mksdcard
+	./out/host/linux-x86/bin/emulator
+	./out/host/linux-x86/bin/emulator-arm
+	./out/host/linux-x86/bin/ddms
+	./out/host/linux-x86/lib
+	./out/host/linux-x86/lib/libOpenglRender.so
+	./out/host/linux-x86/lib/libGLES_V2_translator.so
+	./out/host/linux-x86/lib/lib64GLES_CM_translator.so
+	./out/host/linux-x86/lib/libicui18n.so
+	./out/host/linux-x86/lib/libssl.so
+	./out/host/linux-x86/lib/libEGL_translator.so
+	./out/host/linux-x86/lib/lib64GLES_V2_translator.so
+	./out/host/linux-x86/lib/libut_rendercontrol_dec.so
+	./out/host/linux-x86/lib/libGLES_CM_translator.so
+	./out/host/linux-x86/lib/libsqlite.so
+	./out/host/linux-x86/lib/libicuuc.so
+	./out/host/linux-x86/lib/lib64OpenglRender.so
+	./out/host/linux-x86/lib/libcrypto.so
+	./out/host/linux-x86/lib/lib64EGL_translator.so
+	./out/target
+	./out/target/product
+	./out/target/product/generic
+	./out/target/product/generic/ramdisk.img
+	./out/target/product/generic/hardware-qemu.ini
+	./out/target/product/generic/sdcard.img
+	./out/target/product/generic/userdata.img 
+	./out/target/product/generic/system.img
+	./.config
+	./run-emulator.sh
+	./development
+	./development/tools
+	./development/tools/emulator
+	./development/tools/emulator/skins
+	./load-config.sh
+	./prebuilts
+	./prebuilts/qemu-kernel
+	./prebuilts/qemu-kernel/arm
+	./prebuilts/qemu-kernel/arm/kernel-qemu-armv7
 
 You can probably shrink this list down a bit more, but as it stands, it's only about a quarter of a gig without `sdcard.img`. The `sdcard.img` does not have to get copied because it is created by the `run-emulator` script and the `mksdcard` program.
+
+A quick way to copy all the files from the build server to the local computer is using rsync. Note that the list of files is contained in `files.txt`
+
+	rsync -z --files-from=../files.txt ssh.andreani.in:/home/gonzalo/B2G/ ../b2g-test/
 
 ## Using the emulator
 

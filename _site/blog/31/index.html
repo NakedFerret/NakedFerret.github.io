@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Bug Progress: Day 2</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+		<script src="http://localhost:35729/livereload.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+
+    <div class="site">
+
+      <div class="header">
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/"> home </a>
+
+	
+
+	  
+
+	  
+
+    <a class="extra current" href="/blog/"> blog </a>
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/portfolio/"> portfolio </a>
+
+	
+	
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+
+<div class="row clearfix">
+
+	<div class="column two-thirds post">
+
+		<div class="title">
+			<h1>Bug Progress: Day 2</h2>
+			<p class="meta">30 Mar 2014</p>
+		</div>
+
+		<p>Here&#39;s a small overview of my progress in fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=924609">bug #924609</a>.</p>
+
+<h2>Finding the code</h2>
+
+<p>We know how to replicate the video app&#39;s thumbnail functionality. We just need to find the relevant code that generates (or doesn&#39;t generate, in this case) a thumbnail for an attachment. </p>
+
+<p>Here&#39;s the path I took to find the relevant code</p>
+
+<ul>
+<li><code>Compose.js</code> -  handles the UI section that creates a new text message.</li>
+<li>clicking the attach button calls requestAttachment()</li>
+<li>this calls a MozActivity, the activity returns a blob of the attachment</li>
+<li><code>attachment.js</code> - object that represents an attachment</li>
+<li>getThumbnail function found</li>
+</ul>
+
+<p>The Attachment.getThumbnail functions is where we need to make the changes. </p>
+
+<h2>Development</h2>
+
+<p>To rebuild the SMS application, we can run</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">BUILD_APP_NAME=sms ./build.sh gaia
+</code></pre></div>
+<p>I used rsync to copy the compiled files from my build server. The list of files to copy can be found in the <a href="/blog/30/">last post</a></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">rsync -z --files-from=files.txt host:~/B2G/ ./
+</code></pre></div>
+<h2>Debugging</h2>
+
+<p>To debug the applications first you must install the <a href="https://ftp.mozilla.org/pub/mozilla.org/labs/fxos-simulator/">adb helper</a>. Then you must set the remote debugging option to <code>ABD and Devtools</code>. Finally, when the emulator starts up, you can connect to the emulator in the app manager, and accept the connection in the emulator itself.</p>
+
+<p>In order to test Certified applications, we first have to build gaia with the following options.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">DEVICE_DEBUG=1 reset-gaia
+</code></pre></div>
+<p>But for the emulator build we actually just want to run</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">DEVICE_DEBUG=1 ./build.sh gaia
+</code></pre></div>
+<p>These changes allows us to debug system applications, i.e. the certified applications. To test out the code we can use the following debuggin flow</p>
+
+<ul>
+<li>Place break in the code</li>
+<li>Trigger the breaks by interacting with the emulator</li>
+<li>Open the console part of the dev tools</li>
+<li>Print the stack trace using <code>(new Error()).stack)</code> </li>
+</ul>
+
+<p>Results</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">Attachment.prototype.getThumbnail@app://sms.gaiamobile.org/js/attachment.js:69:11
+Attachment.prototype.render@app://sms.gaiamobile.org/js/attachment.js:216:9
+insert@app://sms.gaiamobile.org/js/compose.js:172:1
+Compose&lt;/compose.append@app://sms.gaiamobile.org/js/compose.js:499:1
+Compose&lt;/compose.requestAttachment/activity.onsuccess@app://sms.gaiamobile.org/js/compose.js:644:1
+</code></pre></div>
+<h2>Changing the code</h2>
+
+<p>I&#39;m not familiar with the build tools and I unfortunately can&#39;t make any code changes appear in the emulator build. The next post will outline how to make code changes stick. </p>
+
+
+	</div>
+
+  <div class="column third">
+    
+		<div class="title">
+			<h1> Recent Blog Posts</h1>
+		</div>
+
+		<ul class="posts">
+			
+			<li><span>30 Mar 2014</span> &raquo; 
+				<a href="/blog/31/">Bug Progress: Day 2</a></li>
+			
+			<li><span>27 Mar 2014</span> &raquo; 
+				<a href="/blog/30/">Building the Emulator</a></li>
+			
+			<li><span>11 Mar 2014</span> &raquo; 
+				<a href="/blog/28/">Simple Notes: Edit Notes</a></li>
+			
+			<li><span>10 Mar 2014</span> &raquo; 
+				<a href="/blog/27/">Simple Notes: Hidden Notes Fix</a></li>
+			
+			<li><span>07 Mar 2014</span> &raquo; 
+				<a href="/blog/26/">Bug Progress: Day 1</a></li>
+			
+			<li><span>06 Mar 2014</span> &raquo; 
+				<a href="/blog/25/">Simple Notes: Date</a></li>
+			
+			<li><span>05 Mar 2014</span> &raquo; 
+				<a href="/blog/24/">Simple Notes: Deleting</a></li>
+			
+			<li><span>04 Mar 2014</span> &raquo; 
+				<a href="/blog/23/">Simple Notes: Index</a></li>
+			
+			<li><span>03 Mar 2014</span> &raquo; 
+				<a href="/blog/22/">Simple Notes: New Note</a></li>
+			
+			<li><span>28 Feb 2014</span> &raquo; 
+				<a href="/blog/21/">Building Gaia</a></li>
+			
+		</ul>
+
+  </div>
+
+</div>
+
+
+      <div class="footer">
+        <div class="contact">
+          <p>
+            Gonzalo Andreani<br />
+            Student<br />
+            gandr002@plattsburgh.edu
+          </p>
+        </div>
+        <div class="contact">
+          <p>
+            <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
