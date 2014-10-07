@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ADB access to remote server from local usb</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+		<script src="http://localhost:35729/livereload.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+
+    <div class="site">
+
+      <div class="header">
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/"> home </a>
+
+	
+
+	  
+
+	  
+
+    <a class="extra current" href="/blog/"> blog </a>
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/portfolio/"> portfolio </a>
+
+	
+	
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+
+<div class="row clearfix">
+
+	<div class="column two-thirds post">
+
+		<div class="title">
+			<h1>ADB access to remote server from local usb</h2>
+			<p class="meta">06 Oct 2014</p>
+		</div>
+
+		<p>I have a VPS server where I&#39;m compiling CyanogenMod and some android kernels. To compile CyanogenMod we need to pull some vendor specific &quot;prebuilts&quot; i.e. binaries. Connecting the server to the device connected to my laptop is actually quite trivial.</p>
+
+<p>First we put adb in TCP/IP mode</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">adb tcpip 8001
+</code></pre></div>
+<p>Then, let&#39;s forward the that same port to the laptop</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">adb forward tcp:8001 tcp:8001
+</code></pre></div>
+<p>Connect to the phone</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">adb connect localhost:8001
+</code></pre></div>
+<p>Then finally, we forward the local port to the server</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh -R localhost:8001:localhost:8001 &lt;server_host&gt;
+</code></pre></div>
+<p>This command simply does a reverse tunnel. Back on the server we simply connect to the port on localhost again</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">adb connect localhost:8001
+</code></pre></div>
+<p>And viola! Pretty simple :D</p>
+
+
+	</div>
+
+  <div class="column third">
+    
+		<div class="title">
+			<h1> Recent Blog Posts</h1>
+		</div>
+
+		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/blog/32/">ADB access to remote server from local usb</a></li>
+			
+			<li><span>30 Mar 2014</span> &raquo; 
+				<a href="/blog/31/">Bug Progress: Day 2</a></li>
+			
+			<li><span>27 Mar 2014</span> &raquo; 
+				<a href="/blog/30/">Building the Emulator</a></li>
+			
+			<li><span>11 Mar 2014</span> &raquo; 
+				<a href="/blog/28/">Simple Notes: Edit Notes</a></li>
+			
+			<li><span>10 Mar 2014</span> &raquo; 
+				<a href="/blog/27/">Simple Notes: Hidden Notes Fix</a></li>
+			
+			<li><span>07 Mar 2014</span> &raquo; 
+				<a href="/blog/26/">Bug Progress: Day 1</a></li>
+			
+			<li><span>06 Mar 2014</span> &raquo; 
+				<a href="/blog/25/">Simple Notes: Date</a></li>
+			
+			<li><span>05 Mar 2014</span> &raquo; 
+				<a href="/blog/24/">Simple Notes: Deleting</a></li>
+			
+			<li><span>04 Mar 2014</span> &raquo; 
+				<a href="/blog/23/">Simple Notes: Index</a></li>
+			
+			<li><span>03 Mar 2014</span> &raquo; 
+				<a href="/blog/22/">Simple Notes: New Note</a></li>
+			
+		</ul>
+
+  </div>
+
+</div>
+
+
+      <div class="footer">
+        <div class="contact">
+          <p>
+            Gonzalo Andreani<br />
+            Student<br />
+            gandr002@plattsburgh.edu
+          </p>
+        </div>
+        <div class="contact">
+          <p>
+            <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
