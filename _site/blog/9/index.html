@@ -81,7 +81,7 @@
 
 <p>Then we can specify the navigation in the sidebar with the following HTML</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;header&gt;</span>
     <span class="nt">&lt;menu</span> <span class="na">type=</span><span class="s">&quot;toolbar&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Done<span class="nt">&lt;/a&gt;</span>
@@ -99,8 +99,7 @@
       <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Image Clock<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
     <span class="nt">&lt;/ul&gt;</span>
   <span class="nt">&lt;/nav&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>This is broken down into 2 parts:</p>
 
@@ -111,7 +110,7 @@
 
 <p>We can specify the content of the webpage in the following format</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;drawer&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;drawer&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;header&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#content&quot;</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-menu&quot;</span><span class="nt">&gt;</span>hide sidebar<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#drawer&quot;</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-menu&quot;</span><span class="nt">&gt;</span>show sidebar<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
@@ -120,8 +119,7 @@
    <span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;button&gt;</span> Notify <span class="nt">&lt;/button&gt;</span>
    <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>Again, this includes a <code>header</code> which in this case contains two links: one to open the sidebar and one to hide the sidebar. The content of the page is inside <code>&lt;div role=&quot;main&quot;&gt;</code>.</p>
 
@@ -135,17 +133,16 @@
 
 <p>It seems like something went very wrong, but the following CSS will fix it</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">html</span><span class="o">,</span> <span class="nt">body</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">html</span><span class="o">,</span> <span class="nt">body</span> <span class="p">{</span>
     <span class="k">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="k">height</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
-    <span class="k">width</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nt">section</span><span class="o">[</span><span class="nt">role</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="o">]</span> <span class="p">{</span>
     <span class="k">background</span><span class="o">:</span> <span class="m">#fff</span><span class="p">;</span>
-    <span class="k">height</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+    <span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 
 <p>Here&#39;s a quick overview of what was happening. <code>drawer.css</code> absolutely positions the sidebar on the webpage with a small z-index. The effect is that the side bar is all ways in the back of the layout. The <code>section</code> with the content was just large enough to wrap the header and button and it had a transparent background. The rules under <code>section[role=&quot;region&quot;]</code> fix these problems. The next problem was that the containing elements of <code>section</code>, <code>html</code> and <code>body</code>, were not stretching to the available space. The fix for this was to set <code>margin: 0;</code> and <code>height: 100%</code>.</p>
 
@@ -167,17 +164,16 @@
 
 <p>This is the structure of the content</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
  <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span> Welcome to API Showcase.
   You can try out any API demo by opening up the drawer.<span class="nt">&lt;/h1&gt;</span>
  <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btn-nofity&quot;</span><span class="nt">&gt;</span> Notify Me!<span class="nt">&lt;/button&gt;</span>
  <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btn-nofity-wait&quot;</span><span class="nt">&gt;</span> Notify Me! (Wait 5s)<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <p>And this is the structure of the navigation</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;header&gt;</span>
         <span class="nt">&lt;menu</span> <span class="na">type=</span><span class="s">&quot;toolbar&quot;</span><span class="nt">&gt;</span>
             <span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">&quot;nav-message&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Done<span class="nt">&lt;/a&gt;</span>
@@ -190,23 +186,21 @@
             <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">id=</span><span class="s">&quot;nav-notify-wait&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Alarm<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
         <span class="nt">&lt;/ul&gt;</span>
     <span class="nt">&lt;/nav&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>The CSS to hide the buttons</p>
 
-<div class="highlight"><pre><code class="css"><span class="nf">#btn-nofity</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#btn-nofity</span> <span class="p">{</span>
     <span class="k">display</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nf">#btn-nofity-wait</span> <span class="p">{</span>
     <span class="k">display</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>And the javascript to bring it all together</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-notify&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-notify&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">notifyButton</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;block&quot;</span><span class="p">;</span>
     <span class="nx">notifyLaterButton</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
 <span class="p">});</span>
@@ -219,8 +213,7 @@
 <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-message&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">notifyButton</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
     <span class="nx">notifyLaterButton</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
 <p><a href="/demos/07/">Try the demo</a> and check out the <a href="https://github.com/NakedFerret/NakedFerret.github.io/tree/master/demos/07">source code</a>.</p>
 
@@ -234,6 +227,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -261,9 +257,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

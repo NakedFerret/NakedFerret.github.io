@@ -80,7 +80,7 @@
 
 <p>The CreateNoteForm object managed the new note form. It&#39;s interface was simply</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">CreateNoteForm</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">CreateNoteForm</span> <span class="p">()</span> <span class="p">{</span>
     <span class="c1">// initializes the form. Mainly takes care of connecting the date button to</span>
     <span class="c1">// the date picker</span>
     <span class="nx">init</span><span class="p">();</span>
@@ -92,12 +92,11 @@
 
 <span class="c1">// To use it...</span>
 <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CreateNoteForm</span><span class="p">();</span>
-<span class="nx">form</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-</code></pre></div>
+<span class="nx">form</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span></code></pre></div>
 
 <p>The object was modified to work with both forms, and renamed to <code>NoteForm</code>. It now takes a single parameter, the form to manage. The methods now operate on this form instead of the hard coded reference to the new note form. </p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">NoteForm</span> <span class="p">(</span> <span class="nx">formSelector</span> <span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">NoteForm</span> <span class="p">(</span> <span class="nx">formSelector</span> <span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// could be the New Note form or the Edit Note form</span>
 
     <span class="c1">// Now these methods use the form variable</span>
@@ -105,12 +104,11 @@
     <span class="nx">getTitle</span><span class="p">();</span>
     <span class="nx">getContent</span><span class="p">();</span>
     <span class="nx">getDate</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>For these changes to work, the structures for the sections containing the forms needed modifications. Elements needed to be reference by class instead of id. This required changes to the inputs and buttons elements, and the date picker. The end result was something like the following</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;create-note&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;create-note&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;header&gt;</span>
         <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;btn-back&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-back&quot;</span><span class="nt">&gt;</span>back<span class="nt">&lt;/span&gt;</span>
@@ -136,25 +134,23 @@
             <span class="nt">&lt;li&gt;&lt;button</span> <span class="na">class=</span><span class="s">&quot;btn-date&quot;</span> <span class="na">class=</span><span class="s">&quot;icon icon-dialog&quot;</span><span class="nt">&gt;</span>Date Due<span class="nt">&lt;/button&gt;&lt;/li&gt;</span>
         <span class="nt">&lt;/p&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>The only CSS changes that were required was on the rule that hid the date picker</p>
 
-<div class="highlight"><pre><code class="css"><span class="c">/* Hide the ugly date input result form */</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* Hide the ugly date input result form */</span>
 <span class="nt">div</span><span class="nc">.hides-date</span> <span class="p">{</span>
     <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
     <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Navigating</h2>
 
 <p>The next step was to show the <code>Edit Note</code> section whenever a note was clicked. This turned out to be trivial to implement. All we needed to do was call addNavigation() for every anchor in each list item. All relevant changes were confined to <code>addNoteToList()</code>.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="p">...;</span> 
     <span class="kd">var</span> <span class="nx">noteListItem</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 
@@ -165,14 +161,13 @@
     <span class="c1">// where # is the note id</span>
     <span class="kd">var</span> <span class="nx">noteLISelector</span> <span class="o">=</span> <span class="s2">&quot;li[note-id=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">note</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot;\&quot;]&quot;</span><span class="p">;</span>
     <span class="nx">addNavigation</span><span class="p">(</span><span class="nx">noteLISelector</span> <span class="o">+</span> <span class="s2">&quot; a&quot;</span><span class="p">,</span> <span class="s2">&quot;#edit-note&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Populating</h2>
 
 <p>Populating the <code>Edit Note</code> section required fetching the relevant note from the database. This can be accomplished as long as the note id is known. I stored the note id as soon as a note was clicked. The code for this is found in <code>addNoteToList()</code> again</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="p">...;</span> 
     <span class="kd">var</span> <span class="nx">noteListItem</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 
@@ -188,12 +183,11 @@
         <span class="nx">editForm</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;note-id&quot;</span><span class="p">,</span> <span class="nx">note</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
         <span class="nx">populateEditNoteSection</span><span class="p">();</span>
     <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>As show in the code, the <code>Edit Note</code> section can be populated as soon as the note-id is stored. <code>populateEditNoteSection()</code> simply fetches the relevant note from the database and fills in the fields.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">populateEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">populateEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">section</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#edit-note&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">noteId</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;note-id&quot;</span><span class="p">));</span>
@@ -217,12 +211,11 @@
     <span class="p">};</span>
     
     <span class="p">...</span> <span class="c1">// more error handling</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>To fill in the fields, I opted to use the <code>NoteForm</code> object. I added the <code>setTitle()</code>, <code>setContent()</code>, and <code>setDate()</code> methods. They were simply defined as </p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">NoteForm</span><span class="p">(</span><span class="nx">formSectionSelector</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">NoteForm</span><span class="p">(</span><span class="nx">formSectionSelector</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">titleInput</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.note-form-title&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">contentInput</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.note-form-content&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">datePicker</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;.picker-date&quot;</span><span class="p">);</span>    
@@ -244,18 +237,16 @@
         <span class="p">}</span>
         
     <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>Filling in the fields now simply consisted of a couple of method calls.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nx">getRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">getRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">note</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
     <span class="nx">form</span><span class="p">.</span><span class="nx">setTitle</span><span class="p">(</span><span class="nx">note</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
     <span class="nx">form</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="nx">note</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
     <span class="nx">form</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">note</span><span class="p">.</span><span class="nx">date</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Buttoning</h2>
 
@@ -263,15 +254,14 @@
 
 <p>The bare the function needed to implement was the following</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NoteForm</span><span class="p">(</span><span class="s1">&#39;#edit-note&#39;</span><span class="p">);</span>
     <span class="nx">form</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The back button was the most straightforward to implement.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NoteForm</span><span class="p">(</span><span class="s1">&#39;#edit-note&#39;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">section</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#edit-note&quot;</span><span class="p">);</span>
@@ -281,19 +271,17 @@
         <span class="nx">form</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
         <span class="nx">section</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="s2">&quot;note-id&quot;</span><span class="p">);</span>
     <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The other two buttons required the note id to function. This is stored in the edit-note section, but since the method is called once at runtime, we cannot store it in a variable. Instead we need to use a function to lookup the note-id when the buttons are clicked. The function is simply</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">getNoteId</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">getNoteId</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">section</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;note-id&quot;</span><span class="p">));</span>  
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>The delete button calls <code>deleteNotes()</code>. It passes in the note id enclosed in an array. When the delete action completes successfully the back button is pressed and the notes list is reloaded.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
     
     <span class="kd">var</span> <span class="nx">deleteBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#edit-note .btn-delete&#39;</span><span class="p">)</span>
     <span class="kd">var</span> <span class="nx">backBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#edit-note .btn-back&quot;</span><span class="p">);</span> 
@@ -304,14 +292,13 @@
             <span class="nx">reloadNotes</span><span class="p">();</span>
         <span class="p">});</span>
     <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>Saving a note that is already in the database is synonymous with an update operation. The <code>IndexedDB</code> update method is <code>put()</code>. Interestingly enough, <code>put()</code> saves an object to the database even if it&#39;s not already present. We can take advantage of this by modifying the <code>saveNote</code> method so that both forms can use it.</p>
 
 <p>The modification is simple: provide the note id in the parameter. If the note id is present, set the note object we create within the method to have the same id. The <code>put()</code> method will do an update operation if the id is present, or it will just do a save operation if it is not.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">saveNote</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">successCallback</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">saveNote</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">successCallback</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">dbRequest</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">indexedDB</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">dbName</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
@@ -329,12 +316,11 @@
         
         <span class="nx">notes</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">note</span><span class="p">);</span>
     <span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The save button handler can now use the new version of <code>saveNote()</code></p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">prepareEditNoteSection</span><span class="p">()</span> <span class="p">{</span>
 
     <span class="kd">var</span> <span class="nx">backBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#edit-note .btn-back&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">saveBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#edit-note .btn-save&quot;</span><span class="p">);</span>
@@ -346,8 +332,7 @@
             <span class="nx">reloadNotes</span><span class="p">();</span>
         <span class="p">});</span>
     <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Demo</h2>
 
@@ -363,6 +348,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -390,9 +378,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

@@ -72,7 +72,7 @@
 
 <p>The most destructive API call in is by far the <code>clear()</code> command. It will remove all contacts from the device. The system does not step in and warn the user while the command is happening, so the duty is delegated to the application. In the future we will implement an alert dialog for this particular demo, but for now here is the code.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">clearRequest</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">clearRequest</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozContacts</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
 
 <span class="nx">clearRequest</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;All contacts have been removed.&#39;</span><span class="p">);</span>
@@ -80,13 +80,12 @@
 
 <span class="nx">clearRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Contacts were not cleared&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Asking for Permission, Take one</h2>
 
 <p>According to <a href="https://developer.mozilla.org/en-US/Apps/Developing/App_permissions#Hosted_app_and_privileged_app_permissions">the permissions list page</a>, accessing the contacts API requires something like the following in the application manifest</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;permissions&quot;: {
+<div class="highlight"><pre><code class="language-text" data-lang="text">&quot;permissions&quot;: {
   &quot;contacts&quot;: {
     &quot;access&quot;: &quot;readwrite&quot;,
     &quot;description&quot;: &quot;Needed to read, create, and modify contacts&quot;
@@ -109,7 +108,7 @@
 <h2>Asking for Permission, Take two</h2>
 
 <p>The fix is a simple one, all it requires is that the app manifest contain the following</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;type&quot;: &quot;privileged&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&quot;type&quot;: &quot;privileged&quot;
 </code></pre></div>
 <p>Here&#39;s the explanation. The contact API is a <code>privileged</code> API. An application can be privileged when it is installed through the marketplace. But for the system to recognize the application as privileged, we must specify it in the manifest as stated above.</p>
 
@@ -127,6 +126,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -154,9 +156,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

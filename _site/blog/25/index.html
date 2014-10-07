@@ -72,8 +72,7 @@
 
 <p>Firefox OS comes with a native date picker optimized for mobile layouts. In order to call forth this date picker, one has to simple add the following <code>input</code> element to a form.</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#39;date&#39;</span><span class="nt">&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&#39;date&#39;</span><span class="nt">&gt;</span></code></pre></div>
 
 <p>And said Date picker looks like this</p>
 
@@ -87,27 +86,25 @@
 
 <p>To fix this issue, I wrapped the <code>&lt;input&gt;</code> in a div that had the following CSS rules applied</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">div</span><span class="nf">#hides-date</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nf">#hides-date</span> <span class="p">{</span>
     <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
     <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>This hides the input, and takes it out of the &quot;flow&quot; (i.e. other elements on the page ignore the div when aligning themselves). Next, I added a button. When the button is clicked, the hidden date input is focused. This causes the date picker to pop up, and this effectively makes the user think that the button controls the date picker. I also added an event listener to the <code>input</code> element that listened for input changes. This event gets fired when the user chooses a date. When the event is received I updated the text of the button to reflect the date chosen.</p>
 
 <p>To accomplish all of that I used the following snippet</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// dateButton == the button to replace the date input element</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// dateButton == the button to replace the date input element</span>
 <span class="c1">// datePicker == the date input element</span>
 <span class="nx">dateButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">datePicker</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
   <span class="nx">datePicker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">dateButton</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
   <span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
 <p>This is the result</p>
 
@@ -125,15 +122,14 @@
 
 <p>Adding the date field, is trivial. Adding the date field to the template was pretty simple, it only required adding the following <code>aside</code></p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;aside</span> <span class="na">class=</span><span class="s">&quot;pack-end&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;aside</span> <span class="na">class=</span><span class="s">&quot;pack-end&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;p&gt;</span> <span class="nt">&lt;/p&gt;</span>
   <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;note-date&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
-<span class="nt">&lt;/aside&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/aside&gt;</span></code></pre></div>
 
 <p>In case you&#39;re curious, the CSS rules that style this structure come from <code>lists.css</code>. Then the following snippets of code where added throughout the code base</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="nx">noteListItem</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.note-date&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">note</span><span class="p">.</span><span class="nx">date</span><span class="p">;</span>
     <span class="c1">// ...</span>
@@ -144,8 +140,7 @@
 <span class="c1">// ...</span>
 <span class="kd">var</span> <span class="nx">newNote</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Note</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">getTitle</span><span class="p">(),</span> <span class="nx">form</span><span class="p">.</span><span class="nx">getContent</span><span class="p">(),</span> <span class="nx">form</span><span class="p">.</span><span class="nx">getDate</span><span class="p">());</span>
 <span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>Surprisingly, that is all the spots that needed to be changed. My code turned out to be more modular than I anticipated :)</p>
 
@@ -163,6 +158,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -190,9 +188,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

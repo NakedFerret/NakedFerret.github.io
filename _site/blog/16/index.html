@@ -81,7 +81,7 @@
 </ul>
 
 <p>To access a certain storage area, use the <code>navigator.getDeviceStorage()</code> method. Also, each storage area requires explicit permissions. For example, to access the <code>sdcard</code> and <code>videos</code> areas, the following is needed in the manifest</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&quot;permissions&quot;: {
+<div class="highlight"><pre><code class="language-text" data-lang="text">&quot;permissions&quot;: {
   &quot;device-storage:videos&quot;:{ &quot;access&quot;: &quot;readonly&quot; },
   &quot;device-storage:sdcard&quot;:{ &quot;access&quot;: &quot;readwrite&quot; }
 }
@@ -101,7 +101,7 @@
 
 <p>A good first step is to check if the storage area has enough space for your intended use. The <code>DeviceStorage.freeSpace()</code> method provides the information. It returns the amount of free space in bytes</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">pics</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s1">&#39;pictures&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">pics</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s1">&#39;pictures&#39;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">pics</span><span class="p">.</span><span class="nx">freeSpace</span><span class="p">();</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -112,14 +112,13 @@
 <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
     <span class="nx">utils</span><span class="p">.</span><span class="nx">status</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="s2">&quot;Could not access the device storage&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Adding a file</h2>
 
 <p>There are two methods to add a file, <code>add()</code> and <code>addNamed()</code>. The system creates a name for the file when using <code>add()</code>. Both files except a <code>Blob</code>. It&#39;s mandatory to give a <code>Blob</code> a mime type. All together, one might use the methods as follows.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">file</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">Blob</span><span class="p">([</span><span class="s2">&quot;This is a text file.&quot;</span><span class="p">],</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">sdcard</span><span class="p">.</span><span class="nx">addNamed</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="s2">&quot;my-file.txt&quot;</span><span class="p">);</span>
@@ -132,8 +131,7 @@
 <span class="c1">// An error typically occur if a file with the same name already exist</span>
 <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">&#39;Unable to write the file: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>It&#39;s important to mention what mime type each storage area expects</p>
 
@@ -149,7 +147,7 @@
 
 <p>Retrieving a file is much simpler, simple provide the file name to <code>DeviceStorage.get()</code>.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">pics</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;my-file.txt&quot;</span><span class="p">);</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -159,8 +157,7 @@
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The result of the get request is a <code>FileHandle</code> object.</p>
 
@@ -168,7 +165,7 @@
 
 <p>Deleting files is also simple. Use <code>DeviceStorage.delete()</code></p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">sdcard</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getDeviceStorage</span><span class="p">(</span><span class="s2">&quot;sdcard&quot;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">pics</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;my-file.txt&quot;</span><span class="p">);</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -177,8 +174,7 @@
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>API Showcase</h2>
 
@@ -194,6 +190,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -221,9 +220,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

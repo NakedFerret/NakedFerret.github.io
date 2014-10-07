@@ -72,14 +72,13 @@
 
 <p>The first order of business was separating the <code>Index</code> from the <code>New Note</code> section. I used the same CSS rules from the <a href="/blog/10/">BuildingBlocks Transitions</a> post. With these rules I could use the following structure to separate the sections.</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span>
 <span class="c">&lt;!-- Index section content goes here --&gt;</span>
 <span class="nt">&lt;/section&gt;</span>
 
 <span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
 <span class="c">&lt;!-- create-note section content goes here --&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>With these sections wrapped, they can be easily switched in and out of the user interface by changing the classes. A more in depth explanation is provided in the aforementioned <a href="/blog/10/">transitions post</a>.</p>
 
@@ -94,14 +93,13 @@
 
 <p>Then I just had to enclose the list with a <code>section data-type=&quot;list&quot;</code></p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;list&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;list&quot;</span><span class="nt">&gt;</span>
 <span class="c">&lt;!-- List goes in here --&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>Since I planned on populating the list dynamically, I created a template list item. I enclosed it in a section that forced it off the screen and applied some styles to get rid of the list styles (there were random dots in the index section because of the list styles).</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;list&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;ul&gt;</span>
 
@@ -112,12 +110,11 @@
       
     <span class="nt">&lt;/ul&gt;</span>
   <span class="nt">&lt;/section&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>To create a list item for each note I simply used a technique similar to this</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addNoteToList</span><span class="p">(</span><span class="nx">note</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#note-li-template&quot;</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">templateClone</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 
@@ -128,12 +125,11 @@
     <span class="c1">// Add the note list item to the list</span>
     <span class="kd">var</span> <span class="nx">noteList</span> <span class="o">=</span> <span class="p">...;</span>
     <span class="nx">noteList</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">templateClone</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>Next I used a cursor to retrieve the objects from the database. Here is the most important part of that code</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">reloadNotes</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">reloadNotes</span><span class="p">()</span> <span class="p">{</span>
 
   <span class="c1">// Open the database</span>
   <span class="kd">var</span> <span class="nx">openRequest</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">indexedDB</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">dbName</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
@@ -175,14 +171,13 @@
   <span class="nx">openRequest</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Tying it Together</h2>
 
 <p>Now all that was left was to change the New Note section to work with the index section. First of all, the discard button was replaced with a back button. This required changes to the New Note section header and some javascript code</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;header&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;header&gt;</span>
   <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;btn-back&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-back&quot;</span><span class="nt">&gt;</span>back<span class="nt">&lt;/span&gt;</span>
   <span class="nt">&lt;/a&gt;</span>
@@ -190,16 +185,14 @@
     <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btn-create-note-save&quot;</span><span class="nt">&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
   <span class="nt">&lt;/menu&gt;</span>
   <span class="nt">&lt;h1&gt;</span>New Note<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/header&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/header&gt;</span></code></pre></div>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">backButton</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#create-note .btn-back&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">backButton</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#create-note .btn-back&quot;</span><span class="p">);</span>
 
 <span class="c1">// Discard Button</span>
 <span class="nx">backButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">form</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
 <p>After a successful save operation, <code>backButton.click()</code> and <code>reloadNotes()</code> were called.</p>
 
@@ -217,6 +210,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -244,9 +240,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

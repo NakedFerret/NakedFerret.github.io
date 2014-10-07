@@ -75,7 +75,7 @@
 <h2>Getting the Source Code</h2>
 
 <p>The source of the Gaia interface is located at <a href="https://github.com/mozilla-b2g/gaia">https://github.com/mozilla-b2g/gaia</a>. It uses the <a href="http://git-scm.com/">Git</a> version control system. To copy the code to my computer, I used the clone command</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">git clone https://github.com/mozilla-b2g/gaia.git
+<div class="highlight"><pre><code class="language-text" data-lang="text">git clone https://github.com/mozilla-b2g/gaia.git
 </code></pre></div>
 <p>Git will copy the source code to a folder named <code>gaia</code> in the directory in which the command is run.</p>
 
@@ -86,18 +86,18 @@
 <ul>
 <li><code>default</code></li>
 <li><p><code>push to device</code> : This will push the new build to the device using <code>ADB</code>. Optionally, you can use <code>reset-gaia</code> to remove profiles, web app, and database entries (essentially resetting the phone for the specific build).</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">make install-gaia
+<div class="highlight"><pre><code class="language-text" data-lang="text">make install-gaia
 </code></pre></div></li>
 <li><p><code>production</code> : phone is prepared for a production environment. Gaia is run as packaged apps (privileged and certified levels), test applications are not included int the build, remote debugging is disabled, the lock screen is turned off, etc.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">PRODUCTION=1 make
+<div class="highlight"><pre><code class="language-text" data-lang="text">PRODUCTION=1 make
 # or optionally you can use
 make production
 </code></pre></div></li>
 <li><p><code>debug</code> : runs gaia as a hosted application on a local webserver. This allows apps to be tested without repackaging the apps. It also allows specific developers tools (that will be mentioned in more detail later on) to function.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    DEBUG=1 make
+<div class="highlight"><pre><code class="language-text" data-lang="text">    DEBUG=1 make
 </code></pre></div></li>
 <li><p><code>device debug</code> : this disables the lock screen on the device and enables ADB debugging. Only useful if you have a device</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">DEVICE_DEBUG=1 make
+<div class="highlight"><pre><code class="language-text" data-lang="text">DEVICE_DEBUG=1 make
 </code></pre></div>
 <p>There are more options but they are not too relevant to most scenarios. I used the <code>debug</code> option because it allows me to debug applications really easily as explained in the next section.</p></li>
 </ul>
@@ -105,7 +105,7 @@ make production
 <h2>Testing</h2>
 
 <p>The fastest way to test any changes to Gaia is to use a <a href="http://nightly.mozilla.org/">nightly build of Firefox</a>. I downloaded last nights build and extracted the archive. To test gaia I simply ran the following command in the directory I extracted the nightly build</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">./firefox-bin -profile &lt;gaia dir&gt;/profile-debug/ -no-remote
+<div class="highlight"><pre><code class="language-text" data-lang="text">./firefox-bin -profile &lt;gaia dir&gt;/profile-debug/ -no-remote
 </code></pre></div>
 <p><code>&lt;gaia dir&gt;</code> is the path to the directory where the Gaia source code is located. The <code>-no-remote</code> options will prevent the nightly build from interfering with any other firefox instances currently running.</p>
 
@@ -123,16 +123,15 @@ make production
 
 <p>First, I closed the instance of the Firefox Nightly I had running. Then, I I added the following rule to the file located at <code>/apps/communications/contacts/style/app.css</code></p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">section</span><span class="o">[</span><span class="nt">role</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="o">]</span> <span class="o">&gt;</span> <span class="nt">header</span><span class="nd">:first-child</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">section</span><span class="o">[</span><span class="nt">role</span><span class="o">=</span><span class="s2">&quot;region&quot;</span><span class="o">]</span> <span class="o">&gt;</span> <span class="nt">header</span><span class="nd">:first-child</span> <span class="p">{</span>
     <span class="k">background-color</span><span class="o">:</span> <span class="m">#FFA</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>I recompiled the the project...</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">DEBUG=1 make
+<div class="highlight"><pre><code class="language-text" data-lang="text">DEBUG=1 make
 </code></pre></div>
 <p>Started up the Firefox Nightly again...</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">./firefox-bin -profile &lt;gaia dir&gt;/profile-debug/ -no-remote
+<div class="highlight"><pre><code class="language-text" data-lang="text">./firefox-bin -profile &lt;gaia dir&gt;/profile-debug/ -no-remote
 </code></pre></div>
 <p>And Voila! I got the following result</p>
 
@@ -148,6 +147,9 @@ make production
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -175,9 +177,6 @@ make production
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

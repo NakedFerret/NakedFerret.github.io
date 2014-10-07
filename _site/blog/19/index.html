@@ -72,7 +72,7 @@
 
 <p>A cursor allows an app to iterate through all the results of a query in a manner that does not block the main UI thread. Opening a cursor is simple, just call <code>openCursor()</code> on an object store. It returns an <a href="https://developer.mozilla.org/en-US/docs/Web/API/IDBRequest">IDBRequest</a> object. The result of the request will be the cursor. The object retrieved by the cursor is in <code>cursor.value</code>. To retrieve the next object call <code>cursor.continue()</code> and the function will be called again recursively. The function will be called one last time when there are no more results to the query. A common flow is as follows</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// open the object store in a transaction</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// open the object store in a transaction</span>
 <span class="kd">var</span> <span class="nx">objStr</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">().</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -85,8 +85,7 @@
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// handle transaction success, error</span>
-</code></pre></div>
+<span class="c1">// handle transaction success, error</span></code></pre></div>
 
 <h2>Range and Direction</h2>
 
@@ -100,7 +99,7 @@
 
 <p>Here are a couple of examples to better illustrate the above. The examples assume the object store uses a string value as a key.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Match anything past &quot;Bill&quot;, including &quot;Bill&quot;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Match anything past &quot;Bill&quot;, including &quot;Bill&quot;</span>
 <span class="kd">var</span> <span class="nx">lowerBoundKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">lowerBound</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">);</span>
 
 <span class="c1">// Match anything past &quot;Bill&quot;, but don&#39;t include &quot;Bill&quot;</span>
@@ -112,14 +111,13 @@
 <span class="c1">// Match anything between &quot;Bill&quot; and &quot;Donna&quot;, but not including &quot;Donna&quot;</span>
 <span class="kd">var</span> <span class="nx">boundKeyRange</span> <span class="o">=</span> <span class="nx">IDBKeyRange</span><span class="p">.</span><span class="nx">bound</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="s2">&quot;Donna&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 
-<span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">(</span><span class="nx">boundKeyRange</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="p">...;</span>
-</code></pre></div>
+<span class="nx">objStr</span><span class="p">.</span><span class="nx">openCursor</span><span class="p">(</span><span class="nx">boundKeyRange</span><span class="p">).</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="p">...;</span></code></pre></div>
 
 <h2>Indexes</h2>
 
 <p>Indexes allow the user to search through the object store on properties besides the key. This does not work on object stores that contain values instead of javascript objects. The parameter for creating an index are the name of the index and the name of the property to build the index on. </p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">openDBRequest</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">openDBRequest</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="nx">openDBRequest</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 <span class="c1">// create the object stores</span>
@@ -129,20 +127,18 @@
 <span class="nx">objStr</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;firstName&quot;</span><span class="p">);</span>
 
 <span class="c1">// Finish setting up db</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>You can also use indexes to apply constraints on the data. This can be achieved using the <code>unique</code> optional parameter.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// Users should not have the same email address</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Users should not have the same email address</span>
 <span class="c1">// Create an index called &quot;email&quot; on the &quot;email&quot; property of the objects</span>
 <span class="nx">objStr</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>You can use the indexes through <code>get()</code>, simply pass the value of the property you are looking for. <code>get()</code> will return the object with the lowest key value. To run through all the matches, you can get a cursor through <code>openCursor()</code></p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// open the object store in a transaction</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// open the object store in a transaction</span>
 <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="c1">// Returns the first result</span>
@@ -161,8 +157,7 @@
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// handle transaction success, error</span>
-</code></pre></div>
+<span class="c1">// handle transaction success, error</span></code></pre></div>
 
 <h2>Demo</h2>
 
@@ -178,6 +173,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -205,9 +203,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

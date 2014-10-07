@@ -87,20 +87,20 @@
 <h2>Development</h2>
 
 <p>To rebuild the SMS application, we can run</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">BUILD_APP_NAME=sms ./build.sh gaia
+<div class="highlight"><pre><code class="language-text" data-lang="text">BUILD_APP_NAME=sms ./build.sh gaia
 </code></pre></div>
 <p>I used rsync to copy the compiled files from my build server. The list of files to copy can be found in the <a href="/blog/30/">last post</a></p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">rsync -z --files-from=files.txt host:~/B2G/ ./
+<div class="highlight"><pre><code class="language-text" data-lang="text">rsync -z --files-from=files.txt host:~/B2G/ ./
 </code></pre></div>
 <h2>Debugging</h2>
 
 <p>To debug the applications first you must install the <a href="https://ftp.mozilla.org/pub/mozilla.org/labs/fxos-simulator/">adb helper</a>. Then you must set the remote debugging option to <code>ABD and Devtools</code>. Finally, when the emulator starts up, you can connect to the emulator in the app manager, and accept the connection in the emulator itself.</p>
 
 <p>In order to test Certified applications, we first have to build gaia with the following options.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">DEVICE_DEBUG=1 reset-gaia
+<div class="highlight"><pre><code class="language-text" data-lang="text">DEVICE_DEBUG=1 reset-gaia
 </code></pre></div>
 <p>But for the emulator build we actually just want to run</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">DEVICE_DEBUG=1 ./build.sh gaia
+<div class="highlight"><pre><code class="language-text" data-lang="text">DEVICE_DEBUG=1 ./build.sh gaia
 </code></pre></div>
 <p>These changes allows us to debug system applications, i.e. the certified applications. To test out the code we can use the following debuggin flow</p>
 
@@ -112,7 +112,7 @@
 </ul>
 
 <p>Results</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">Attachment.prototype.getThumbnail@app://sms.gaiamobile.org/js/attachment.js:69:11
+<div class="highlight"><pre><code class="language-text" data-lang="text">Attachment.prototype.getThumbnail@app://sms.gaiamobile.org/js/attachment.js:69:11
 Attachment.prototype.render@app://sms.gaiamobile.org/js/attachment.js:216:9
 insert@app://sms.gaiamobile.org/js/compose.js:172:1
 Compose&lt;/compose.append@app://sms.gaiamobile.org/js/compose.js:499:1
@@ -132,6 +132,9 @@ Compose&lt;/compose.requestAttachment/activity.onsuccess@app://sms.gaiamobile.or
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -159,9 +162,6 @@ Compose&lt;/compose.requestAttachment/activity.onsuccess@app://sms.gaiamobile.or
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

@@ -87,7 +87,7 @@
 
 <p>The object stores are created using <code>createObjectStore()</code>. The first parameter is the name of the object store and the second parameters is an object that specifies which strategy to use. The following example assumes we have a database opened and ready to be modified. We will cover how to accomplish this in the next section.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// db == open database</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// db == open database</span>
 
 <span class="c1">// Uses the keyPath strategy</span>
 <span class="c1">// Keys is stored in object.taskId</span>
@@ -104,37 +104,33 @@
 
 <span class="c1">// Uses the &quot;neither&quot; strategy</span>
 <span class="c1">// Keys have to be given when adding objects to the store</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">);</span>
-</code></pre></div>
+<span class="nx">db</span><span class="p">.</span><span class="nx">createObjectStore</span><span class="p">(</span><span class="s2">&quot;toDoList&quot;</span><span class="p">);</span></code></pre></div>
 
 <h2>Handling the Database</h2>
 
 <p>Once the structure is designed, the database can be created. There is no explicit create method in IndexedDB. Instead, the database is created when it is first opened. To open the database, simply call <code>indexedDB.open()</code></p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">indexedDB</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;MyTestDatabase&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">indexedDB</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;MyTestDatabase&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span></code></pre></div>
 
 <p>The first argument is the name of the database and the second argument is the database version. When the database version changes, the system will call <code>onupgradeneeded()</code>. The system will also call <code>onupgradeneeded()</code> when the database needs to be created.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nx">request</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span> 
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">request</span><span class="p">.</span><span class="nx">onupgradeneeded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span> 
   <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
   <span class="c1">// Create an object store for this database</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>It&#39;s important to note that any structure changes to the database can only happen in <code>onupgradeneeded()</code></p>
 
 <p>Opening the database returns a <code>DOMRequest</code> object. We can grab the database connection from the result or access any errors in the following manner</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">db</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">db</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">errorCode</span><span class="p">);</span>
 <span class="p">};</span>
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">db</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>Closing the database is not required, but it is good practice. Use <code>db.close()</code></p>
 
@@ -153,6 +149,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -180,9 +179,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

@@ -71,7 +71,7 @@
 <h2>Getting the code</h2>
 
 <p>The Firefox OS project is based on the Android project and is spread out over many Github repositories. The following commands fetch the code from the servers. </p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">git clone git://github.com/mozilla-b2g/B2G.git
+<div class="highlight"><pre><code class="language-text" data-lang="text">git clone git://github.com/mozilla-b2g/B2G.git
 cd B2G
 ./config.sh emulator // Starts fetching code
 </code></pre></div>
@@ -82,7 +82,7 @@ cd B2G
 <p>Building requires the correct libraries to be installed in the system. A list can be found <a href="https://developer.mozilla.org/en-US/Firefox_OS/Firefox_OS_build_prerequisites#64_bit_requirement_installation">here</a>.</p>
 
 <p>Also, it&#39;s important to install the required 32 bit libraries. For a 64-bit debian based system, run the following commands.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">sudo dpkg --add-architecture i386
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo dpkg --add-architecture i386
 sudo apt-get update
 </code></pre></div>
 <p>Here are a couple of libraries that I also needed to install to complete the build</p>
@@ -93,13 +93,13 @@ sudo apt-get update
 </ul>
 
 <p>I also needed to create the following symlinks</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">sudo ln -s /usr/lib/i386-linux-gnu/libX11.so.6 /usr/lib/i386-linux-gnu/libX11.so
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo ln -s /usr/lib/i386-linux-gnu/libX11.so.6 /usr/lib/i386-linux-gnu/libX11.so
 sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 </code></pre></div>
 <h2>Transferring the emulator</h2>
 
 <p>I built the emulator in a VPS. I wanted to use the emulator locally however. After a lot of trial and error, I found the relevant files.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">./out
+<div class="highlight"><pre><code class="language-text" data-lang="text">./out
 ./out/host
 ./out/host/linux-x86
 ./out/host/linux-x86/bin
@@ -145,7 +145,7 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 <p>You can probably shrink this list down a bit more, but as it stands, it&#39;s only about a quarter of a gig without <code>sdcard.img</code>. The <code>sdcard.img</code> does not have to get copied because it is created by the <code>run-emulator</code> script and the <code>mksdcard</code> program.</p>
 
 <p>A quick way to copy all the files from the build server to the local computer is using rsync. Note that the list of files is contained in <code>files.txt</code></p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">rsync -z --files-from=../files.txt ssh.andreani.in:/home/gonzalo/B2G/ ../b2g-test/
+<div class="highlight"><pre><code class="language-text" data-lang="text">rsync -z --files-from=../files.txt ssh.andreani.in:/home/gonzalo/B2G/ ../b2g-test/
 </code></pre></div>
 <h2>Using the emulator</h2>
 
@@ -163,6 +163,9 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -190,9 +193,6 @@ sudo ln -s /usr/lib/i386-linux-gnu/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

@@ -72,7 +72,7 @@
 
 <p>We will separate our app into three parts. Let&#39;s start with the <code>Notification</code> section</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;notification&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;notification&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">&quot;btn-notification-back&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-back&quot;</span><span class="nt">&gt;</span>back<span class="nt">&lt;/span&gt;</span>
@@ -82,14 +82,13 @@
     <span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btn-notify&quot;</span><span class="nt">&gt;</span> Notify Me!<span class="nt">&lt;/button&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>Notice that the header contains a back button with the <code>a#btn-notification-back</code>. The content of the page is under <code>div role=&quot;main&quot;</code>.</p>
 
 <p>The <code>Alarm</code> section will be very similar</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;alarm&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;alarm&quot;</span> <span class="na">role=</span><span class="s">&quot;region&quot;</span> <span class="na">data-position=</span><span class="s">&quot;right&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">&quot;btn-alarm-back&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-back&quot;</span><span class="nt">&gt;</span>back<span class="nt">&lt;/span&gt;</span>
@@ -99,14 +98,13 @@
     <span class="nt">&lt;div</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;btn-notify-wait&quot;</span><span class="nt">&gt;</span> Notify Me! (Wait 5s)<span class="nt">&lt;/button&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <p>It has the same structure as <code>section#notification</code>.</p>
 
 <p>The main content section will be similar as to what we had before but it&#39;s going to be wrapped in <code>section#index</code>. The reason why will be explained in the next section.</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;index&quot;</span> <span class="na">data-position=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;index&quot;</span> <span class="na">data-position=</span><span class="s">&quot;current&quot;</span><span class="nt">&gt;</span>
     
     <span class="nt">&lt;section</span> <span class="na">data-type=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;header&gt;</span>
@@ -132,25 +130,23 @@
             Open the drawer to see all the demos<span class="nt">&lt;/h1&gt;</span>
         <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/section&gt;</span>
-<span class="nt">&lt;/section&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/section&gt;</span></code></pre></div>
 
 <h2>The Layout</h2>
 
 <p>The layout of the page is as follows. Every section that has the property <code>data-position=&quot;right&quot;</code> will be placed off screen to the right. We accomplish this with the following CSS</p>
 
-<div class="highlight"><pre><code class="css"><span class="o">[</span><span class="nt">data-position</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="o">]</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">[</span><span class="nt">data-position</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="o">]</span> <span class="p">{</span>
     <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
     <span class="k">top</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">right</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
     <span class="k">bottom</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="n">transform</span><span class="o">:</span> <span class="n">translateX</span><span class="p">(</span><span class="m">100</span><span class="o">%</span><span class="p">);</span>
-    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">transform</span><span class="o">:</span> <span class="n">translateX</span><span class="p">(</span><span class="m">100</span><span class="o">%</span><span class="p">);</span>
+    <span class="n">transform</span><span class="o">:</span> <span class="n">translateX</span><span class="p">(</span><span class="m">100%</span><span class="p">);</span>
+    <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">transform</span><span class="o">:</span> <span class="n">translateX</span><span class="p">(</span><span class="m">100%</span><span class="p">);</span>
     <span class="k">z-index</span><span class="o">:</span> <span class="m">15</span><span class="p">;</span>
     <span class="k">z-index</span><span class="o">:</span> <span class="m">100</span><span class="p">;</span> <span class="c">/* -&gt; drawer */</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The sections with <code>data-position=&quot;current&quot;</code> will be place in the center of the page, where the user can interact with them (hence the value <code>current</code>). To navigate from one section to the next, we simply shift the <code>current</code> section and the next section to the left. This is the reason why we had to wrap the sidebar section and <code>section#drawer</code> in the <code>section#index</code>, the whole middle section has to move or else they end up on top of each other. </p>
 
@@ -173,7 +169,7 @@
 
 <p>Therefore, when we click a navigation link in our drawer, we will set the class of the current element to <code>left</code> and the off-screen section to <code>current</code></p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-notify&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-notify&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#notification&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span><span class="p">;</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[data-position=&quot;current&quot;]&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">;</span>
 <span class="p">});</span>
@@ -181,12 +177,11 @@
 <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#nav-alarm&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#alarm&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span><span class="p">;</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[data-position=&quot;current&quot;]&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
 <p>To each section has a <code>btn-*-back</code> button, so we can reverse the actions above with the following</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#btn-notification-back&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#btn-notification-back&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#notification&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span><span class="p">;</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[data-position=&quot;current&quot;]&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span><span class="p">;</span>
 <span class="p">});</span>
@@ -194,14 +189,13 @@
 <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#btn-alarm-back&#39;</span><span class="p">).</span><span class="nx">addEventListener</span> <span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#alarm&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span><span class="p">;</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[data-position=&quot;current&quot;]&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;current&#39;</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class="p">});</span></code></pre></div>
 
 <h2>The CSS</h2>
 
 <p>Finally, the following CSS will tie up the animations to the classes</p>
 
-<div class="highlight"><pre><code class="css"><span class="o">[</span><span class="nt">data-position</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="o">]</span><span class="nc">.current</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">[</span><span class="nt">data-position</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="o">]</span><span class="nc">.current</span> <span class="p">{</span>
     <span class="n">animation</span><span class="o">:</span> <span class="n">rightToCurrent</span> <span class="m">0.4s</span> <span class="n">forwards</span><span class="p">;</span>
     <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">animation</span><span class="o">:</span> <span class="n">rightToCurrent</span> <span class="m">0.4s</span> <span class="n">forwards</span><span class="p">;</span>
 <span class="p">}</span>
@@ -216,8 +210,7 @@
 <span class="o">[</span><span class="nt">data-position</span><span class="o">=</span><span class="s2">&quot;current&quot;</span><span class="o">]</span><span class="nc">.current</span> <span class="p">{</span>
     <span class="n">animation</span><span class="o">:</span> <span class="n">leftToCurrent</span> <span class="m">0.4s</span> <span class="n">forwards</span><span class="p">;</span>
     <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">animation</span><span class="o">:</span> <span class="n">leftToCurrent</span> <span class="m">0.4s</span> <span class="n">forwards</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Presto</h2>
 
@@ -233,6 +226,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -260,9 +256,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 

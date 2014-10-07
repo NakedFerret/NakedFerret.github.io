@@ -72,7 +72,7 @@
 
 <p><a href="/blog/17/">Part 1</a> of the IndexedDB posts explains that it&#39;s possible to store objects using a <code>keyPath</code> and <code>autoIncrement</code>. The documentation states that the key will be stored in <code>object[keyPath]</code> if it doesn&#39;t exists already. This is not true. Examine the following code</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// open a transaction and access the object store</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// open a transaction and access the object store</span>
 <span class="kd">var</span> <span class="nx">objStore</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// object store has keyPath and autoIncrement</span>
 <span class="c1">// obj = object with keyPath undefined</span>
 <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
@@ -81,30 +81,27 @@
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">keyPath</span><span class="p">);</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class="p">};</span></code></pre></div>
 
 <p>This will add an object and print the value of the objects <code>keyPath</code>. When running the code, it prints <code>undefined</code>. This is against what the documentation states, but there is an easy work around. It is this utility function.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">addObject</span><span class="p">(</span><span class="nx">objectStore</span><span class="p">,</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addObject</span><span class="p">(</span><span class="nx">objectStore</span><span class="p">,</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">objectStore</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">object</span><span class="p">);</span>
 
   <span class="nx">request</span><span class="p">.</span><span class="nx">onsuccess</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">keyPath</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">keyPath</span><span class="p">;</span>
     <span class="nx">object</span><span class="p">[</span><span class="nx">keyPath</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
   <span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>The function encapsulates the scope of the object, and updates the keyPath value with the key. The keyPath value is stored in <code>event.target.source.keyPath</code>, and the new key is the <code>result</code>. With this function, the code changes only slightly but works as expected.</p>
 
-<div class="highlight"><pre><code class="javascript"><span class="c1">// open a transaction and access the object store</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// open a transaction and access the object store</span>
 <span class="kd">var</span> <span class="nx">objStore</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// object store has keyPath and autoIncrement</span>
 <span class="c1">// obj = object with keyPath undefined</span>
 <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">...;</span>
 
-<span class="nx">addObject</span><span class="p">(</span><span class="nx">objStore</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
-</code></pre></div>
+<span class="nx">addObject</span><span class="p">(</span><span class="nx">objStore</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span></code></pre></div>
 
 <p>After the code is run and the result is received, the object will be updated with the correct key. They only drawback to this workaround is that it limits the users from being able to execute code on the <code>request.onsuccess</code> call back. The function could be modified to receive an optional callback as a parameter to remedy this.</p>
 
@@ -122,6 +119,9 @@
 		</div>
 
 		<ul class="posts">
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/2014/10/06/remote-to-local-adb.html">Remote To Local Adb</a></li>
 			
 			<li><span>30 Mar 2014</span> &raquo; 
 				<a href="/blog/31/">Bug Progress: Day 2</a></li>
@@ -149,9 +149,6 @@
 			
 			<li><span>03 Mar 2014</span> &raquo; 
 				<a href="/blog/22/">Simple Notes: New Note</a></li>
-			
-			<li><span>28 Feb 2014</span> &raquo; 
-				<a href="/blog/21/">Building Gaia</a></li>
 			
 		</ul>
 
