@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Updating a forked Git repo</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+		<script src="http://localhost:35729/livereload.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-55624711-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="site">
+
+      <div class="header">
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/"> home </a>
+
+	
+
+	  
+
+	  
+
+    <a class="extra current" href="/blog/"> blog </a>
+
+	
+
+	  
+
+	  
+	    
+	  
+
+    <a class=" extra  " href="/portfolio/"> portfolio </a>
+
+	
+	
+  <div class="logo-container">
+    <img src="/img/logo.png"/>
+  </div>
+</div>
+
+
+<div class="row clearfix">
+
+	<div class="column two-thirds post">
+
+		<div class="title">
+			<h1>Updating a forked Git repo</h2>
+			<p class="meta">08 Oct 2014</p>
+		</div>
+
+		<p>A while ago, I forked the ActiveAndroid repository to add some of my own changes to the ORM framework. Today I wanted to use the library again, use the new changes that the original maintainer has implemented, and also use my own changes. It turned out to be easier than I thought, despite there being <em>112 commits</em> between the original repo and my forked version. Here&#39;s what I did</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git remote add upstream git@github.com:pardom/ActiveAndroid.git
+</code></pre></div>
+<p>Then to fetch the updates</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git fetch upstream
+From github.com:pardom/ActiveAndroid
+ * [new branch]      gh-pages   -&gt; upstream/gh-pages
+ * [new branch]      master     -&gt; upstream/master 
+</code></pre></div>
+<p>The next part is a matter of preference. You can either merge the changes </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git checkout master
+$ git merge upstream/master
+</code></pre></div>
+<p>Or rebase the changes onto the local master branch</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git checkout master
+$ git rebase upstream/master
+</code></pre></div>
+<p>I prefer to rebase because it makes for a cleaner history. Merging will make one giant commit with all the changes from the upstream branch <em>in addition</em> to having all the commits from the upstream in your history. It&#39;s a bit redundant</p>
+
+<p><img src="/img/posts/33/merge-git-example.png" alt="The github history after the merge"></p>
+
+<p>On the other hand, rebasing will make a separate commit for every conflict that comes up. That is to say, if your changes conflict with 3 different commits from upstream, there will be 3 commit on top of the upstream commits with your changes. See below</p>
+
+<p><img src="/img/posts/33/rebase-git-example.png" alt="The github history after the rebase"></p>
+
+<p>Both processes will leave you with the same result. Only the histories will differ. Hence the matter of preference. The other difference worth mentioning is that rebasing is a bit more interactive. </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">First, rewinding head to replay your work on top of it...
+Applying: Add method in Table annotation for set column Id name.
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging tests/src/com/activeandroid/test/query/FromTest.java
+Auto-merging tests/src/com/activeandroid/test/MockModel.java
+CONFLICT (content): Merge conflict in tests/src/com/activeandroid/test/MockModel.java
+Auto-merging src/com/activeandroid/util/SQLiteUtils.java
+CONFLICT (content): Merge conflict in src/com/activeandroid/util/SQLiteUtils.java
+Auto-merging src/com/activeandroid/TableInfo.java
+CONFLICT (content): Merge conflict in src/com/activeandroid/TableInfo.java
+Auto-merging src/com/activeandroid/Model.java
+CONFLICT (content): Merge conflict in src/com/activeandroid/Model.java
+Failed to merge in the changes.
+Patch failed at 0001 Add method in Table annotation for set column Id name.
+
+When you have resolved this problem run &quot;git rebase --continue&quot;.
+If you would prefer to skip this patch, instead run &quot;git rebase --skip&quot;.
+To check out the original branch and stop rebasing run &quot;git rebase --abort&quot;.
+</code></pre></div>
+<p>For each conflict you must either resolve or skip the conflict ( although I&#39;m not sure whether skipping will keep the local or upstream changes )</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ git rebase upstream/master
+$ # then for each conflict
+$ nano source.c         # resolve the conflict
+$ git rebase --continue # and continue the rebase 
+</code></pre></div>
+<p>Hope that helps!</p>
+
+
+	</div>
+
+  <div class="column third">
+    
+		<div class="title">
+			<h1> Recent Blog Posts</h1>
+		</div>
+
+		<ul class="posts">
+			
+			<li><span>08 Oct 2014</span> &raquo; 
+				<a href="/blog/33/">Updating a forked Git repo</a></li>
+			
+			<li><span>06 Oct 2014</span> &raquo; 
+				<a href="/blog/32/">ADB access to remote server from local usb</a></li>
+			
+			<li><span>30 Mar 2014</span> &raquo; 
+				<a href="/blog/31/">Bug Progress: Day 2</a></li>
+			
+			<li><span>27 Mar 2014</span> &raquo; 
+				<a href="/blog/30/">Building the Emulator</a></li>
+			
+			<li><span>11 Mar 2014</span> &raquo; 
+				<a href="/blog/28/">Simple Notes: Edit Notes</a></li>
+			
+			<li><span>10 Mar 2014</span> &raquo; 
+				<a href="/blog/27/">Simple Notes: Hidden Notes Fix</a></li>
+			
+			<li><span>07 Mar 2014</span> &raquo; 
+				<a href="/blog/26/">Bug Progress: Day 1</a></li>
+			
+			<li><span>06 Mar 2014</span> &raquo; 
+				<a href="/blog/25/">Simple Notes: Date</a></li>
+			
+			<li><span>05 Mar 2014</span> &raquo; 
+				<a href="/blog/24/">Simple Notes: Deleting</a></li>
+			
+			<li><span>04 Mar 2014</span> &raquo; 
+				<a href="/blog/23/">Simple Notes: Index</a></li>
+			
+		</ul>
+
+  </div>
+
+</div>
+
+
+      <div class="footer">
+        <div class="contact">
+          <p>
+            Gonzalo Andreani<br />
+            Android Engineer<br />
+          </p>
+        </div>
+        <div class="contact">
+          <p>
+            <a href="https://github.com/NakedFerret">github.com/NakedFerret</a><br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
